@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Hidi</string>
+    <string name="title_person">Person</string>
+    <string name="title_loc">Location</string>
+    <string name="title_my">My hidies</string>
+    <string-array name="usernames">
+        <item>barbie</item>
+        <item>hatman</item>
+        <item>batman</item>
+        <item>cindrella</item>
+        <item>spiderman</item>
+        <item>Katie</item>
+        <item>Goku</item>
+    </string-array>
+</resources>

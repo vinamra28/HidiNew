@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backcolor"
+    android:orientation="vertical"
+    tools:context="com.example.hp.hidi2.Recover">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HIDI"
+        android:fontFamily="@font/andada"
+        android:textSize="49sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="70dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="where you can remain"
+        android:textSize="13sp"
+
+        android:layout_marginLeft="95dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hidden always"
+
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="95dp"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp"
+        android:textColorHint="#798081">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:hint="Old phone number"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textColorHint="#798081">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:hint="New phone number"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"/>
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textColorHint="#798081">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:hint="Password"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"/>
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:text="Recover my account"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/recovery"
+        android:textSize="15dp"
+        android:background="@drawable/shape"
+        android:layout_marginTop="25dp"
+        android:textAllCaps="false"/>
+
+
+</LinearLayout>
