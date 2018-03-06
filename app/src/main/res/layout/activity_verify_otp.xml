@@ -37,33 +37,39 @@
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:id="@+id/no1"
             android:cursorVisible="false"
             android:maxLength="1"/>
         <EditText
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:id="@+id/no2"
             android:cursorVisible="false"
             android:maxLength="1"/>
         <EditText
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:id="@+id/no3"
             android:cursorVisible="false"
             android:maxLength="1"/>
         <EditText
+            android:layout_width="35dp"
+            android:id="@+id/no4"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:cursorVisible="false"
+            android:maxLength="1"/>
+        <EditText
+            android:id="@+id/no5"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:cursorVisible="false"
             android:maxLength="1"/>
         <EditText
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:cursorVisible="false"
-            android:maxLength="1"/>
-        <EditText
+            android:id="@+id/no6"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:inputType="number"

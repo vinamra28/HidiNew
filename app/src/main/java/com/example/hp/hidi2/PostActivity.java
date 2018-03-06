@@ -2,7 +2,6 @@ package com.example.hp.hidi2;
 
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,18 +15,19 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Post extends AppCompatActivity
+public class PostActivity extends AppCompatActivity
 {
-    private List<Post> postList = new ArrayList<>();
+    private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;
-//    private MyAdapter_Post myAdapter_post;
+    private MyAdapter_post myAdapter_post;
     private GestureDetector gestureDetector;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        myAdapter_post = new MyAdapter_post(postList);
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -41,9 +41,14 @@ public class Post extends AppCompatActivity
         recyclerView.setOnTouchListener(gestureListener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-//        myAdapter_post = new MyAdapter_Post(postList);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(myAdapter_post);
+        recyclerView.setAdapter(myAdapter_post);
+        //Post post = new Post("Aditya Bajpai");
+        PostGet post=new PostGet("Goku","February 22 Ghaziabad","200","1");
+        postList.add(post);
+        // post = new Post("Aditya Bajpai");
+        post=new PostGet("Goku","February 22 Ghaziabad","200","1");
+        postList.add(post);
     }
     private void onLeftSwipe() {
 
@@ -53,7 +58,7 @@ public class Post extends AppCompatActivity
 
     private void onRightSwipe() {
 
-        Intent intent=new Intent(Post.this,Accounts.class);
+        Intent intent=new Intent(PostActivity.this,Accounts.class);
         startActivity(intent);
 
     }
@@ -76,12 +81,12 @@ public class Post extends AppCompatActivity
                 // Left swipe
                 if (diff > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Post.this.onLeftSwipe();
+                    PostActivity.this.onLeftSwipe();
                 }
                 // Right swipe
                 else if (-diff > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    Post.this.onRightSwipe();
+                    PostActivity.this.onRightSwipe();
                 }
             } catch (Exception e) {
                 Log.e("Home", "Error on gestures");

@@ -18,10 +18,11 @@
         </activity>
         <activity android:name=".Recover" />
         <activity android:name=".Register" />
-        <activity android:name=".Post" />
+        <activity android:name=".PostActivity" />
         <activity android:name=".VerifyOtp" />
         <activity android:name=".SelectName" />
-        <activity android:name=".Accounts"></activity>
+        <activity android:name=".Accounts" />
+        <activity android:name=".Arguments"></activity>
     </application>
 
 </manifest>

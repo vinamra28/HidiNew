@@ -4,7 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -27,7 +28,11 @@ public class SelectName extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent intent=new Intent(SelectName.this,Post.class);
+                final Animation myAnim = AnimationUtils.loadAnimation(SelectName.this, R.anim.bounce);
+                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+                myAnim.setInterpolator(interpolator);
+                nextt.startAnimation(myAnim);
+                Intent intent=new Intent(SelectName.this,PostActivity.class);
                 startActivity(intent);
             }
         });
