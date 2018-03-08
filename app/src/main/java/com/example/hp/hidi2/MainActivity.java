@@ -128,6 +128,8 @@ public class MainActivity extends AppCompatActivity
                 Log.d("verifi", ss);
                 if (ss.equalsIgnoreCase("success")) {
                     Bundle bundle = new Bundle();
+                    bundle.putString("mobile",mobile);
+                    bundle.putInt("request",1);
                     Intent intent = new Intent(MainActivity.this, VerifyOtp.class);
                     intent.putExtras(bundle);
                     startActivity(intent);

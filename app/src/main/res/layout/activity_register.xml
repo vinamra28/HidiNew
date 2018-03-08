@@ -45,6 +45,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:hint="Username"
+            android:id="@+id/namess"
             android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
 
@@ -58,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:id="@+id/mobilenoss"
             android:hint="Mobile Number"
             android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
@@ -70,6 +72,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/passwordss"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:hint="Password(optional)"
