@@ -25,19 +25,20 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/access_location"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:id="@+id/access_location"
             android:background="@drawable/ic_search_black_24dp" />
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navigation"
-        android:id="@+id/recyclerView"
-        android:layout_below="@+id/post_header">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/post_header"></android.support.v7.widget.RecyclerView>
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"

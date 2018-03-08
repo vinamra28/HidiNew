@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/backcolor"
+
     tools:context="com.example.hp.hidi2.MainActivity">
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,112 +21,126 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
         android:text="where you can remain"
         android:textSize="13sp"
-        android:layout_marginLeft="95dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
         android:text="hidden always"
         android:textSize="13sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="95dp"/>
+        android:textStyle="bold" />
+
     <android.support.design.widget.TextInputLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="35dp">
+
         <EditText
+            android:id="@+id/phnumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:hint="Phone Number"
-            android:textColorHint="#798081"
             android:layout_marginRight="15dp"
-            android:textSize="14sp"/>
+            android:hint="Phone Number"
+            android:inputType="number"
+            android:textColorHint="#798081"
+            android:textSize="14sp" />
     </android.support.design.widget.TextInputLayout>
+
     <Button
+        android:id="@+id/getOtp"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:text="Get OTP"
         android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:id="@+id/getOtp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/shape"
-        android:layout_marginTop="15dp"
+        android:text="Get OTP"
         android:textAllCaps="false"
-        />
+        android:textColor="#000"
+        android:textStyle="bold" />
+
     <ImageButton
-        android:layout_width="230dp"
-        android:layout_height="40dp"
-        android:src="@drawable/google"
-        android:layout_gravity="center"
         android:id="@+id/fbButton"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/shape1"
-        />
-
-
-    <ImageButton
         android:layout_width="230dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:id="@+id/gplusButton"
-        android:src="@drawable/googlesignin"
-        android:background="@drawable/shape1"
         android:layout_marginTop="15dp"
-        />
+        android:adjustViewBounds="true"
+        android:background="@drawable/shape1"
+        android:scaleType="fitCenter"
+        android:src="@drawable/google" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="OR"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/gplusButton"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/shape1"
+        android:scaleType="fitCenter"
+        android:src="@drawable/googlesignin" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="25dp"
-        >
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Problem signing in??"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
+
         <TextView
+            android:id="@+id/recovering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recover your account"
-            android:textSize="12sp"
-            android:id="@+id/recovering"
             android:layout_marginLeft="15dp"
+            android:text="Recover your account"
             android:textColor="#3966f7"
-            android:textStyle="bold"
-            />
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="10dp"
-        >
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Not a hidi user??"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
+
         <TextView
+            android:id="@+id/creating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create account"
-            android:id="@+id/creating"
-            android:textSize="12sp"
             android:layout_marginLeft="15dp"
+            android:text="Create account"
             android:textColor="#3966f7"
-            android:textStyle="bold"/>
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

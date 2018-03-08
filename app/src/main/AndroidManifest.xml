@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hp.hidi2">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,20 +12,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Recover" />
-        <activity android:name=".Register" />
-        <activity android:name=".PostActivity" />
-        <activity android:name=".VerifyOtp" />
-        <activity android:name=".SelectName" />
-        <activity android:name=".Accounts" />
-        <activity android:name=".Arguments"></activity>
+        <activity android:name=".Recover"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Register"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PostActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".VerifyOtp"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SelectName"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Accounts"
+            android:theme="@style/AccountsTheme"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Arguments"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -51,13 +51,21 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         holder.image_posted.setImageDrawable(post.getUser_post_image());
         holder.do_like.setImageDrawable(post.getDo_like());
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
+        holder.image_argument.setImageDrawable(post.getImage_argument());
         holder.do_arguments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),Arguments.class);
+                Intent intent = new Intent(v.getContext(), Arguments.class);
                 v.getContext().startActivity(intent);
 //                Intent intent = new Intent(context,Argument.class);
 //                context.startActivity(intent);
+            }
+        });
+        holder.image_argument.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Arguments.class);
+                v.getContext().startActivity(intent);
             }
         });
     }
@@ -101,7 +109,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView user_name, post_location, post_content_text, total_favours, total_arguments, do_arguments;
-        public ImageView user_dp, image_posted, do_like, do_dislike;
+        public ImageView user_dp, image_posted, do_like, do_dislike, image_argument;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -113,6 +121,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             do_arguments = itemView.findViewById(R.id.do_arguments);
             do_like = itemView.findViewById(R.id.like);
             do_dislike = itemView.findViewById(R.id.dislike);
+            image_argument = itemView.findViewById(R.id.arguments_image);
 
 
         }

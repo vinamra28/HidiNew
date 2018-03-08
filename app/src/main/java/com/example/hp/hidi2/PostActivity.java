@@ -15,16 +15,15 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity
-{
+public class PostActivity extends AppCompatActivity {
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;
     private MyAdapter_post myAdapter_post;
     private GestureDetector gestureDetector;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         myAdapter_post = new MyAdapter_post(postList);
@@ -34,7 +33,7 @@ public class PostActivity extends AppCompatActivity
                 return gestureDetector.onTouchEvent(event);
             }
         };
-        BottomNavigationView navigation =findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         recyclerView = findViewById(R.id.recyclerView);
 //        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
 //        layoutParams.setBehavior(new BottomNavigationBehavior());
@@ -44,12 +43,13 @@ public class PostActivity extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(myAdapter_post);
         //Post post = new Post("Aditya Bajpai");
-        PostGet post=new PostGet("Goku","February 22 Ghaziabad","200","1");
+        PostGet post = new PostGet("Goku", "February 22 Ghaziabad", "200", "1");
         postList.add(post);
         // post = new Post("Aditya Bajpai");
-        post=new PostGet("Goku","February 22 Ghaziabad","200","1");
+        post = new PostGet("Goku", "February 22 Ghaziabad", "200", "1");
         postList.add(post);
     }
+
     private void onLeftSwipe() {
 
 //        Intent intent=new Intent(PostActivity.this,HidiChatActivity.class);
@@ -58,10 +58,11 @@ public class PostActivity extends AppCompatActivity
 
     private void onRightSwipe() {
 
-        Intent intent=new Intent(PostActivity.this,Accounts.class);
+        Intent intent = new Intent(PostActivity.this, Accounts.class);
         startActivity(intent);
 
     }
+
     private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 50;
         private static final int SWIPE_MAX_OFF_PATH = 200;

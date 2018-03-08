@@ -11,74 +11,82 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HIDI"
-        android:fontFamily="@font/andada"
-        android:textSize="49sp"
+        android:layout_marginLeft="70dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="70dp"/>
+        android:fontFamily="@font/andada"
+        android:text="HIDI"
+        android:textSize="49sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
         android:text="where you can remain"
         android:textSize="13sp"
-        android:layout_marginLeft="95dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="95dp"
         android:text="hidden always"
         android:textSize="13sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="95dp"/>
+        android:textStyle="bold" />
+
     <android.support.design.widget.TextInputLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textColorHint="#798081">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:hint="Username"
-            android:layout_marginRight="15dp"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
+
     <android.support.design.widget.TextInputLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textColorHint="#798081">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:hint="Mobile Number"
             android:layout_marginRight="15dp"
-            android:textSize="14dp"/>
+            android:hint="Mobile Number"
+            android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
+
     <android.support.design.widget.TextInputLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textColorHint="#798081">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:hint="Password(optional)"
-            android:textSize="14dp"/>
+            android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
+
     <Button
+        android:id="@+id/registry"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:text="Register"
-        android:id="@+id/registry"
         android:layout_gravity="center"
-        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape"
+        android:text="Register"
+        android:textAllCaps="false"
         android:textColor="#000"
         android:textSize="15dp"
-        android:background="@drawable/shape"
-        android:layout_marginTop="15dp"
-        android:textAllCaps="false"/>
+        android:textStyle="bold" />
 
 </LinearLayout>

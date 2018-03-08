@@ -11,35 +11,33 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class VerifyOtp extends AppCompatActivity
-{
-    EditText n1,n2,n3,n4,n5,n6;
-    Button log,verifi;
+public class VerifyOtp extends AppCompatActivity {
+    EditText n1, n2, n3, n4, n5, n6;
+    Button log, verifi;
+    String otp = "";
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
-        n1=findViewById(R.id.no1);
-        n2=findViewById(R.id.no2);
-        n3=findViewById(R.id.no3);
-        n4=findViewById(R.id.no4);
-        n5=findViewById(R.id.no5);
-        n6=findViewById(R.id.no6);
+        n1 = findViewById(R.id.no1);
+        n2 = findViewById(R.id.no2);
+        n3 = findViewById(R.id.no3);
+        n4 = findViewById(R.id.no4);
+        n5 = findViewById(R.id.no5);
+        n6 = findViewById(R.id.no6);
         n1.addTextChangedListener(new GenericTextWatcher(n1));
         n2.addTextChangedListener(new GenericTextWatcher(n2));
         n3.addTextChangedListener(new GenericTextWatcher(n3));
         n4.addTextChangedListener(new GenericTextWatcher(n4));
         n5.addTextChangedListener(new GenericTextWatcher(n5));
         n6.addTextChangedListener(new GenericTextWatcher(n6));
-        log=findViewById(R.id.login);
+        log = findViewById(R.id.login);
         log.setVisibility(View.INVISIBLE);
-        verifi=findViewById(R.id.verify);
-        verifi.setOnClickListener(new View.OnClickListener()
-        {
+        verifi = findViewById(R.id.verify);
+        verifi.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
@@ -49,22 +47,21 @@ public class VerifyOtp extends AppCompatActivity
         });
         log.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
                 log.startAnimation(myAnim);
-                Intent intent=new Intent(VerifyOtp.this,SelectName.class);
+                Intent intent = new Intent(VerifyOtp.this, SelectName.class);
                 startActivity(intent);
             }
         });
     }
-    public class GenericTextWatcher implements TextWatcher
-    {
+
+    public class GenericTextWatcher implements TextWatcher {
         private View view;
-        public GenericTextWatcher(View view)
-        {
+
+        public GenericTextWatcher(View view) {
             this.view = view;
         }
 
@@ -72,32 +69,43 @@ public class VerifyOtp extends AppCompatActivity
         public void afterTextChanged(Editable editable) {
             // TODO Auto-generated method stub
             String text = editable.toString();
-            switch(view.getId())
-            {
+            switch (view.getId()) {
 
                 case R.id.no1:
-                    if(text.length()==1)
+                    if (text.length() == 1) {
+                        otp = otp + text;
                         n2.requestFocus();
+                    }
                     break;
                 case R.id.no2:
-                    if(text.length()==1)
+                    if (text.length() == 1) {
+                        otp = otp + text;
                         n3.requestFocus();
+                    }
                     break;
                 case R.id.no3:
-                    if(text.length()==1)
+                    if (text.length() == 1) {
+                        otp = otp + text;
                         n4.requestFocus();
+                    }
                     break;
                 case R.id.no4:
-                    if(text.length()==1)
+                    if (text.length() == 1) {
+                        otp = otp + text;
                         n5.requestFocus();
+                    }
                     break;
                 case R.id.no5:
-                    if(text.length()==1)
+                    if (text.length() == 1) {
+                        otp = otp + text;
                         n6.requestFocus();
+                    }
                     break;
                 case R.id.no6:
-                    if(text.length()==1)
+                    if (text.length() == 1) {
+                        otp = otp + text;
                         verifi.requestFocus();
+                    }
                     break;
             }
         }

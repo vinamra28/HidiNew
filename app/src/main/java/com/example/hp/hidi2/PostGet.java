@@ -7,8 +7,8 @@ import android.graphics.drawable.Drawable;
  */
 
 public class PostGet {
-    private String user_name,post_location,total_favours,do_arguments;
-    private Drawable user_dp,user_post_image,do_like,do_dislike;
+    private String user_name, post_location, total_favours, do_arguments;
+    private Drawable user_dp, user_post_image, do_like, do_dislike, image_argument;
 
     public PostGet() {
     }
@@ -32,7 +32,7 @@ public class PostGet {
         this.user_post_image = user_post_image;
     }
 
-    public PostGet(String user_name, String post_location, String total_favours,  String do_arguments, Drawable user_dp, Drawable user_post_image) {
+    public PostGet(String user_name, String post_location, String total_favours, String do_arguments, Drawable user_dp, Drawable user_post_image) {
         this.user_name = user_name;
         this.post_location = post_location;
         this.total_favours = total_favours;
@@ -115,5 +115,13 @@ public class PostGet {
 
     public void setDo_dislike(Drawable do_dislike) {
         this.do_dislike = do_dislike;
+    }
+
+    public Drawable getImage_argument() {
+        return image_argument;
+    }
+
+    public void setImage_argument(Drawable image_argument) {
+        this.image_argument = image_argument;
     }
 }

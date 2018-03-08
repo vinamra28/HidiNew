@@ -4,99 +4,106 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/backcolor"
+    android:orientation="vertical"
     tools:context="com.example.hp.hidi2.VerifyOtp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:text="An OTP is send to your mobile number"
         android:gravity="center"
-        android:textColor="#000"/>
+        android:text="An OTP is send to your mobile number"
+        android:textColor="#000"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:textStyle="bold"
-        android:textSize="14sp"
-        android:text="enter the OTP to verify the account"
         android:gravity="center"
-        android:textColor="#000" />
+        android:text="enter the OTP to verify the account"
+        android:textColor="#000"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="50dp">
+        android:orientation="horizontal">
+
         <EditText
-            android:layout_width="35dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
             android:id="@+id/no1"
-            android:cursorVisible="false"
-            android:maxLength="1"/>
-        <EditText
             android:layout_width="35dp"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
             android:inputType="number"
+            android:maxLength="1" />
+
+        <EditText
             android:id="@+id/no2"
-            android:cursorVisible="false"
-            android:maxLength="1"/>
-        <EditText
             android:layout_width="35dp"
             android:layout_height="wrap_content"
+            android:cursorVisible="false"
             android:inputType="number"
+            android:maxLength="1" />
+
+        <EditText
             android:id="@+id/no3"
-            android:cursorVisible="false"
-            android:maxLength="1"/>
-        <EditText
             android:layout_width="35dp"
-            android:id="@+id/no4"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:cursorVisible="false"
-            android:maxLength="1"/>
+            android:inputType="number"
+            android:maxLength="1" />
+
+        <EditText
+            android:id="@+id/no4"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:inputType="number"
+            android:maxLength="1" />
+
         <EditText
             android:id="@+id/no5"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:cursorVisible="false"
-            android:maxLength="1"/>
+            android:inputType="number"
+            android:maxLength="1" />
+
         <EditText
             android:id="@+id/no6"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:cursorVisible="false"
-            android:maxLength="1"/>
+            android:inputType="number"
+            android:maxLength="1" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/verify"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Verify OTP"
-        android:id="@+id/verify"
-        android:textSize="12sp"
-        android:textColor="#000"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:background="@drawable/shape"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        />
+        android:background="@drawable/shape"
+        android:text="Verify OTP"
+        android:textColor="#000"
+        android:textSize="12sp" />
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
         android:id="@+id/login"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:background="@drawable/shape"
-        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="12sp"/>
+        android:layout_marginTop="40dp"
+        android:background="@drawable/shape"
+        android:text="Login"
+        android:textSize="12sp" />
 </LinearLayout>
