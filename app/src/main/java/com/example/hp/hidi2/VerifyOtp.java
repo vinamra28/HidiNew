@@ -249,7 +249,13 @@ public class VerifyOtp extends AppCompatActivity
                     }
                     else
                     {
+                        JSONObject recordds=res.getJSONObject("records");
+                        int uid=recordds.getInt("UID");
+                        Log.d("UID",""+uid);
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("UID",uid);
                         Intent intent=new Intent(VerifyOtp.this,SelectName.class);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }
 //                    Toast.makeText(MainActivity.this,"successfully logged in",Toast.LENGTH_SHORT).show();
