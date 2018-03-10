@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 public class SplashScreen extends AppCompatActivity
 {
     SessionManager session;
-    private static int SPLASH_TIME_OUT = 800;
+    private static int SPLASH_TIME_OUT = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
