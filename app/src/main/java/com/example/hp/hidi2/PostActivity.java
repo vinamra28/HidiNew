@@ -57,12 +57,15 @@ public class PostActivity extends AppCompatActivity {
 
 //        Intent intent=new Intent(PostActivity.this,HidiChatActivity.class);
 //        startActivity(intent);
+//        finish();
     }
 
-    private void onRightSwipe() {
+    private void onRightSwipe()
+    {
 
         Intent intent = new Intent(PostActivity.this, Accounts.class);
         startActivity(intent);
+        finish();
 
     }
 

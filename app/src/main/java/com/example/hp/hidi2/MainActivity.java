@@ -62,25 +62,31 @@ public class MainActivity extends AppCompatActivity
         RoundedBitmapDrawable roundedBitmapDrawable1 = RoundedBitmapDrawableFactory.create(getResources(), myBitmap1);
         roundedBitmapDrawable1.setCornerRadius(125f);
         google.setImageDrawable(roundedBitmapDrawable1);
-        registering.setOnClickListener(new View.OnClickListener() {
+        registering.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(MainActivity.this, Register.class);
                 startActivity(intent);
                 finish();
             }
         });
-        recover.setOnClickListener(new View.OnClickListener() {
+        recover.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(MainActivity.this, Recover.class);
                 startActivity(intent);
                 finish();
             }
         });
-        get.setOnClickListener(new View.OnClickListener() {
+        get.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 mobile = phone.getText().toString();
                 final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
@@ -89,18 +95,22 @@ public class MainActivity extends AppCompatActivity
                 new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
             }
         });
-        fb.setOnClickListener(new View.OnClickListener() {
+        fb.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
                 fb.startAnimation(myAnim);
             }
         });
-        google.setOnClickListener(new View.OnClickListener() {
+        google.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
@@ -108,29 +118,34 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
-    private class Verification extends AsyncTask<String, Void, String> {
+    private class Verification extends AsyncTask<String, Void, String>
+    {
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
         }
 
         @Override
-        protected String doInBackground(String... url) {
+        protected String doInBackground(String... url)
+        {
             return POST(url[0]);
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s)
+        {
             super.onPostExecute(s);
             Log.d("Result", result);
             //Toast.makeText(GenOtp.this,""+result,Toast.LENGTH_LONG).show();
-            try {
+            try
+            {
                 JSONObject ff = new JSONObject(result);
                 JSONObject info = ff.getJSONObject("info");
                 String ss = info.getString("status");
                 Log.d("verifi", ss);
-                if (ss.equalsIgnoreCase("success")) {
+                if (ss.equalsIgnoreCase("success"))
+                {
                     Bundle bundle = new Bundle();
                     bundle.putString("mobile",mobile);
                     bundle.putInt("request",1);
@@ -139,13 +154,14 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intent);
                     finish();
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
-
-    public String POST(String url) {
+    public String POST(String url)
+    {
         InputStream inputStream = null;
         try {
             HttpClient httpClient = new DefaultHttpClient();
@@ -182,7 +198,8 @@ public class MainActivity extends AppCompatActivity
         return result;
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException
+    {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
@@ -190,5 +207,10 @@ public class MainActivity extends AppCompatActivity
             result += line;
         inputStream.close();
         return result;
+    }
+    @Override
+    public void onBackPressed()
+    {
+        finish();
     }
 }
