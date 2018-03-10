@@ -40,12 +40,14 @@ public class MainActivity extends AppCompatActivity
     String mobile = "";
     String result = "";
     ImageButton google, fb;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        session=new SessionManager(getApplicationContext());
         registering = findViewById(R.id.creating);
         recover = findViewById(R.id.recovering);
         get = findViewById(R.id.getOtp);
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Register.class);
                 startActivity(intent);
+                finish();
             }
         });
         recover.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +75,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Recover.class);
                 startActivity(intent);
+                finish();
             }
         });
         get.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +137,7 @@ public class MainActivity extends AppCompatActivity
                     Intent intent = new Intent(MainActivity.this, VerifyOtp.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

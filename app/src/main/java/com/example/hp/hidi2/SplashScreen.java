@@ -5,15 +5,21 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SplashScreen extends AppCompatActivity {
+import retrofit2.http.POST;
 
+public class SplashScreen extends AppCompatActivity
+{
+    SessionManager session;
     private static int SPLASH_TIME_OUT = 800;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        new Handler().postDelayed(new Runnable() {
+        session=new SessionManager(getApplicationContext());
+        new Handler().postDelayed(new Runnable()
+        {
 
             /*
              * Showing splash screen with a timer. This will be useful when you
@@ -21,14 +27,25 @@ public class SplashScreen extends AppCompatActivity {
              */
 
             @Override
-            public void run() {
+            public void run()
+            {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashScreen.this, MainActivity.class);
-                startActivity(i);
-
+//                session.checkLogin();
+                if(!session.isLoggedIn())
+                {
+                    Intent i = new Intent(SplashScreen.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                else
+                {
+                    Intent intent=new Intent(SplashScreen.this, PostActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
                 // close this activity
-                finish();
+
             }
         }, SPLASH_TIME_OUT);
     }

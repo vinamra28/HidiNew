@@ -19,6 +19,7 @@ public class PostActivity extends AppCompatActivity {
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;
+    SessionManager session;
     private MyAdapter_post myAdapter_post;
     private GestureDetector gestureDetector;
 
@@ -26,6 +27,8 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        session=new SessionManager(getApplicationContext());
+        session.checkLogin();
         myAdapter_post = new MyAdapter_post(postList);
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gestureListener = new View.OnTouchListener() {

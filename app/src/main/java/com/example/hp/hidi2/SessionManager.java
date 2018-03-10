@@ -34,13 +34,11 @@ public class SessionManager
         sharedPreferences=context.getSharedPreferences(PREF_NAME,PRIVATE_MODE);
         editor=sharedPreferences.edit();
     }
-    public void createLoginSession(int uid,String mobileno,String username,String secname)
+    public void createLoginSession(int uid,String mobileno)
     {
         editor.putBoolean(IS_LOGIN,true);
         editor.putInt(KEY_UID,uid);
         editor.putString(KEY_MOBILE,mobileno);
-        editor.putString(KEY_NAME,username);
-        editor.putString(KEY_SECNAME,secname);
         editor.commit();
     }
     public boolean isLoggedIn()

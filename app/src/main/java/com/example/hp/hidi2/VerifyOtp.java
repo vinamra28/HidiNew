@@ -31,6 +31,7 @@ import java.io.UnsupportedEncodingException;
 
 public class VerifyOtp extends AppCompatActivity
 {
+    SessionManager session;
     EditText n1,n2,n3,n4,n5,n6;
     Button log,verifi;
     String otp="",mobile="",result="",user_name="",user_password="";
@@ -40,6 +41,7 @@ public class VerifyOtp extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
+        session=new SessionManager(getApplicationContext());
         log=findViewById(R.id.login);
         log.setText("Register");
         log.setVisibility(View.INVISIBLE);
@@ -242,21 +244,25 @@ public class VerifyOtp extends AppCompatActivity
                 String status=info.getString("status");
                 if(status.equals("success"))
                 {
+                    JSONObject recordds=res.getJSONObject("records");
+                    int uid=recordds.getInt("UID");
                     if(request==1)
                     {
+                        session.createLoginSession(uid,mobile);
                         Intent intent=new Intent(VerifyOtp.this,PostActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     else
                     {
-                        JSONObject recordds=res.getJSONObject("records");
-                        int uid=recordds.getInt("UID");
                         Log.d("UID",""+uid);
                         Bundle bundle=new Bundle();
                         bundle.putInt("UID",uid);
+                        session.createLoginSession(uid,mobile);
                         Intent intent=new Intent(VerifyOtp.this,SelectName.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
+                        finish();
                     }
 //                    Toast.makeText(MainActivity.this,"successfully logged in",Toast.LENGTH_SHORT).show();
 //                    Intent intent=new Intent(MainActivity.this,PostActivity.class);

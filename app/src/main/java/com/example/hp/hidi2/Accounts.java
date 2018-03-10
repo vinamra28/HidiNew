@@ -19,8 +19,9 @@ import com.github.lzyzsd.circleprogress.CircleProgress;
 
 public class Accounts extends AppCompatActivity
 {
+    SessionManager session;
     float x1, x2, y1, y2;
-    CircleProgress progress;
+//    CircleProgress progress;
     ImageView imageView_plus,userdp;
     TextView admire,love,visitors,hidies,blocks;
     Button see_notifications,my_journey;
@@ -30,8 +31,10 @@ public class Accounts extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounts);
+        session=new SessionManager(getApplicationContext());
+        session.checkLogin();
         userdp = findViewById(R.id.profilepic);
-        progress=findViewById(R.id.popularProgress);
+//        progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);
         love=findViewById(R.id.loveCount);
         visitors=findViewById(R.id.visitorsCount);
@@ -87,6 +90,8 @@ public class Accounts extends AppCompatActivity
         }
         if (id == R.id.logout)
         {
+            session.logoutUser();
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
