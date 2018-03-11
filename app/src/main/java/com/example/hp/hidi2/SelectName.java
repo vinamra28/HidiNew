@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 public class SelectName extends AppCompatActivity
 {
@@ -36,6 +37,7 @@ public class SelectName extends AppCompatActivity
     Button nextt;
     String result="",hidiName="";
     int uid=0;
+    ArrayList<String> names=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -44,10 +46,16 @@ public class SelectName extends AppCompatActivity
         Bundle bundle=getIntent().getExtras();
         uid=bundle.getInt("UID");
         tv=findViewById(R.id.tvx);
+        try {
+            read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         tv1=findViewById(R.id.textView);
         nextt = findViewById(R.id.next);
         spinner = findViewById(R.id.spinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.usernames, android.R.layout.select_dialog_item);
+        ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.select_dialog_item, names);
+//        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, names, android.R.layout.select_dialog_item);
         spinner.setAdapter(adapter);
         hidiName=spinner.getSelectedItem().toString();
         if(hidiName.length()!=0)
@@ -66,6 +74,22 @@ public class SelectName extends AppCompatActivity
                 new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
             }
         });
+    }
+    public void read()throws IOException
+    {
+        String str="";
+        StringBuffer buf=new StringBuffer();
+        InputStream in=this.getResources().openRawResource(R.raw.hidi_names);
+        BufferedReader reader=new BufferedReader(new InputStreamReader(in));
+        if(in!=null)
+        {
+            while((str=reader.readLine())!=null)
+            {
+                buf.append(str+"\n");
+                names.add(str);
+            }
+        }
+        in.close();
     }
     private class HttpAsyncTask extends AsyncTask<String,Void,String>
     {
