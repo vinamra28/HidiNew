@@ -47,6 +47,7 @@
             android:layout_marginRight="15dp"
             android:hint="Phone Number"
             android:inputType="number"
+            android:maxLength="10"
             android:textColorHint="#798081"
             android:textSize="14sp" />
     </android.support.design.widget.TextInputLayout>

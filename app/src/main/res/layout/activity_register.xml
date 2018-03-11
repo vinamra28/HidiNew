@@ -61,6 +61,7 @@
             android:layout_marginRight="15dp"
             android:id="@+id/mobilenoss"
             android:hint="Mobile Number"
+            android:maxLength="10"
             android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
 
@@ -75,6 +76,7 @@
             android:id="@+id/passwordss"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:maxLength="16"
             android:hint="Password(optional)"
             android:textSize="14dp" />
     </android.support.design.widget.TextInputLayout>
