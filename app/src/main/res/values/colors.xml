@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <!--<color name="colorAccent">#FF4081</color>-->
+    <color name="colorAccent">#798081</color>
     <color name="backcolor">#fff</color>
     <color name="teal">#fbc02d</color>
     <color name="orange">#ff5722</color>

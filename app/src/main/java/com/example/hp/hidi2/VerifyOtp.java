@@ -250,6 +250,7 @@ public class VerifyOtp extends AppCompatActivity
                     {
                         session.createLoginSession(uid,mobile);
                         Intent intent=new Intent(VerifyOtp.this,PostActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
                     }
@@ -261,29 +262,20 @@ public class VerifyOtp extends AppCompatActivity
                         session.createLoginSession(uid,mobile);
                         Intent intent=new Intent(VerifyOtp.this,SelectName.class);
                         intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
                     }
-//                    Toast.makeText(MainActivity.this,"successfully logged in",Toast.LENGTH_SHORT).show();
-//                    Intent intent=new Intent(MainActivity.this,PostActivity.class);
-//                    startActivity(intent);
-//                    mobile.setText("");
-//                    pass.setText("");
                 }
                 else
                 {
                     Toast.makeText(VerifyOtp.this,"Incorrect",Toast.LENGTH_SHORT).show();
-//                    mobile.setText("");
-//                    pass.setText("");
                 }
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
             }
-
-//            Toast.makeText(MainActivity.this,""+result,Toast.LENGTH_LONG).show();
-
         }
     }
     public String POST(String url)

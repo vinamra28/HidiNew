@@ -191,7 +191,9 @@ public class Accounts extends AppCompatActivity
                 if (x1 > x2)
                 {
                     Intent intent = new Intent(Accounts.this, PostActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
                 }
                 break;
             default:System.out.println();
