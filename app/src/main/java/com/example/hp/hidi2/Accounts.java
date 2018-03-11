@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -8,9 +9,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,12 +61,21 @@ public class Accounts extends AppCompatActivity
     TextView admire,love,visitors,hidies,blocks;
     Button see_notifications,my_journey;
     static int PICK_IMAGE_REQUEST = 1;
+    String mPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final int REQUEST_CODE_PERMISSION = 2;
     String result="";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounts);
+        try {
+            if (ActivityCompat.checkSelfPermission(this, mPermission) != MockPackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{mPermission}, REQUEST_CODE_PERMISSION);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
         userdp = findViewById(R.id.profilepic);
