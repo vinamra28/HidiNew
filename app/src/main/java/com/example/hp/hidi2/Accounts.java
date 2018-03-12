@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.CircleProgress;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -54,6 +55,7 @@ public class Accounts extends AppCompatActivity
     SessionManager session;
     float x1, x2, y1, y2;
 //    CircleProgress progress;
+    DonutProgress progress;
     Uri URI;
     String[] FILE;
     String ImageDecode;
@@ -79,6 +81,7 @@ public class Accounts extends AppCompatActivity
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
         userdp = findViewById(R.id.profilepic);
+        progress=findViewById(R.id.popularProgress);
 //        progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);
         love=findViewById(R.id.loveCount);
@@ -241,6 +244,7 @@ public class Accounts extends AppCompatActivity
                 hidies.setText(""+records.getInt("hidies"));
                 blocks.setText(""+records.getInt("blocks"));
                 love.setText(""+records.getInt("love"));
+                progress.setProgress((float) records.getDouble("popularity"));
             }
             catch (JSONException e)
             {
