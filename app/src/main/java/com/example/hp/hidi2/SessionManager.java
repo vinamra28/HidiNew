@@ -64,6 +64,16 @@ public class SessionManager
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
+    public void accountDetails(int admire,int love,int visitors,double popularity,int hidies,int blocks)
+    {
+        editor.putString(KEY_ADMIRE,""+admire);
+        editor.putString(KEY_LOVE,""+love);
+        editor.putString(KEY_VISITORS,""+visitors);
+        editor.putString(KEY_HIDIES,""+hidies);
+        editor.putString(KEY_BLOCKS,""+blocks);
+        editor.putString(KEY_POPULARITY,""+(float)popularity);
+        editor.commit();
+    }
     public HashMap<String,String> getUserDetails()
     {
         HashMap<String,String> user=new HashMap<>();

@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -49,6 +50,13 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.hp.hidi2.SessionManager.KEY_ADMIRE;
+import static com.example.hp.hidi2.SessionManager.KEY_BLOCKS;
+import static com.example.hp.hidi2.SessionManager.KEY_HIDIES;
+import static com.example.hp.hidi2.SessionManager.KEY_LOVE;
+import static com.example.hp.hidi2.SessionManager.KEY_POPULARITY;
+import static com.example.hp.hidi2.SessionManager.KEY_VISITORS;
 
 public class Accounts extends AppCompatActivity
 {
@@ -95,23 +103,7 @@ public class Accounts extends AppCompatActivity
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(55f);
         userdp.setImageDrawable(roundedBitmapDrawable);
-        imageView_plus.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(Accounts.this,StatusActivity.class);
-                startActivity(intent);
-            }
-        });
-        userdp.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                showFileChooser();
-            }
-        });
+        new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
     }
     private void showFileChooser()
     {
@@ -161,7 +153,7 @@ public class Accounts extends AppCompatActivity
             {
                 Log.v("Upload", "success");
                 userdp.setImageURI(fileUri);
-                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
+//                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
             }
 
             @Override
@@ -239,17 +231,37 @@ public class Accounts extends AppCompatActivity
             {
                 JSONObject res = new JSONObject(result);
                 JSONObject records = res.getJSONObject("records");
-                admire.setText(""+records.getInt("admire"));
-                visitors.setText(""+records.getInt("visitors"));
-                hidies.setText(""+records.getInt("hidies"));
-                blocks.setText(""+records.getInt("blocks"));
-                love.setText(""+records.getInt("love"));
-                progress.setProgress((float) records.getDouble("popularity"));
+                session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
+                        records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
             }
+            HashMap<String,String> user=session.getUserDetails();
+            admire.setText(user.get(KEY_ADMIRE));
+            visitors.setText(user.get(KEY_VISITORS));
+            hidies.setText(user.get(KEY_HIDIES));
+            blocks.setText(user.get(KEY_BLOCKS));
+            love.setText(user.get(KEY_LOVE));
+            progress.setProgress(Float.parseFloat(user.get(KEY_POPULARITY)));
+            imageView_plus.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(Accounts.this,StatusActivity.class);
+                    startActivity(intent);
+                }
+            });
+            userdp.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    showFileChooser();
+                }
+            });
         }
     }
     public String POST(String url)
