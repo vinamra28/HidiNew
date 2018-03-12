@@ -158,6 +158,7 @@ public class Accounts extends AppCompatActivity
             {
                 Log.v("Upload", "success");
                 userdp.setImageURI(fileUri);
+                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
             }
 
             @Override

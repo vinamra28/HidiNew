@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -57,12 +58,30 @@ public class SelectName extends AppCompatActivity
         ArrayAdapter adapter=new ArrayAdapter(this, android.R.layout.select_dialog_item, names);
 //        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, names, android.R.layout.select_dialog_item);
         spinner.setAdapter(adapter);
-        hidiName=spinner.getSelectedItem().toString();
-        if(hidiName.length()!=0)
+//        hidiName=spinner.getSelectedItem().toString();
+//        if(hidiName.length()!=0)
+//        {
+//            tv.setVisibility(View.VISIBLE);
+//            tv1.setText(hidiName);
+//        }
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            tv.setVisibility(View.VISIBLE);
-            tv1.setText(hidiName);
-        }
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                hidiName= (String) parent.getItemAtPosition(position);
+                if(hidiName.length()!=0)
+                {
+                    tv.setVisibility(View.VISIBLE);
+                    tv1.setText(hidiName);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
         nextt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
