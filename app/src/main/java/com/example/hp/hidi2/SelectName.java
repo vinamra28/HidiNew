@@ -1,9 +1,12 @@
 package com.example.hp.hidi2;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;

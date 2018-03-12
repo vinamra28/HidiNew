@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -34,6 +35,7 @@ import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity
 {
+    GPSTracker gps;
     TextView registering, recover;
     Button get;
     EditText phone;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        gps=new GPSTracker(this);
         session=new SessionManager(getApplicationContext());
         registering = findViewById(R.id.creating);
         recover = findViewById(R.id.recovering);
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         google = findViewById(R.id.gplusButton);
         fb = findViewById(R.id.fbButton);
         phone = findViewById(R.id.phnumber);
+        session.saveLoc(gps.latitude,gps.longitude);
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.google);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(125f);
@@ -154,6 +158,10 @@ public class MainActivity extends AppCompatActivity
                     intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e) {

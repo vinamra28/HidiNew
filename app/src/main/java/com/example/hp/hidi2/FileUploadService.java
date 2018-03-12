@@ -21,7 +21,13 @@ public interface FileUploadService
             @Part MultipartBody.Part file,
             @Part("uid") RequestBody id
     );
-
+    @Multipart
+    @POST("uploadprofile.php")
+    Call<ResponseBody> upload1(
+            @Part("pic") RequestBody description,
+            @Part MultipartBody.Part file,
+            @Part("pid") RequestBody pid
+    );
     // previous code for single description
 //    @Multipart
 //    @POST("uploadprofile.php")

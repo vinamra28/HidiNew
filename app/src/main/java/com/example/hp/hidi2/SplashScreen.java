@@ -1,23 +1,41 @@
 package com.example.hp.hidi2;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.test.mock.MockPackageManager;
 
 import retrofit2.http.POST;
 
 public class SplashScreen extends AppCompatActivity
 {
+    GPSTracker gps;
     SessionManager session;
     private static int SPLASH_TIME_OUT = 1000;
-
+    private static final int REQUEST_CODE_PERMISSION = 2;
+    String mPermission= Manifest.permission.ACCESS_FINE_LOCATION;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        gps=new GPSTracker(this);
         session=new SessionManager(getApplicationContext());
+        try
+        {
+            if (ActivityCompat.checkSelfPermission(this, mPermission) != MockPackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(this, new String[]{mPermission},REQUEST_CODE_PERMISSION);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        session.saveLoc(gps.latitude,gps.longitude);
         new Handler().postDelayed(new Runnable()
         {
 

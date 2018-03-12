@@ -27,6 +27,8 @@ public class SessionManager
     public static final String KEY_VISITORS="visitors";
     public static final String KEY_HIDIES="my_hidies";
     public static final String KEY_BLOCKS="blocks";
+    public static final String KEY_LAT="latitude";
+    public static final String KEY_LONG="longitude";
     int PRIVATE_MODE=0;
     public SessionManager(Context context)
     {
@@ -72,6 +74,12 @@ public class SessionManager
         editor.putString(KEY_HIDIES,""+hidies);
         editor.putString(KEY_BLOCKS,""+blocks);
         editor.putString(KEY_POPULARITY,""+(float)popularity);
+        editor.commit();
+    }
+    public void saveLoc(double latitude,double longitude)
+    {
+        editor.putString(KEY_LAT,""+latitude);
+        editor.putString(KEY_LONG,""+longitude);
         editor.commit();
     }
     public HashMap<String,String> getUserDetails()
