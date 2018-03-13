@@ -4,14 +4,25 @@
     <item
         android:id="@+id/notification"
         android:title="Notification"
-        android:enabled="true"/>
+        android:enabled="true"
+        android:checkable="true"/>
     <item
         android:id="@+id/night"
         android:title="Night Mode"
-        android:enabled="true"/>
+        android:enabled="true"
+        android:checkable="true"/>
     <item
         android:id="@+id/logout"
         android:enabled="true"
         android:title="Log Out"
+        android:checkable="true"
         />
+    <!--<item-->
+        <!--android:id="notifi_content"-->
+        <!--android:title="Notification content"-->
+        <!--android:enabled="true"/>-->
+    <!--<item-->
+        <!--android:id="create_pass"-->
+        <!--android:title="Create password"-->
+        <!--android:enabled="true"/>-->
 </menu>

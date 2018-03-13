@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 
@@ -43,12 +48,15 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         PostGet post = postList.get(position);
-        holder.user_dp.setImageDrawable(post.getUser_dp());
+//        holder.user_dp.setImageDrawable(post.getUser_dp());
+
+        Glide.with(context).load(post.getUser_dp()).into(holder.user_dp);
         holder.user_name.setText(post.getUser_name());
         holder.post_location.setText(post.getPost_location());
         holder.total_favours.setText(post.getTotal_favours());
         holder.do_arguments.setText(post.getDo_arguments());
-        holder.image_posted.setImageDrawable(post.getUser_post_image());
+//        holder.image_posted.setImageDrawable(post.getUser_post_image());
+        Picasso.with(context).load(post.getUser_post_image()).into(holder.image_posted);
         holder.do_like.setImageDrawable(post.getDo_like());
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
         holder.image_argument.setImageDrawable(post.getImage_argument());

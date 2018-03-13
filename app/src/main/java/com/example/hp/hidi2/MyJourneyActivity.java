@@ -3,6 +3,9 @@ package com.example.hp.hidi2;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -20,12 +23,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyJourneyActivity extends AppCompatActivity
 {
     String result="";
     SessionManager session;
     GPSTracker gps;
+    private List<PostGet> postList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private MyAdapter_post myAdapter_post;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -33,6 +42,8 @@ public class MyJourneyActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_journey);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
+        myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList);
+        recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
     }
@@ -56,27 +67,35 @@ public class MyJourneyActivity extends AppCompatActivity
             try
             {
                 JSONObject respnse=new JSONObject(result);
-//                JSONObject info=respnse.getJSONObject("info");
-//                JSONArray records=respnse.getJSONArray("records");
-//                if((info.getString("status")).equals("success"))
-//                {
-//                    for(int i=0;i<records.length();i++)
-//                    {
-//                        JSONObject posts=records.getJSONObject(i);
-//                        Log.d("pid",""+posts.getInt("pid"));
-//                        Log.d("pic",""+posts.getString("pic"));
-//                        Log.d("likes",""+posts.getInt("likes"));
-//                        Log.d("dislikes",""+posts.getInt("dislikes"));
-//                        Log.d("comments",""+posts.getInt("comments"));
-//                        Log.d("time",""+posts.getString("time"));
-//                        Log.d("lat",""+posts.getDouble("lat"));
-//                        Log.d("long",""+posts.getDouble("long"));
-//                        Log.d("sec_name",""+posts.getString("sec_name"));
-//                        Log.d("profilepic",""+posts.getString("profilepic"));
-//                        Log.d("like",""+posts.getInt("like"));
-//                        Log.d("dislike",""+posts.getInt("dislike"));
-//                    }
-//                }
+                JSONObject info=respnse.getJSONObject("info");
+                JSONArray records=respnse.getJSONArray("records");
+                if((info.getString("status")).equals("success"))
+                {
+                    for(int i=0;i<1;i++)
+                    {
+                        JSONObject posts=records.getJSONObject(i);
+                        Log.d("pid",""+posts.getInt("pid"));
+                        Log.d("pic",""+posts.getString("pic"));
+                        Log.d("likes",""+posts.getInt("likes"));
+                        Log.d("dislikes",""+posts.getInt("dislikes"));
+                        Log.d("comments",""+posts.getInt("comments"));
+                        Log.d("time",""+posts.getString("time"));
+                        Log.d("lat",""+posts.getDouble("lat"));
+                        Log.d("long",""+posts.getDouble("long"));
+                        Log.d("sec_name",""+posts.getString("sec_name"));
+                        Log.d("profilepic",""+posts.getString("profilepic"));
+                        Log.d("like",""+posts.getInt("like"));
+                        Log.d("dislike",""+posts.getInt("dislike"));
+                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(myAdapter_post);
+                        PostGet postGet=new PostGet(posts.getString("sec_name"),
+                                ""+posts.getInt("like"),""+posts.getInt("comments"),
+                                posts.getString("profilepic"),posts.getString("pic"));
+                        postList.add(postGet);
+                    }
+                }
             }
             catch (JSONException e)
             {

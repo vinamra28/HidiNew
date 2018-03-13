@@ -7,8 +7,8 @@ import android.graphics.drawable.Drawable;
  */
 
 public class PostGet {
-    private String user_name, post_location, total_favours, do_arguments;
-    private Drawable user_dp, user_post_image, do_like, do_dislike, image_argument;
+    private String user_name, post_location, total_favours, do_arguments,user_dp, user_post_image;
+    private Drawable  do_like, do_dislike, image_argument;
 
     public PostGet() {
     }
@@ -24,33 +24,40 @@ public class PostGet {
         this.do_arguments = do_arguments;
     }
 
-    public PostGet(String user_name, String post_location, String total_favours, Drawable user_dp, Drawable user_post_image) {
+    public PostGet(String user_name, String total_favours, String do_arguments, String user_dp, String user_post_image) {
         this.user_name = user_name;
-        this.post_location = post_location;
-        this.total_favours = total_favours;
-        this.user_dp = user_dp;
-        this.user_post_image = user_post_image;
-    }
-
-    public PostGet(String user_name, String post_location, String total_favours, String do_arguments, Drawable user_dp, Drawable user_post_image) {
-        this.user_name = user_name;
-        this.post_location = post_location;
         this.total_favours = total_favours;
         this.do_arguments = do_arguments;
         this.user_dp = user_dp;
         this.user_post_image = user_post_image;
     }
-
-    public PostGet(String user_name, String post_location, String total_favours, String do_arguments, Drawable user_dp, Drawable user_post_image, Drawable do_like, Drawable do_dislike) {
-        this.user_name = user_name;
-        this.post_location = post_location;
-        this.total_favours = total_favours;
-        this.do_arguments = do_arguments;
-        this.user_dp = user_dp;
-        this.user_post_image = user_post_image;
-        this.do_like = do_like;
-        this.do_dislike = do_dislike;
-    }
+    //    public PostGet(String user_name, String post_location, String total_favours, Drawable user_dp, Drawable user_post_image) {
+//        this.user_name = user_name;
+//        this.post_location = post_location;
+//        this.total_favours = total_favours;
+//        this.user_dp = user_dp;
+//        this.user_post_image = user_post_image;
+//    }
+//
+//    public PostGet(String user_name, String post_location, String total_favours, String do_arguments, Drawable user_dp, Drawable user_post_image) {
+//        this.user_name = user_name;
+//        this.post_location = post_location;
+//        this.total_favours = total_favours;
+//        this.do_arguments = do_arguments;
+//        this.user_dp = user_dp;
+//        this.user_post_image = user_post_image;
+//    }
+//
+//    public PostGet(String user_name, String post_location, String total_favours, String do_arguments, Drawable user_dp, Drawable user_post_image, Drawable do_like, Drawable do_dislike) {
+//        this.user_name = user_name;
+//        this.post_location = post_location;
+//        this.total_favours = total_favours;
+//        this.do_arguments = do_arguments;
+//        this.user_dp = user_dp;
+//        this.user_post_image = user_post_image;
+//        this.do_like = do_like;
+//        this.do_dislike = do_dislike;
+//    }
 
     public String getUser_name() {
         return user_name;
@@ -77,19 +84,19 @@ public class PostGet {
     }
 
 
-    public Drawable getUser_dp() {
+    public String getUser_dp() {
         return user_dp;
     }
 
-    public void setUser_dp(Drawable user_dp) {
+    public void setUser_dp(String user_dp) {
         this.user_dp = user_dp;
     }
 
-    public Drawable getUser_post_image() {
+    public String getUser_post_image() {
         return user_post_image;
     }
 
-    public void setUser_post_image(Drawable user_post_image) {
+    public void setUser_post_image(String user_post_image) {
         this.user_post_image = user_post_image;
     }
 
