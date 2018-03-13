@@ -1,13 +1,16 @@
 package com.example.hp.hidi2;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity
     String result = "";
     ImageButton google, fb;
     SessionManager session;
+    private static final int REQUEST_CODE_PERMISSION = 2;
+    String mPermission= Manifest.permission.READ_SMS;
+    String mPermission1= Manifest.permission.ACCESS_FINE_LOCATION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,6 +57,29 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         gps=new GPSTracker(this);
         session=new SessionManager(getApplicationContext());
+        try
+        {
+            if (ActivityCompat.checkSelfPermission(this, mPermission) != MockPackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(this, new String[]{mPermission,mPermission1},REQUEST_CODE_PERMISSION);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            if (ActivityCompat.checkSelfPermission(this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(this, new String[]{mPermission1},REQUEST_CODE_PERMISSION);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        session.saveLoc(gps.latitude,gps.longitude);
         registering = findViewById(R.id.creating);
         recover = findViewById(R.id.recovering);
         get = findViewById(R.id.getOtp);

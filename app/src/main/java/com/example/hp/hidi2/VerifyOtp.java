@@ -1,7 +1,11 @@
 package com.example.hp.hidi2;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -97,6 +101,49 @@ public class VerifyOtp extends AppCompatActivity
             }
         });
     }
+    @Override
+    public void onResume() {
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("otp"));
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+    private BroadcastReceiver receiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equalsIgnoreCase("otp")) {
+                final String message = intent.getStringExtra("message");
+//                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                /*Pattern pattern = Pattern.compile("\\w+([0-9]+)\\w+([0-9]+)");
+                Matcher matcher = pattern.matcher(message);
+                for(int i = 0 ; i < matcher.groupCount(); i++) {
+                    matcher.find();
+                    //System.out.println(matcher.group());
+                    textView1.setText(matcher.group());
+                }*/
+                String[] splited = message.split("\\s+");
+                String x=splited[0];
+                Log.d("split[0]",""+x);
+                Log.d("split[0]",""+splited[1]);
+                x=x.substring(0,6);
+//                textView1.setText(""+x);
+                char ch[]=x.toCharArray();
+                n1.setText(""+ch[0]);
+                n2.setText(""+ch[1]);
+                n3.setText(""+ch[2]);
+                n4.setText(""+ch[3]);
+                n5.setText(""+ch[4]);
+                n6.setText(""+ch[5]);
+
+                //Do whatever you want with the code here
+            }
+        }
+    };
     public class GenericTextWatcher implements TextWatcher
     {
         private View view;

@@ -12,7 +12,6 @@ import retrofit2.http.POST;
 
 public class SplashScreen extends AppCompatActivity
 {
-    GPSTracker gps;
     SessionManager session;
     private static int SPLASH_TIME_OUT = 1000;
     private static final int REQUEST_CODE_PERMISSION = 2;
@@ -22,20 +21,7 @@ public class SplashScreen extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        gps=new GPSTracker(this);
         session=new SessionManager(getApplicationContext());
-        try
-        {
-            if (ActivityCompat.checkSelfPermission(this, mPermission) != MockPackageManager.PERMISSION_GRANTED)
-            {
-                ActivityCompat.requestPermissions(this, new String[]{mPermission},REQUEST_CODE_PERMISSION);
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        session.saveLoc(gps.latitude,gps.longitude);
         new Handler().postDelayed(new Runnable()
         {
 
