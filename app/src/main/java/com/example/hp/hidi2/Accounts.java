@@ -262,6 +262,15 @@ public class Accounts extends AppCompatActivity
                     showFileChooser();
                 }
             });
+            my_journey.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent =new Intent(Accounts.this,MyJourneyActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
     }
     public String POST(String url)
