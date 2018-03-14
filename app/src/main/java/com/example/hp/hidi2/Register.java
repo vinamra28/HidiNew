@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -62,6 +63,10 @@ public class Register extends AppCompatActivity
                         REQUEST_CODE=21;
                     new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Enter correct entries",Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -102,6 +107,11 @@ public class Register extends AppCompatActivity
                     Intent intent=new Intent(Register.this,VerifyOtp.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)
@@ -120,6 +130,7 @@ public class Register extends AppCompatActivity
             String json="";
             JSONObject jsonObject=new JSONObject();
             jsonObject.accumulate("mobileno",mobino);
+            jsonObject.accumulate("request","register");
             json=jsonObject.toString();
             json=jsonObject.toString();
             Log.d("Json",json);

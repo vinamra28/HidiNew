@@ -31,7 +31,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity
+{
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;
@@ -43,7 +44,8 @@ public class PostActivity extends AppCompatActivity {
     String result="";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
@@ -53,8 +55,10 @@ public class PostActivity extends AppCompatActivity {
         session.saveLoc(gps.latitude,gps.longitude);
         myAdapter_post = new MyAdapter_post(PostActivity.this,postList);
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
-        gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
+        gestureListener = new View.OnTouchListener()
+        {
+            public boolean onTouch(View v, MotionEvent event)
+            {
                 return gestureDetector.onTouchEvent(event);
             }
         };
@@ -63,20 +67,11 @@ public class PostActivity extends AppCompatActivity {
 //        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
 //        layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(myAdapter_post);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
-        //Post post = new Post("Aditya Bajpai");
-//        PostGet post = new PostGet("Goku", "February 22 Ghaziabad", "200", "1");
-//        postList.add(post);
-//        // post = new Post("Aditya Bajpai");
-//        post = new PostGet("Goku", "February 22 Ghaziabad", "200", "1");
-//        postList.add(post);
     }
 
-    private void onLeftSwipe() {
+    private void onLeftSwipe()
+    {
 
 //        Intent intent=new Intent(PostActivity.this,HidiChatActivity.class);
 //        startActivity(intent);
@@ -93,33 +88,34 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
+    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener
+    {
         private static final int SWIPE_MIN_DISTANCE = 50;
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
         @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
-            try {
-
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+        {
+            try
+            {
                 float diffAbs = Math.abs(e1.getY() - e2.getY());
                 float diff = e1.getX() - e2.getX();
-
                 if (diffAbs > SWIPE_MAX_OFF_PATH)
                     return false;
-
                 // Left swipe
-                if (diff > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
                     PostActivity.this.onLeftSwipe();
                 }
                 // Right swipe
-                else if (-diff > SWIPE_MIN_DISTANCE
-                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+                {
                     PostActivity.this.onRightSwipe();
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Log.e("Home", "Error on gestures");
             }
             return false;
@@ -144,6 +140,7 @@ public class PostActivity extends AppCompatActivity {
             Log.d("result",result);
             try
             {
+                PostGet postGet;
                 JSONObject respnse=new JSONObject(result);
                 JSONObject info=respnse.getJSONObject("info");
                 JSONArray records=respnse.getJSONArray("records");
@@ -153,6 +150,7 @@ public class PostActivity extends AppCompatActivity {
                     {
                         JSONObject posts=records.getJSONObject(i);
                         Log.d("pid",""+posts.getInt("pid"));
+
                         Log.d("pic",""+posts.getString("pic"));
                         Log.d("likes",""+posts.getInt("likes"));
                         Log.d("dislikes",""+posts.getInt("dislikes"));
@@ -160,6 +158,8 @@ public class PostActivity extends AppCompatActivity {
                         Log.d("time",""+posts.getString("time"));
                         Log.d("lat",""+posts.getDouble("lat"));
                         Log.d("long",""+posts.getDouble("long"));
+                        Log.d("location",posts.getString("location"));
+                        Log.d("distance",""+posts.getDouble("distance"));
                         Log.d("sec_name",""+posts.getString("sec_name"));
                         Log.d("profilepic",""+posts.getString("profilepic"));
                         Log.d("like",""+posts.getInt("like"));
@@ -168,9 +168,10 @@ public class PostActivity extends AppCompatActivity {
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(myAdapter_post);
-                        PostGet postGet=new PostGet(posts.getString("sec_name"),
+                        postGet=new PostGet(posts.getString("sec_name"),
                                 ""+posts.getInt("like"),""+posts.getInt("comments"),
                                 posts.getString("profilepic"),posts.getString("pic"));
+
                         postList.add(postGet);
                     }
                 }

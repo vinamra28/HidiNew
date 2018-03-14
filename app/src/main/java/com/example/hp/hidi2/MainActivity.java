@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -125,7 +126,14 @@ public class MainActivity extends AppCompatActivity
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
                 get.startAnimation(myAnim);
-                new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
+                if(Pattern.matches("[6789][0-9]{9}",mobile))
+                {
+                    new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Enter valid no.",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         fb.setOnClickListener(new View.OnClickListener()
@@ -207,6 +215,7 @@ public class MainActivity extends AppCompatActivity
             String json = "";
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("mobileno", mobile);
+            jsonObject.accumulate("request","login");
             json = jsonObject.toString();
             json = jsonObject.toString();
             Log.d("Json", json);

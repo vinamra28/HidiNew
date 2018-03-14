@@ -71,7 +71,7 @@ public class MyJourneyActivity extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
-                    for(int i=0;i<1;i++)
+                    for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);
                         Log.d("pid",""+posts.getInt("pid"));

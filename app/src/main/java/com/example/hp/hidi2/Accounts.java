@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.Menu;
@@ -179,6 +180,12 @@ public class Accounts extends AppCompatActivity
         }
         if (id == R.id.night)
         {
+            if(item.isCheckable())
+            {
+                item.setChecked(true);
+                restartActivity();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
         }
         if (id == R.id.logout)
         {
@@ -210,6 +217,12 @@ public class Accounts extends AppCompatActivity
             default:System.out.println();
         }
         return false;
+    }
+    public void restartActivity()
+    {
+        Intent mIntent = getIntent();
+        finish();
+        startActivity(mIntent);
     }
     private class HttpAsyncTask extends AsyncTask<String,Void,String>
     {

@@ -118,8 +118,10 @@ public class VerifyOtp extends AppCompatActivity
     private BroadcastReceiver receiver = new BroadcastReceiver()
     {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equalsIgnoreCase("otp")) {
+        public void onReceive(Context context, Intent intent)
+        {
+            if (intent.getAction().equalsIgnoreCase("otp"))
+            {
                 final String message = intent.getStringExtra("message");
 //                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
                 /*Pattern pattern = Pattern.compile("\\w+([0-9]+)\\w+([0-9]+)");
@@ -259,7 +261,7 @@ public class VerifyOtp extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(VerifyOtp.this,"Enter valid otp", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerifyOtp.this,info.getString("otpMessage"), Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)
@@ -319,7 +321,7 @@ public class VerifyOtp extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(VerifyOtp.this,"Incorrect",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerifyOtp.this,info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)

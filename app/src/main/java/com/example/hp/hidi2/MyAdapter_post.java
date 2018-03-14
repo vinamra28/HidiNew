@@ -10,47 +10,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
-/**
- * Created by asus on 06-03-2018.
- */
-
-public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHolder> {
+public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHolder>
+{
     private Context context;
     private List<PostGet> postList;
 
-    public MyAdapter_post(Context context, List<PostGet> postList) {
+    public MyAdapter_post(Context context, List<PostGet> postList)
+    {
         this.context = context;
         this.postList = postList;
     }
-
-    public MyAdapter_post(Context context) {
-        this.context = context;
-    }
-
-    public MyAdapter_post(List<PostGet> postList) {
-        this.postList = postList;
-    }
-
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.post_design, parent, false);
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_design, parent, false);
         return new MyViewHolder(view);
     }
-
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position)
+    {
         PostGet post = postList.get(position);
-//        holder.user_dp.setImageDrawable(post.getUser_dp());
-
-        Glide.with(context).load(post.getUser_dp()).into(holder.user_dp);
+        Picasso.with(context).load(post.getUser_dp()).into(holder.user_dp);
         holder.user_name.setText(post.getUser_name());
         holder.post_location.setText(post.getPost_location());
         holder.total_favours.setText(post.getTotal_favours());
@@ -60,66 +44,39 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         holder.do_like.setImageDrawable(post.getDo_like());
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
         holder.image_argument.setImageDrawable(post.getImage_argument());
-        holder.do_arguments.setOnClickListener(new View.OnClickListener() {
+        holder.do_arguments.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(v.getContext(), Arguments.class);
                 v.getContext().startActivity(intent);
-//                Intent intent = new Intent(context,Argument.class);
-//                context.startActivity(intent);
             }
         });
-        holder.image_argument.setOnClickListener(new View.OnClickListener() {
+        holder.image_argument.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(v.getContext(), Arguments.class);
                 v.getContext().startActivity(intent);
             }
         });
     }
-
-//    PopupWindow pwindo;
-//
-//    private void initiatePopUpWindow(View v,int pos) {
-//        try {
-//
-//// We need to get the instance of the LayoutInflater
-//            LayoutInflater inflater = (LayoutInflater) context
-//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            View layout = inflater.inflate(R.layout.popup_layout, null);
-//            pwindo = new PopupWindow(layout,ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            pwindo.setBackgroundDrawable(new BitmapDrawable());
-//            pwindo.setFocusable(true);
-//            pwindo.setOutsideTouchable(true);
-//            pwindo.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                @Override
-//                public void onDismiss() {
-//                    //TODO do sth here on dismiss
-//                }
-//            });
-//            pwindo.showAsDropDown(v, v.getScrollX(), v.getScrollY());
-////            pwindo = new PopupWindow(layout, 300, 370, true);
-////            pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
-//
-////                    btnClosePopup = (Button) layout.findViewById(R.id.btn_close_popup);
-////                    btnClosePopup.setOnClickListener(cancel_button_click_listener);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return postList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder
+    {
 
         public TextView user_name, post_location, post_content_text, total_favours, total_arguments, do_arguments;
         public ImageView user_dp, image_posted, do_like, do_dislike, image_argument;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(View itemView)
+        {
             super(itemView);
             user_dp = itemView.findViewById(R.id.user_dp);
             user_name = itemView.findViewById(R.id.user_name);
@@ -131,11 +88,6 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             do_dislike = itemView.findViewById(R.id.dislike);
             image_argument = itemView.findViewById(R.id.arguments_image);
 
-
-        }
-
-
-        private void initiatePopUpWindow() {
 
         }
     }
