@@ -42,7 +42,7 @@ public class MyJourneyActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_journey);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
-        myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList);
+        myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID());
         recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");

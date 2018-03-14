@@ -268,13 +268,14 @@ public class StatusActivity extends AppCompatActivity
         time_stamp=sdf.format(date);
         Geocoder geocoder;
         List<Address> addresses;
-        String city="";
+        String city="",country="";
         geocoder=new Geocoder(this, Locale.getDefault());
         try
         {
             addresses=geocoder.getFromLocation(gps.latitude,gps.longitude,1);
             city=addresses.get(0).getLocality();
-            Log.d("city",city);
+            country=addresses.get(0).getCountryName();
+            Log.d("city",city+","+country);
         }
         catch (IOException e)
         {
@@ -290,7 +291,7 @@ public class StatusActivity extends AppCompatActivity
             jsonObject.accumulate("long",gps.longitude);//
             jsonObject.accumulate("time",time_stamp);
             jsonObject.accumulate("uid",session.getUID());
-            jsonObject.accumulate("location",city);
+            jsonObject.accumulate("location",city+","+country);
             json = jsonObject.toString();
             Log.d("Json", json);
             StringEntity se = new StringEntity(json);

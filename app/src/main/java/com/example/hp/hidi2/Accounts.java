@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -241,18 +242,6 @@ public class Accounts extends AppCompatActivity
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
-            Log.d("Result", result);
-            try
-            {
-                JSONObject res = new JSONObject(result);
-                JSONObject records = res.getJSONObject("records");
-                session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
-                        records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
             HashMap<String,String> user=session.getUserDetails();
             admire.setText(user.get(KEY_ADMIRE));
             visitors.setText(user.get(KEY_VISITORS));
@@ -260,6 +249,32 @@ public class Accounts extends AppCompatActivity
             blocks.setText(user.get(KEY_BLOCKS));
             love.setText(user.get(KEY_LOVE));
             progress.setProgress(Float.parseFloat(user.get(KEY_POPULARITY)));
+            Log.d("Result", result);
+            try
+            {
+                JSONObject res = new JSONObject(result);
+                JSONObject info=res.getJSONObject("info");
+                if(info.getString("status").equals("success"))
+                {
+                    JSONObject records = res.getJSONObject("records");
+                    Picasso.with(getApplicationContext()).load(records.getString("profilepic")).into(userdp);
+                    session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
+                        records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
+                }
+                else
+                {
+                    user=session.getUserDetails();
+                    admire.setText(user.get(KEY_ADMIRE));
+                    visitors.setText(user.get(KEY_VISITORS));
+                    hidies.setText(user.get(KEY_HIDIES));
+                    blocks.setText(user.get(KEY_BLOCKS));
+                    love.setText(user.get(KEY_LOVE));
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
             imageView_plus.setOnClickListener(new View.OnClickListener()
             {
                 @Override

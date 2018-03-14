@@ -53,7 +53,7 @@ public class PostActivity extends AppCompatActivity
         session.checkLogin();
         gps=new GPSTracker(this);
         session.saveLoc(gps.latitude,gps.longitude);
-        myAdapter_post = new MyAdapter_post(PostActivity.this,postList);
+        myAdapter_post = new MyAdapter_post(PostActivity.this,postList,session.getUID());
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gestureListener = new View.OnTouchListener()
         {
@@ -149,30 +149,30 @@ public class PostActivity extends AppCompatActivity
                     for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);
-                        Log.d("pid",""+posts.getInt("pid"));
-
-                        Log.d("pic",""+posts.getString("pic"));
-                        Log.d("likes",""+posts.getInt("likes"));
-                        Log.d("dislikes",""+posts.getInt("dislikes"));
-                        Log.d("comments",""+posts.getInt("comments"));
+                        Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
+                        Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
+                        Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");
+                        Log.d("dislikes",""+posts.getInt("dislikes"));String dislikesc=""+posts.getInt("dislikes");
+                        Log.d("comments",""+posts.getInt("comments"));String commentsc=""+posts.getInt("comments");
                         Log.d("time",""+posts.getString("time"));
                         Log.d("lat",""+posts.getDouble("lat"));
                         Log.d("long",""+posts.getDouble("long"));
-                        Log.d("location",posts.getString("location"));
+                        Log.d("location",posts.getString("location"));String locations=posts.getString("location");
                         Log.d("distance",""+posts.getDouble("distance"));
-                        Log.d("sec_name",""+posts.getString("sec_name"));
-                        Log.d("profilepic",""+posts.getString("profilepic"));
-                        Log.d("like",""+posts.getInt("like"));
-                        Log.d("dislike",""+posts.getInt("dislike"));
+                        Log.d("sec_name",""+posts.getString("sec_name"));String name=posts.getString("sec_name");
+                        Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
+                        Log.d("like",""+posts.getInt("like"));String mlike=""+posts.getInt("like");
+                        Log.d("dislike",""+posts.getInt("dislike"));String mdisllike=""+posts.getInt("dislike");
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(myAdapter_post);
-                        postGet=new PostGet(posts.getString("sec_name"),
-                                ""+posts.getInt("like"),""+posts.getInt("comments"),
-                                posts.getString("profilepic"),posts.getString("pic"));
-
+//                        postGet=new PostGet(posts.getString("sec_name"),
+//                                ""+posts.getInt("like"),""+posts.getInt("comments"),
+//                                posts.getString("profilepic"),posts.getString("pic"));
+                        postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
+                        myAdapter_post.notifyDataSetChanged();
                     }
                 }
             }
