@@ -18,6 +18,7 @@ import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -56,6 +58,7 @@ import retrofit2.Response;
 public class StatusActivity extends AppCompatActivity
 {
     GPSTracker gps;
+    byte[] byteArray;
     String time_stamp="",result="";
     RelativeLayout backgroundLayout;
     ImageView colorBack,sending;
@@ -76,11 +79,12 @@ public class StatusActivity extends AppCompatActivity
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
         final int[] backColors = getResources().getIntArray(R.array.back);
-        backgroundLayout=(RelativeLayout)findViewById(R.id.background);
+        backgroundLayout= findViewById(R.id.background);
         status=findViewById(R.id.text);
         sending=findViewById(R.id.send);
+        status.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         backgroundLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        colorBack=(ImageView)findViewById(R.id.color);
+        colorBack= findViewById(R.id.color);
         gps=new GPSTracker(this);
         if(gps.canGetLocation())
         {
@@ -107,37 +111,50 @@ public class StatusActivity extends AppCompatActivity
         });
         sending.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                showFileChooser();
-                status.buildDrawingCache();
-                Bitmap image=status.getDrawingCache();
-                ContextWrapper wrapper=new ContextWrapper(getApplicationContext());
-                File file=wrapper.getDir("Hidi",MODE_PRIVATE);
-                file=new File(file,"Post"+".jpg");
-                try
+            public void onClick(View v)
+            {
+                if(status.getText().toString().length()!=0)
                 {
-                    OutputStream outputStream=null;
-                    outputStream=new FileOutputStream(file);
-                    image.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-                    outputStream.flush();
-                    outputStream.close();
+                    status.setFocusable(false);
+                    status.setDrawingCacheEnabled(true);
+                    Bitmap bitmap=Bitmap.createBitmap(status.getDrawingCache());
+                    ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
+                    byteArray = outputStream.toByteArray();
+                    new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
                 }
-                catch (FileNotFoundException e)
+                else
                 {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Enter some text",Toast.LENGTH_SHORT).show();
                 }
-                Uri savedImage=Uri.parse(file.getAbsolutePath());
-//                FILE = new String[]{MediaStore.Images.Media.DATA};
-//                Cursor cursor = getContentResolver().query(savedImage, FILE, null, null, null);
-//                cursor.moveToFirst();
-//                int columnIndex = cursor.getColumnIndex(FILE[0]);
-//                ImageDecode = cursor.getString(columnIndex);
-                ImageDecode=file.getAbsolutePath();
-                Log.d("paths",ImageDecode);
-//                cursor.close();
-                new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
+//                status.buildDrawingCache();
+//                Bitmap image=status.getDrawingCache();
+//                ContextWrapper wrapper=new ContextWrapper(getApplicationContext());
+//                File file=wrapper.getDir("Hidi",MODE_PRIVATE);
+//                file=new File(file,"Post"+".jpg");
+//                try
+//                {
+//                    OutputStream outputStream=null;
+//                    outputStream=new FileOutputStream(file);
+//                    image.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+//                    outputStream.flush();
+//                    outputStream.close();
+//                }
+//                catch (FileNotFoundException e)
+//                {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                Uri savedImage=Uri.parse(file.getAbsolutePath());
+////                FILE = new String[]{MediaStore.Images.Media.DATA};
+////                Cursor cursor = getContentResolver().query(savedImage, FILE, null, null, null);
+////                cursor.moveToFirst();
+////                int columnIndex = cursor.getColumnIndex(FILE[0]);
+////                ImageDecode = cursor.getString(columnIndex);
+//                ImageDecode=file.getAbsolutePath();
+//                Log.d("paths",ImageDecode);
+////                cursor.close();
             }
         });
     }
@@ -169,15 +186,15 @@ public class StatusActivity extends AppCompatActivity
 //            new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
         }
     }
-    private void imageUpload(final Uri fileUri, int r)
+    private void imageUpload( int r)
     {
         FileUploadService service = ServiceGenerator.createService1(FileUploadService.class);
-
-        File file = new File(ImageDecode);
-        RequestBody requestFile =RequestBody.create(MediaType.parse("*/*"), file);
+//        File file = new File(ImageDecode);
+//        RequestBody requestFile =RequestBody.create(MediaType.parse("*/*"), file);
+        RequestBody requestFile=RequestBody.create(MediaType.parse("*/*"),byteArray);
 //        RequestBody requestFile =RequestBody.create(MediaType.parse("*/*"), String.valueOf(image));
         Log.d("Request1",""+requestFile);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("pic", file.getName(), requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("pic", ""+session.getUID(), requestFile);
         Log.d("Multipart",""+body);
         String descriptionString = "hello, this is description speaking";
         RequestBody id=RequestBody.create(MediaType.parse("text/plain"),""+r);
@@ -230,7 +247,7 @@ public class StatusActivity extends AppCompatActivity
                 String status=info.getString("status");
                 if(status.equals("success"))
                 {
-                    imageUpload(selectedMediaUri,res.getInt("records"));
+                    imageUpload(res.getInt("records"));
                 }
                 else
                 {
@@ -247,7 +264,7 @@ public class StatusActivity extends AppCompatActivity
     public String POST(String url)
     {
         Date date=new Date();
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         time_stamp=sdf.format(date);
         Geocoder geocoder;
         List<Address> addresses;

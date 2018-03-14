@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -40,6 +41,7 @@ public class VerifyOtp extends AppCompatActivity
     Button log,verifi;
     String otp="",mobile="",result="",user_name="",user_password="";
     int request=0;
+    ImageView checking;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,6 +51,7 @@ public class VerifyOtp extends AppCompatActivity
         log=findViewById(R.id.login);
         log.setText("Register");
         log.setVisibility(View.INVISIBLE);
+        checking=findViewById(R.id.check_img);
         Bundle bundle=getIntent().getExtras();
         request=bundle.getInt("request");
         if(request==1)
@@ -151,7 +154,6 @@ public class VerifyOtp extends AppCompatActivity
         {
             this.view = view;
         }
-
         @Override
         public void afterTextChanged(Editable editable) {
             // TODO Auto-generated method stub
@@ -233,6 +235,7 @@ public class VerifyOtp extends AppCompatActivity
                 String otp_status=info.getString("otpStatus");
                 if(otp_status.compareTo("success")==0)
                 {
+                    checking.setVisibility(View.VISIBLE);
                     log.setVisibility(View.VISIBLE);
                     log.setOnClickListener(new View.OnClickListener()
                     {
