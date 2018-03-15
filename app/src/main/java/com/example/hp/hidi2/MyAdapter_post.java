@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,8 +38,8 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     private Context context;
     private List<PostGet> postList;
     String result="",request="";
-    int pid,uid;
-    public TextView total_favours;
+    int pid,uid,x;PostGet post;
+
 
     public MyAdapter_post(Context context, List<PostGet> postList,int uid)
     {
@@ -53,22 +54,25 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         return new MyViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position)
+    public void onBindViewHolder(final MyViewHolder holder, int position)
     {
-        PostGet post = postList.get(position);
+        post = postList.get(holder.getAdapterPosition());
+
         Picasso.with(context).load(post.getUser_dp()).into(holder.user_dp);
         holder.user_name.setText(post.getUser_name());
         holder.post_location.setText(post.getPost_location());
         Picasso.with(context).load(post.getUser_post_image()).into(holder.image_posted);
-        total_favours.setText(post.getTotal_favours());
+        holder.total_favours.setText(post.getTotal_favours());
         holder.do_like.setImageDrawable(post.getDo_like());
         holder.do_arguments.setText(post.getDo_arguments());
         holder.image_argument.setImageDrawable(post.getImage_argument());
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
         holder.total_dislikes.setText(post.getTotal_dislikes());
         pid=Integer.parseInt(post.getPid());
+        holder.setIsRecyclable(false);
         if(post.getLike().equals("1"))
         {
+            holder.do_like.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
         }
         holder.do_arguments.setOnClickListener(new View.OnClickListener()
         {
@@ -94,9 +98,17 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             public void onClick(View v)
             {
                 request="like";
+                x = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())+1;
+                postList.get(holder.getAdapterPosition()).setTotal_favours(x+"");
+                Log.e(x+"",holder.getAdapterPosition()+"");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
+                holder.total_favours.setText(x+"");
+                notifyItemChanged(holder.getAdapterPosition());
+                notifyDataSetChanged();
             }
         });
+
+
         holder.do_dislike.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -104,9 +116,11 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             {
                 request="dislike";
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
+
             }
         });
     }
+
     @Override
     public int getItemCount()
     {
@@ -115,7 +129,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
-        public TextView user_name, post_location, total_dislikes, do_arguments;
+        public TextView user_name, post_location, total_dislikes, do_arguments,total_favours;
         public ImageView user_dp, image_posted, do_like, do_dislike, image_argument;
 
         public MyViewHolder(View itemView)
@@ -150,9 +164,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         {
             super.onPostExecute(s);
             Log.d("result",result);
-            int x=Integer.parseInt(total_favours.getText().toString());
-            x=x+1;
-            total_favours.setText(""+x);
+
 
         }
     }
@@ -162,7 +174,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         String json="";
         result="";
         try
-        {
+         {
             HttpClient httpClient=new DefaultHttpClient();
             HttpPost httpPost=new HttpPost(url);
             JSONObject jsonObject=new JSONObject();

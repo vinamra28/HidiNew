@@ -1,24 +1,18 @@
 package com.example.hp.hidi2;
 
-import android.Manifest;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.test.mock.MockPackageManager;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -34,13 +28,9 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,6 +53,7 @@ public class StatusActivity extends AppCompatActivity
     RelativeLayout backgroundLayout;
     ImageView colorBack,sending;
     EditText status;
+
     SessionManager session;
     double lat=0.0,lng=0.0;
     Uri URI;
@@ -78,6 +69,7 @@ public class StatusActivity extends AppCompatActivity
         setContentView(R.layout.activity_status);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
+
         final int[] backColors = getResources().getIntArray(R.array.back);
         backgroundLayout= findViewById(R.id.background);
         status=findViewById(R.id.text);

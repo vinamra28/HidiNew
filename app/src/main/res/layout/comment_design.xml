@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        android:id="@+id/comment_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_below="@id/do_favours_arguments_share"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/comment_person_dp"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/gokudp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="45dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/comment_person_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="22.5dp"
+                        android:text="Goku"
+                        android:textColor="#000"
+                        android:textSize="16dp" />
+                    <!--attribute add krna h-->
+
+                    <TextView
+                        android:id="@+id/comment_by_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="22.5dp"
+                        android:text="Mast lag rha hai"
+                        android:textColor="#000"
+                        android:textSize="13dp" />
+                    <!--attribute add krna h-->
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>

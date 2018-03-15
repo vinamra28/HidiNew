@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundcolor">#ffffff</item>
+        <item name="textColor">#000000</item>
     </style>
 
     <style name="AccountsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -14,6 +16,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundcolor">#ffffff</item>
+        <item name="textColor">#000000</item>
     </style>
 
+    <style name="darkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundcolor">#000000</item>
+        <item name="textColor">#ffffff</item>
+    </style>
 </resources>

@@ -10,4 +10,8 @@
         <attr name="circle_prefix_text" format="string"/>
         <attr name="circle_suffix_text" format="string"/>
     </declare-styleable>
+    <declare-styleable name="ds">
+        <attr name="backgroundcolor" format="color"/>
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
 </resources>
