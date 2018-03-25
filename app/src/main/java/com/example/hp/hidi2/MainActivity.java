@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission= Manifest.permission.READ_SMS;
     String mPermission1= Manifest.permission.ACCESS_FINE_LOCATION;
+    String mPermission2=Manifest.permission.INTERNET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,7 +63,18 @@ public class MainActivity extends AppCompatActivity
         {
             if (ActivityCompat.checkSelfPermission(this, mPermission) != MockPackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
             {
-                ActivityCompat.requestPermissions(this, new String[]{mPermission,mPermission1},REQUEST_CODE_PERMISSION);
+                ActivityCompat.requestPermissions(this, new String[]{mPermission,mPermission1,mPermission2},REQUEST_CODE_PERMISSION);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        try
+        {
+            if(ActivityCompat.checkSelfPermission(this, mPermission2) != MockPackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, mPermission2) != MockPackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(this, new String[]{mPermission2},REQUEST_CODE_PERMISSION);
             }
         }
         catch (Exception e)
