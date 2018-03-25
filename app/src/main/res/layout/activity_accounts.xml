@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backcolor"
     android:theme="@style/AccountsTheme"
     tools:context="com.example.hp.hidi2.Accounts">
 

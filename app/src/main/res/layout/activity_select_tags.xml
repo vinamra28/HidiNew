@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hp.hidi2.SelectTags">
+
+    <com.wefika.flowlayout.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="442dp"
+        android:layout_marginTop="8dp"
+        android:gravity="start|top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/arts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="ARTS" />
+
+        <Button
+            android:id="@+id/asia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="ASIA" />
+
+        <Button
+            android:id="@+id/australia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="AUSTARLIA" />
+
+        <Button
+            android:id="@+id/beauty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="BEAUTY/STYLE" />
+
+        <Button
+            android:id="@+id/books"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="BOOKS" />
+
+        <Button
+            android:id="@+id/bussinesss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="BUSSINESS" />
+
+        <Button
+            android:id="@+id/carreers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="CARREERS" />
+
+        <Button
+            android:id="@+id/cartransport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="CAR/TRANSPORTATION" />
+
+        <Button
+            android:id="@+id/education"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="EDUCATION" />
+
+        <Button
+            android:id="@+id/europe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="EUROPE" />
+
+        <Button
+            android:id="@+id/fooddrink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="FOOD/DRINK" />
+
+        <Button
+            android:id="@+id/fun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="FUN/HUMOUR" />
+
+        <Button
+            android:id="@+id/games"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="GAMES" />
+
+        <Button
+            android:id="@+id/health"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="HEALTHCARE" />
+
+        <Button
+            android:id="@+id/fitness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="FITNESS" />
+
+        <Button
+            android:id="@+id/mathematics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="MATHEMATICS" />
+
+        <Button
+            android:id="@+id/adventure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="ADVENTURE" />
+
+        <Button
+            android:id="@+id/it"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="IT/PROGRAMMING" />
+
+        <Button
+            android:id="@+id/law"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:background="#1e88e5"
+            android:drawableRight="@drawable/ic_check_black_24dp"
+            android:paddingLeft="8dp"
+            android:text="LAW/LEGAL" />
+    </com.wefika.flowlayout.FlowLayout>
+
+    <com.github.clans.fab.FloatingActionButton
+        android:id="@+id/addTags"
+        android:layout_width="46dp"
+        android:layout_height="53dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/green_dark"
+        android:foreground="@drawable/ic_send_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.983"
+        app:rippleColor="@color/green_dark" />
+
+</android.support.constraint.ConstraintLayout>

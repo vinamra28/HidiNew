@@ -1,6 +1,7 @@
 package com.example.hp.hidi2;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 
 public class SelectName extends AppCompatActivity
 {
+    ProgressDialog dialog;
     TextView tv,tv1;
     Spinner spinner;
     Button nextt;
@@ -49,6 +51,10 @@ public class SelectName extends AppCompatActivity
         setContentView(R.layout.activity_select_name);
         Bundle bundle=getIntent().getExtras();
         uid=bundle.getInt("UID");
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Registering...");
+        dialog.setCancelable(false);
+        dialog.setIndeterminate(false);
         tv=findViewById(R.id.tvx);
         try {
             read();
@@ -93,6 +99,7 @@ public class SelectName extends AppCompatActivity
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
                 nextt.startAnimation(myAnim);
+                dialog.show();
                 new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
             }
         });
@@ -138,6 +145,7 @@ public class SelectName extends AppCompatActivity
                 String status=info.getString("status");
                 if(status.equals("success"))
                 {
+                    dialog.dismiss();
                     Intent intent = new Intent(SelectName.this, PostActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -145,6 +153,7 @@ public class SelectName extends AppCompatActivity
                 }
                 else
                 {
+                    dialog.dismiss();
                     Toast.makeText(SelectName.this,"Incorrect",Toast.LENGTH_SHORT).show();
 //                    mobile.setText("");
 //                    pass.setText("");

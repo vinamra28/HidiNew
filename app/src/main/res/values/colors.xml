@@ -4,26 +4,24 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="textColorPrimary">#000000</color>
     <!--<color name="colorAccent">#FF4081</color>-->
-    <color name="colorAccent">#798081</color>
-    <color name="backcolor">#fff</color>
+    <color name="colorAccent">#c8798081</color>
+    <color name="backcolor">#f9f5f5</color>
     <color name="teal">#fbc02d</color>
     <color name="orange">#ff5722</color>
     <color name="accent">#69f0ae</color>
     <color name="back_color">#798081</color>
     <color name="green_dark">#4db6ac</color>
     <color name="red">#FF4081</color>
+    <color name="green">#4caf50</color>
 
 
     <array name="back">
-        <item>@color/colorAccent</item>
-        <item>@color/colorPrimaryDark</item>
-        <item>@color/colorPrimary</item>
-        <item>@color/teal</item>
-        <item>@color/orange</item>
-        <item>@color/green_dark</item>
-        <item>@color/accent</item>
-        <item>@color/red</item>
-
+        <item>@color/textColorPrimary</item>
+        <item>@color/backcolor</item>
     </array>
 
+    <array name="textcolor">
+        <item>@color/backcolor</item>
+        <item>@color/textColorPrimary</item>
+    </array>
 </resources>

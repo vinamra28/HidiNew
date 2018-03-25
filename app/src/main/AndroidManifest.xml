@@ -62,12 +62,22 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".MyJourneyActivity"></activity>
+        <activity
+            android:name=".MyJourneyActivity"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".Incomingsms">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".UnlockVisitors"
+            android:screenOrientation="portrait" />
+        <activity android:name=".SelectTags"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

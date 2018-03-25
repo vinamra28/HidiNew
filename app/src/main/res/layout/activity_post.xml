@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.hp.hidi2.PostActivity">
 
+    <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/post_header"
         android:layout_width="match_parent"
@@ -31,14 +34,18 @@
             android:layout_weight="1"
             android:background="@drawable/ic_search_black_24dp" />
     </LinearLayout>
-
+<android.support.v4.widget.SwipeRefreshLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/refresh"
+    android:layout_below="@+id/post_header">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/navigation"
-        android:layout_below="@+id/post_header"></android.support.v7.widget.RecyclerView>
-
+        ></android.support.v7.widget.RecyclerView>
+</android.support.v4.widget.SwipeRefreshLayout>
+   </RelativeLayout>
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
@@ -54,4 +61,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/navigation"
         tools:layout_editor_absoluteX="16dp" />
-</RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

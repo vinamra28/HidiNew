@@ -12,11 +12,15 @@
         android:enabled="true"
         android:checkable="true"/>
     <item
+        android:id="@+id/createpass"
+        android:title="Create Password"
+        android:enabled="true"/>
+    <item
         android:id="@+id/logout"
         android:enabled="true"
         android:title="Log Out"
-        android:checkable="true"
         />
+
     <!--<item-->
         <!--android:id="notifi_content"-->
         <!--android:title="Notification content"-->

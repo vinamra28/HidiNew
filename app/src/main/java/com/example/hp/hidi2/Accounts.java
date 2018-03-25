@@ -64,7 +64,6 @@ public class Accounts extends AppCompatActivity
 {
     SessionManager session;
     float x1, x2, y1, y2;
-//    CircleProgress progress;
     DonutProgress progress;
     Uri URI;
     String[] FILE;
@@ -92,7 +91,6 @@ public class Accounts extends AppCompatActivity
         session.checkLogin();
         userdp = findViewById(R.id.profilepic);
         progress=findViewById(R.id.popularProgress);
-//        progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);
         love=findViewById(R.id.loveCount);
         visitors=findViewById(R.id.visitorsCount);
@@ -208,10 +206,10 @@ public class Accounts extends AppCompatActivity
                 y2 = touchevent.getY();
                 if (x1 > x2)
                 {
-                    /*Intent intent = new Intent(Accounts.this, PostActivity.class);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );
+                    Intent intent = new Intent(Accounts.this, PostActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    finish();*/
+                    finish();
                     onBackPressed();
                 }
                 break;
@@ -357,30 +355,3 @@ public class Accounts extends AppCompatActivity
         return result;
     }
 }
-
-
-
-//for later use
-
-//    private PopupWindow popupWindow;
-//
-//    private void initiatepopupWindow() {
-//        try {
-//            //We need to get the instance of the LayoutInflater, use the context of this activity
-//            LayoutInflater inflater = (LayoutInflater) Accounts.this
-//                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            //Inflate the view from a predefined XML layout
-//            View layout = inflater.inflate(R.layout.pop_up_on_plus, (ViewGroup) findViewById(R.id.pop_up_on_plus));
-//            // create a 300px width and 470px height PopupWindow
-//            popupWindow = new PopupWindow(layout, 400, 300, true);
-//            // display the popup in the center
-//            popupWindow.showAtLocation(layout, Gravity.CENTER_HORIZONTAL, 50, 580);
-//
-//            TextView textView_text = (TextView) layout.findViewById(R.id.text_text);
-//            ImageButton imageButton_text = (ImageButton) layout.findViewById(R.id.text_img);
-//            TextView textView_camera = (TextView) layout.findViewById(R.id.text_camera);
-//            ImageButton imageButton_camera = (ImageButton) layout.findViewById(R.id.text_camera);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }

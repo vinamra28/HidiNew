@@ -1,8 +1,10 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -53,7 +55,7 @@ public class StatusActivity extends AppCompatActivity
     RelativeLayout backgroundLayout;
     ImageView colorBack,sending;
     EditText status;
-
+    ProgressDialog dialog;
     SessionManager session;
     double lat=0.0,lng=0.0;
     Uri URI;
@@ -69,13 +71,14 @@ public class StatusActivity extends AppCompatActivity
         setContentView(R.layout.activity_status);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
-
+        dialog=new ProgressDialog(this);
         final int[] backColors = getResources().getIntArray(R.array.back);
+        final int[] textColors = getResources().getIntArray(R.array.textcolor);
         backgroundLayout= findViewById(R.id.background);
         status=findViewById(R.id.text);
         sending=findViewById(R.id.send);
-        status.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        backgroundLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+//        status.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+//        backgroundLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         colorBack= findViewById(R.id.color);
         gps=new GPSTracker(this);
         if(gps.canGetLocation())
@@ -97,6 +100,8 @@ public class StatusActivity extends AppCompatActivity
             {
                 backgroundLayout.setBackgroundColor(backColors[t]);
                 status.setBackgroundColor(backColors[t]);
+                status.setTextColor(textColors[t]);
+                status.setHintTextColor(textColors[t]);
                 t++;
                 if(t==backColors.length)t=0;
             }
@@ -113,6 +118,10 @@ public class StatusActivity extends AppCompatActivity
                     ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
                     byteArray = outputStream.toByteArray();
+                    dialog.setMessage("Sending....");
+                    dialog.show();
+                    dialog.setCancelable(false);
+                    dialog.setIndeterminate(false);
                     new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
                 }
                 else
@@ -200,7 +209,9 @@ public class StatusActivity extends AppCompatActivity
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
             {
                 Log.v("Upload", "success");
-                Intent intent=new Intent(StatusActivity.this,PostActivity.class);
+                dialog.dismiss();
+              Intent intent=new Intent(StatusActivity.this,SelectTags.class);
+//              Intent intent=new Intent(StatusActivity.this,PostActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();

@@ -1,10 +1,7 @@
 package com.example.hp.hidi2;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,13 +35,16 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     private List<PostGet> postList;
     String result="",request="";
     int pid,uid,x;PostGet post;
+    String from="";
+    int flag=0,flagdis=0;
+    int like,dislike;
 
-
-    public MyAdapter_post(Context context, List<PostGet> postList,int uid)
+    public MyAdapter_post(Context context, List<PostGet> postList,int uid,String from)
     {
         this.context = context;
         this.postList = postList;
         this.uid=uid;
+        this.from=from;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -58,21 +57,41 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     {
         post = postList.get(holder.getAdapterPosition());
 
+
         Picasso.with(context).load(post.getUser_dp()).into(holder.user_dp);
         holder.user_name.setText(post.getUser_name());
         holder.post_location.setText(post.getPost_location());
         Picasso.with(context).load(post.getUser_post_image()).into(holder.image_posted);
         holder.total_favours.setText(post.getTotal_favours());
-        holder.do_like.setImageDrawable(post.getDo_like());
+        like= Integer.parseInt(post.getTotal_favours());
+        dislike= Integer.parseInt(post.getTotal_dislikes());
+      holder.do_like.setImageDrawable(post.getDo_like());
         holder.do_arguments.setText(post.getDo_arguments());
         holder.image_argument.setImageDrawable(post.getImage_argument());
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
         holder.total_dislikes.setText(post.getTotal_dislikes());
         pid=Integer.parseInt(post.getPid());
         holder.setIsRecyclable(false);
+//        try
+//        {
+//            JSONObject jsonObject=new JSONObject(result);
+//            JSONObject records=jsonObject.getJSONObject("records");
+//            like=records.getInt("like");
+//            dislike=records.getInt("dislike");
+//        }
+//        catch (JSONException e)
+//        {
+//            e.printStackTrace();
+//        }
         if(post.getLike().equals("1"))
         {
             holder.do_like.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+            flag=1;
+        }
+        if(post.getDislike().equals("1"))
+        {
+            holder.do_dislike.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
+            flagdis=1;
         }
         holder.do_arguments.setOnClickListener(new View.OnClickListener()
         {
@@ -98,25 +117,57 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             public void onClick(View v)
             {
                 request="like";
-                x = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())+1;
-                postList.get(holder.getAdapterPosition()).setTotal_favours(x+"");
-                Log.e(x+"",holder.getAdapterPosition()+"");
+//                x = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())+1;
+//                postList.get(holder.getAdapterPosition()).setTotal_favours(x+"");
+                if(flag==0)
+                {
+                    flag=1;
+                    postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+                }
+                else
+                {
+                    flag=0;
+                    postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
+                }
+//                holder.do_like.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+                postList.get(holder.getAdapterPosition()).setTotal_favours(like+"");
+                holder.total_favours.setText(like+"");
+                postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
+                holder.total_dislikes.setText(dislike+"");
+                Log.e(like+"",holder.getAdapterPosition()+"");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
-                holder.total_favours.setText(x+"");
                 notifyItemChanged(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
-
-
         holder.do_dislike.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 request="dislike";
+                if(flagdis==0)
+                {
+                    flagdis=1;
+                    postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
+                }
+                else
+                {
+                    flagdis=0;
+                    postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
+                }
+//                holder.do_dislike.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
+//                int z = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())-1;
+//                postList.get(holder.getAdapterPosition()).setTotal_favours(z+"");
+//                int y = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes())+1;
+//                postList.get(holder.getAdapterPosition()).setTotal_dislikes(y+"");
+                postList.get(holder.getAdapterPosition()).setTotal_favours(like+"");
+                holder.total_favours.setText(like+"");
+                postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
+                holder.total_dislikes.setText(dislike+"");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
-
+                notifyItemChanged(holder.getAdapterPosition());
+                notifyDataSetChanged();
             }
         });
     }
@@ -145,6 +196,11 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             image_argument = itemView.findViewById(R.id.arguments_image);
             do_dislike = itemView.findViewById(R.id.dislike);
             total_dislikes=itemView.findViewById(R.id.argument_number);
+            if(from.equals("my"))
+            {
+                do_like.setEnabled(false);
+                do_dislike.setEnabled(false);
+            }
         }
     }
     private class PostUpdate extends AsyncTask<String,Void,String>
@@ -164,8 +220,17 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         {
             super.onPostExecute(s);
             Log.d("result",result);
-
-
+            try
+            {
+                JSONObject jsonObject=new JSONObject(result);
+                JSONObject records=jsonObject.getJSONObject("records");
+                like=records.getInt("like");
+                dislike=records.getInt("dislike");
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
     public String POST(String url)

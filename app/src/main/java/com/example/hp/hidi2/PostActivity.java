@@ -1,8 +1,11 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +15,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -31,7 +35,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity
+public class PostActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
 {
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
@@ -39,9 +43,11 @@ public class PostActivity extends AppCompatActivity
     SessionManager session;
     GPSTracker gps;
     boolean bool ;
+    ProgressDialog progress;
     private MyAdapter_post myAdapter_post;
     private GestureDetector gestureDetector;
     String result="";
+    SwipeRefreshLayout swiper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,9 +57,15 @@ public class PostActivity extends AppCompatActivity
         setContentView(R.layout.activity_post);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
+        swiper=findViewById(R.id.refresh);
+        progress=new ProgressDialog(this);
+        progress.setMessage("Loading....");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
+        progress.show();
         gps=new GPSTracker(this);
         session.saveLoc(gps.latitude,gps.longitude);
-        myAdapter_post = new MyAdapter_post(PostActivity.this,postList,session.getUID());
+        myAdapter_post = new MyAdapter_post(PostActivity.this,postList,session.getUID(),"all");
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gestureListener = new View.OnTouchListener()
         {
@@ -64,9 +76,25 @@ public class PostActivity extends AppCompatActivity
         };
         BottomNavigationView navigation = findViewById(R.id.navigation);
         recyclerView = findViewById(R.id.recyclerView);
-//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
-//        layoutParams.setBehavior(new BottomNavigationBehavior());
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
+        swiper.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+//                swiper.setRefreshing(true);
+                new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
+            }
+        });
+
+    }
+    @Override
+    public void onRefresh()
+    {
+
+        // Fetching data from server
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
     }
 
@@ -82,15 +110,15 @@ public class PostActivity extends AppCompatActivity
     {
 
         Intent intent = new Intent(PostActivity.this, Accounts.class);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-      //  finish();
+        finish();
 
     }
 
     private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener
     {
-        private static final int SWIPE_MIN_DISTANCE = 50;
+        private static final int SWIPE_MIN_DISTANCE = 100;
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
@@ -146,6 +174,7 @@ public class PostActivity extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
+                    progress.dismiss();
                     for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);
@@ -173,7 +202,13 @@ public class PostActivity extends AppCompatActivity
                         postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
                         myAdapter_post.notifyDataSetChanged();
+                        swiper.setRefreshing(false);
                     }
+                }
+                else
+                {
+                    progress.dismiss();
+                    Toast.makeText(getApplicationContext(),"Error getting records",Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)

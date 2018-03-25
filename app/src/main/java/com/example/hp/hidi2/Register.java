@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity
 {
+    ProgressDialog dialog;
     EditText username,passwords,mobileNo;
     Button register;
     int REQUEST_CODE=0;
@@ -43,6 +45,10 @@ public class Register extends AppCompatActivity
         username=findViewById(R.id.namess);
         passwords=findViewById(R.id.passwordss);
         mobileNo=findViewById(R.id.mobilenoss);
+        dialog=new ProgressDialog(this);
+        dialog.setMessage("Registering....");
+        dialog.setCancelable(false);
+        dialog.setIndeterminate(false);
         register.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -61,6 +67,7 @@ public class Register extends AppCompatActivity
                         REQUEST_CODE=22;
                     else
                         REQUEST_CODE=21;
+                    dialog.show();
                     new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
                 }
                 else
@@ -96,6 +103,7 @@ public class Register extends AppCompatActivity
                 Log.d("verifi",ss);
                 if(ss.equalsIgnoreCase("success"))
                 {
+                    dialog.dismiss();
                     Bundle bundle=new Bundle();
                     bundle.putString("mobile",mobino);
                     bundle.putString("username",name);
@@ -111,6 +119,7 @@ public class Register extends AppCompatActivity
                 }
                 else
                 {
+                    dialog.dismiss();
                     Toast.makeText(getApplicationContext(),info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
             }

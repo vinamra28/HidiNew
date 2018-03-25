@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -42,7 +43,7 @@ public class MyJourneyActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_journey);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
-        myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID());
+        myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID(),"my");
         recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
@@ -71,28 +72,44 @@ public class MyJourneyActivity extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
+                    if(records.length()==0)
+                    {
+                        Toast.makeText(getApplicationContext(),"No Posts Available",Toast.LENGTH_LONG).show();
+                    }
                     for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);
-                        Log.d("pid",""+posts.getInt("pid"));
-                        Log.d("pic",""+posts.getString("pic"));
-                        Log.d("likes",""+posts.getInt("likes"));
-                        Log.d("dislikes",""+posts.getInt("dislikes"));
-                        Log.d("comments",""+posts.getInt("comments"));
+//                        Log.d("pid",""+posts.getInt("pid"));
+//                        Log.d("pic",""+posts.getString("pic"));
+//                        Log.d("likes",""+posts.getInt("likes"));
+//                        Log.d("dislikes",""+posts.getInt("dislikes"));
+//                        Log.d("comments",""+posts.getInt("comments"));
+//                        Log.d("time",""+posts.getString("time"));
+//                        Log.d("lat",""+posts.getDouble("lat"));
+//                        Log.d("long",""+posts.getDouble("long"));
+//                        Log.d("sec_name",""+posts.getString("sec_name"));
+//                        Log.d("profilepic",""+posts.getString("profilepic"));
+//                        Log.d("like",""+posts.getInt("like"));
+//                        Log.d("dislike",""+posts.getInt("dislike"));
+                        Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
+                        Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
+                        Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");
+                        Log.d("dislikes",""+posts.getInt("dislikes"));String dislikesc=""+posts.getInt("dislikes");
+                        Log.d("comments",""+posts.getInt("comments"));String commentsc=""+posts.getInt("comments");
                         Log.d("time",""+posts.getString("time"));
                         Log.d("lat",""+posts.getDouble("lat"));
                         Log.d("long",""+posts.getDouble("long"));
-                        Log.d("sec_name",""+posts.getString("sec_name"));
-                        Log.d("profilepic",""+posts.getString("profilepic"));
-                        Log.d("like",""+posts.getInt("like"));
-                        Log.d("dislike",""+posts.getInt("dislike"));
+                        Log.d("location",posts.getString("location"));String locations=posts.getString("location");
+//                        Log.d("distance",""+posts.getDouble("distance"));
+                        Log.d("sec_name",""+posts.getString("sec_name"));String name=posts.getString("sec_name");
+                        Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
+                        Log.d("like",""+posts.getInt("like"));String mlike=""+posts.getInt("like");
+                        Log.d("dislike",""+posts.getInt("dislike"));String mdisllike=""+posts.getInt("dislike");
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(myAdapter_post);
-                        PostGet postGet=new PostGet(posts.getString("sec_name"),
-                                ""+posts.getInt("like"),""+posts.getInt("comments"),
-                                posts.getString("profilepic"),posts.getString("pic"));
+                        PostGet postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
                     }
                 }

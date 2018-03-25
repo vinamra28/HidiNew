@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        android:id="@+id/comment_section"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/do_favours_arguments_share"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_below="@id/do_favours_arguments_share"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/image_user"
             android:orientation="horizontal">
 
 
@@ -23,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <View
@@ -32,14 +39,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/comment_person_name"
                         android:layout_width="match_parent"
-                        android:layout_height="22.5dp"
+                        android:layout_height="wrap_content"
                         android:text="Goku"
+                        android:textStyle="bold"
                         android:textColor="#000"
                         android:textSize="16dp" />
                     <!--attribute add krna h-->
@@ -47,12 +55,27 @@
                     <TextView
                         android:id="@+id/comment_by_user"
                         android:layout_width="match_parent"
-                        android:layout_height="22.5dp"
+                        android:layout_height="wrap_content"
                         android:text="Mast lag rha hai"
                         android:textColor="#000"
                         android:textSize="13dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Reply"
+                        android:id="@+id/reply_button"
+                        android:textColor="#616161"
+                        android:layout_marginLeft="10dp"/>
                     <!--attribute add krna h-->
                 </LinearLayout>
             </LinearLayout>
+
+
         </LinearLayout>
-    </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

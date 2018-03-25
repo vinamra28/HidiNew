@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +12,17 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterViewFlipper;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -36,12 +42,16 @@ import java.io.UnsupportedEncodingException;
 
 public class VerifyOtp extends AppCompatActivity
 {
+    AdapterViewFlipper adapterFlipper;
     SessionManager session;
     EditText n1,n2,n3,n4,n5,n6;
+    ProgressDialog progress;
     Button log,verifi;
     String otp="",mobile="",result="",user_name="",user_password="";
-    int request=0;
+    int request=0,mPosition=-1;
     ImageView checking;
+    String texts[]={"Taste","Fuck","Love","Hidden","Look","Fear","Passion","Dreams","Suck","Adventure","Death",
+                    "Friendship","Revenge","Lust","Freedom","Respect","Joke","Trust","Enemy"};
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -49,7 +59,15 @@ public class VerifyOtp extends AppCompatActivity
         setContentView(R.layout.activity_verify_otp);
         session=new SessionManager(getApplicationContext());
         log=findViewById(R.id.login);
+        adapterFlipper=findViewById(R.id.adapterFlipper);
+        progress=new ProgressDialog(this);
+        progress.setMessage("Verifying....");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
         log.setText("Register");
+        FlipperAdapter adapter=new FlipperAdapter(this,texts);
+        adapterFlipper.setAdapter(adapter);
+        adapterFlipper.setAutoStart(true);
         log.setVisibility(View.INVISIBLE);
         checking=findViewById(R.id.check_img);
         Bundle bundle=getIntent().getExtras();
@@ -92,6 +110,7 @@ public class VerifyOtp extends AppCompatActivity
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
                 verifi.startAnimation(myAnim);
+                progress.show();
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
                 if(request==1)
                 {
@@ -103,6 +122,42 @@ public class VerifyOtp extends AppCompatActivity
                 }
             }
         });
+    }
+    class FlipperAdapter extends BaseAdapter
+    {
+        Context ctx;
+        String text[];
+        LayoutInflater inflater;
+        public FlipperAdapter(Context context,String[] text)
+        {
+            this.ctx=context;
+            this.text=text;
+            inflater=LayoutInflater.from(context);
+        }
+        @Override
+        public int getCount()
+        {
+            return text.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup)
+        {
+            view=inflater.inflate(R.layout.flipper_items,null);
+            TextView textView=view.findViewById(R.id.flipperText);
+            textView.setText(text[i]);
+            return view;
+        }
     }
     @Override
     public void onResume() {
@@ -237,6 +292,7 @@ public class VerifyOtp extends AppCompatActivity
                 String otp_status=info.getString("otpStatus");
                 if(otp_status.compareTo("success")==0)
                 {
+                    progress.dismiss();
                     checking.setVisibility(View.VISIBLE);
                     log.setVisibility(View.VISIBLE);
                     log.setOnClickListener(new View.OnClickListener()
@@ -244,10 +300,12 @@ public class VerifyOtp extends AppCompatActivity
                         @Override
                         public void onClick(View v)
                         {
+                            progress.setMessage("Loading.....");
                             final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
                             MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                             myAnim.setInterpolator(interpolator);
                             log.startAnimation(myAnim);
+                            progress.show();
                             if(request==1)
                             {
                                 new HttpAsyncTask().execute("http://hidi.org.in/hidi1/Auth/login.php");
@@ -261,6 +319,7 @@ public class VerifyOtp extends AppCompatActivity
                 }
                 else
                 {
+                    progress.dismiss();
                     Toast.makeText(VerifyOtp.this,info.getString("otpMessage"), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -296,6 +355,7 @@ public class VerifyOtp extends AppCompatActivity
                 String status=info.getString("status");
                 if(status.equals("success"))
                 {
+                    progress.dismiss();
                     JSONObject recordds=res.getJSONObject("records");
                     int uid=recordds.getInt("UID");
                     if(request==1)
@@ -321,6 +381,7 @@ public class VerifyOtp extends AppCompatActivity
                 }
                 else
                 {
+                    progress.dismiss();
                     Toast.makeText(VerifyOtp.this,info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
             }

@@ -90,7 +90,7 @@ public class SessionManager
         user.put(KEY_SECNAME,sharedPreferences.getString(KEY_SECNAME,null));
         user.put(KEY_ADMIRE,sharedPreferences.getString(KEY_ADMIRE,null));
         user.put(KEY_LOVE,sharedPreferences.getString(KEY_LOVE,null));
-        user.put(KEY_POPULARITY,sharedPreferences.getString(KEY_POPULARITY,null));
+        user.put(KEY_POPULARITY,sharedPreferences.getString(KEY_POPULARITY,"0.0"));
         user.put(KEY_VISITORS,sharedPreferences.getString(KEY_VISITORS,null));
         user.put(KEY_HIDIES,sharedPreferences.getString(KEY_HIDIES,null));
         user.put(KEY_BLOCKS,sharedPreferences.getString(KEY_BLOCKS,null));
