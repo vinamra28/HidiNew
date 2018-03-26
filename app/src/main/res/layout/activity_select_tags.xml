@@ -227,7 +227,7 @@
             android:text="LAW/LEGAL" />
     </com.wefika.flowlayout.FlowLayout>
 
-    <com.github.clans.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/addTags"
         android:layout_width="46dp"
         android:layout_height="53dp"

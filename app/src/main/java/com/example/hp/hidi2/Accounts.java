@@ -88,7 +88,7 @@ public class Accounts extends AppCompatActivity
             e.printStackTrace();
         }
         session=new SessionManager(getApplicationContext());
-        session.checkLogin();
+//        session.checkLogin();
         userdp = findViewById(R.id.profilepic);
         progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);

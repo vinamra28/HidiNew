@@ -134,13 +134,13 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 mobile = phone.getText().toString();
-                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+               /* final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
                 MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
                 myAnim.setInterpolator(interpolator);
                 get.startAnimation(myAnim);
-                if(Pattern.matches("[6789][0-9]{9}",mobile))
+               */ if(Pattern.matches("[6789][0-9]{9}",mobile))
                 {
-                    new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
+                     new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
                 }
                 else
                 {

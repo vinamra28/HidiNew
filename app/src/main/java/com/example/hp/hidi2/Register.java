@@ -54,13 +54,13 @@ public class Register extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                final Animation myAnim = AnimationUtils.loadAnimation(Register.this, R.anim.bounce);
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-                myAnim.setInterpolator(interpolator);
+//                final Animation myAnim = AnimationUtils.loadAnimation(Register.this, R.anim.bounce);
+//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+//                myAnim.setInterpolator(interpolator);
                 name=username.getText().toString();
                 mobino=mobileNo.getText().toString();
                 passwd=passwords.getText().toString();
-                register.startAnimation(myAnim);
+//                register.startAnimation(myAnim);
                 if(Pattern.matches("[6789][0-9]{9}",mobino)&&name.length()!=0)
                 {
                     if(passwd.length()!=0)
