@@ -75,9 +75,10 @@
         <activity
             android:name=".UnlockVisitors"
             android:screenOrientation="portrait" />
-        <activity android:name=".SelectTags"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".SelectTags"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".PostActivityLocation"></activity>
     </application>
 
 </manifest>

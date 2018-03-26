@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/loc"
-        android:icon="@mipmap/ic_location_on_white_24dp"
-        android:title="@string/title_loc"
+        android:id="@+id/person"
+        android:icon="@mipmap/ic_account_circle_white_24dp"
+        android:title="Person"
     />
     <item
-        android:id="@+id/pers"
+        android:id="@+id/sort_tag"
         android:icon="@mipmap/ic_account_circle_white_24dp"
         android:title="@string/title_person"
         />
