@@ -17,22 +17,11 @@
         android:orientation="horizontal"
         android:weightSum="10">
 
-        <TextView
+        <SearchView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:gravity="center"
-            android:text="Posts"
-            android:textColor="#fff"
-            android:textSize="14dp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/access_location"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_weight="1"
-            android:background="@drawable/ic_search_black_24dp" />
+        </SearchView>
     </LinearLayout>
 <android.support.v4.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
