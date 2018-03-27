@@ -127,6 +127,10 @@ public class PostActivityTag extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
+                    if (records.length() ==0)
+                    {
+                        Toast.makeText(getApplicationContext(), "No posts available", Toast.LENGTH_SHORT).show();
+                    }
                     for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);

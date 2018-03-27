@@ -64,6 +64,7 @@ public class StatusActivity extends AppCompatActivity
     String ImageDecode;
     static int PICK_IMAGE_REQUEST = 1;
     int t=1;
+    int pid=0;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -210,9 +211,12 @@ public class StatusActivity extends AppCompatActivity
             {
                 Log.v("Upload", "success");
                 dialog.dismiss();
+                Bundle bundle=new Bundle();
+                bundle.putInt("pid",pid);
               Intent intent=new Intent(StatusActivity.this,SelectTags.class);
 //              Intent intent=new Intent(StatusActivity.this,PostActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
 //                post.setImageURI(fileUri);
@@ -251,6 +255,7 @@ public class StatusActivity extends AppCompatActivity
                 if(status.equals("success"))
                 {
                     imageUpload(res.getInt("records"));
+                    pid=res.getInt("records");
                 }
                 else
                 {
