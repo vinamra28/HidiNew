@@ -84,6 +84,7 @@ public class PostActivityTag extends AppCompatActivity
         list.add("Arts");
         list.add("Asia");
         list.add("Australia");
+        list.add("America");
         list.add("Beauty&Style");
         list.add("Books");
         list.add("Bussiness");

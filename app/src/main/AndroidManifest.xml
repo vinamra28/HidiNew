@@ -78,10 +78,15 @@
         <activity
             android:name=".SelectTags"
             android:screenOrientation="portrait" />
-        <activity android:name=".PostActivityLocation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PostActivityTag"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".PostActivityLocation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PostActivityTag"
+            android:screenOrientation="portrait" />
+        <activity android:name=".BlockActivity" />
+        <activity android:name=".SearchUser" />
+        <activity android:name=".NewUserProfile"></activity>
     </application>
 
 </manifest>

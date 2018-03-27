@@ -72,6 +72,7 @@ public class Accounts extends AppCompatActivity
     TextView admire,love,visitors,hidies,blocks;
     Button see_notifications,my_journey;
     static int PICK_IMAGE_REQUEST = 1;
+    TextView block_text;
     String mPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String result="";
@@ -96,12 +97,19 @@ public class Accounts extends AppCompatActivity
         visitors=findViewById(R.id.visitorsCount);
         hidies=findViewById(R.id.hidiCount);
         blocks=findViewById(R.id.blockCount);
+        block_text = findViewById(R.id.block);
         see_notifications=findViewById(R.id.notificationButton);
         imageView_plus = findViewById(R.id.statusButton);
         my_journey=findViewById(R.id.journeyButton);
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.index);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(55f);
+        block_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Accounts.this,BlockActivity.class));
+            }
+        });
         userdp.setImageDrawable(roundedBitmapDrawable);
         new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
     }

@@ -47,44 +47,40 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener
-{
+public class PostActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;
     SessionManager session;
     GPSTracker gps;
     CoordinatorLayout constraintLayout;
-    boolean bool ;
+    boolean bool;
     ProgressDialog progress;
     private MyAdapter_post myAdapter_post;
     private GestureDetector gestureDetector;
-    String result="";
+    String result = "";
     SwipeRefreshLayout swiper;
     private PopupWindow popupWindow;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        session=new SessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
         session.checkLogin();
-        swiper=findViewById(R.id.refresh);
-        progress=new ProgressDialog(this);
+        swiper = findViewById(R.id.refresh);
+        progress = new ProgressDialog(this);
         progress.setMessage("Loading....");
         progress.setCancelable(false);
         progress.setIndeterminate(false);
         progress.show();
-        gps=new GPSTracker(this);
-        session.saveLoc(gps.latitude,gps.longitude);
-        myAdapter_post = new MyAdapter_post(PostActivity.this,postList,session.getUID(),"all");
+        gps = new GPSTracker(this);
+        session.saveLoc(gps.latitude, gps.longitude);
+        myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
-        gestureListener = new View.OnTouchListener()
-        {
-            public boolean onTouch(View v, MotionEvent event)
-            {
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
                 return gestureDetector.onTouchEvent(event);
             }
         };
@@ -94,16 +90,13 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
-        {
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item)
-            {
-                switch(item.getItemId())
-                {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
                     case R.id.filter:
-                            initiatepopupWindow();
-                            constraintLayout.setAlpha(.2f);
+                        initiatepopupWindow();
+                        constraintLayout.setAlpha(.2f);
 //                            constraintLayout.setOnClickListener(new View.OnClickListener() {
 //                                @Override
 //                                public void onClick(View v) {
@@ -125,43 +118,42 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
 //                        Intent intent=new Intent(PostActivity.this,PostActivityLocation.class);
 //                        startActivity(intent);
                         return true;
+
+                    case R.id.person:
+                        startActivity(new Intent(PostActivity.this, SearchUser.class));
                 }
                 return false;
             }
         });
-        swiper.post(new Runnable()
-        {
+        swiper.post(new Runnable() {
             @Override
-            public void run()
-            {
+            public void run() {
 //                swiper.setRefreshing(true);
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
         });
 
     }
+
     private void initiatepopupWindow() {
         try {
             LayoutInflater inflater = (LayoutInflater) PostActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.pop_up_on_plus, (ViewGroup) findViewById(R.id.pop_up_on_plus));
             popupWindow = new PopupWindow(layout, 420, 350, true);
             popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 473);
-            ImageButton location=layout.findViewById(R.id.text_img);
+            ImageButton location = layout.findViewById(R.id.text_img);
             location.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    Intent intent=new Intent(PostActivity.this,PostActivityLocation.class);
+                public void onClick(View v) {
+                    Intent intent = new Intent(PostActivity.this, PostActivityLocation.class);
                     startActivity(intent);
                 }
             });
-            ImageButton tags=layout.findViewById(R.id.camera_img);
-            tags.setOnClickListener(new View.OnClickListener()
-            {
+            ImageButton tags = layout.findViewById(R.id.camera_img);
+            tags.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v)
-                {
-                    Intent intent=new Intent(PostActivity.this,PostActivityTag.class);
+                public void onClick(View v) {
+                    Intent intent = new Intent(PostActivity.this, PostActivityTag.class);
                     startActivity(intent);
                 }
             });
@@ -170,30 +162,26 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
 //            EditText editText = layout.findViewById(R.id.post_text);
 //            Button button_mood = layout.findViewById(R.id.button_mood);
 //            Button button_send = layout.findViewById(R.id.button_send);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Override
-    public void onRefresh()
-    {
+    public void onRefresh() {
 
         // Fetching data from server
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
     }
 
-    private void onLeftSwipe()
-    {
+    private void onLeftSwipe() {
 
 //        Intent intent=new Intent(PostActivity.this,HidiChatActivity.class);
 //        startActivity(intent);
 //        finish();
     }
 
-    private void onRightSwipe()
-    {
+    private void onRightSwipe() {
 
         Intent intent = new Intent(PostActivity.this, Accounts.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -202,82 +190,81 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     }
 
-    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener
-    {
+    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
         private static final int SWIPE_MIN_DISTANCE = 100;
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
         @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
-        {
-            try
-            {
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
                 float diffAbs = Math.abs(e1.getY() - e2.getY());
                 float diff = e1.getX() - e2.getX();
                 if (diffAbs > SWIPE_MAX_OFF_PATH)
                     return false;
                 // Left swipe
-                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
-                {
+                if (diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     PostActivity.this.onLeftSwipe();
                 }
                 // Right swipe
-                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
-                {
+                else if (-diff > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     PostActivity.this.onRightSwipe();
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Log.e("Home", "Error on gestures");
             }
             return false;
         }
     }
-    private class Posts extends AsyncTask<String,Void,String>
-    {
+
+    private class Posts extends AsyncTask<String, Void, String> {
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
         }
+
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             return POST(urls[0]);
         }
+
         @Override
-        protected void onPostExecute(String s)
-        {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("result",result);
-            try
-            {
+            Log.d("result", result);
+            try {
                 PostGet postGet;
-                JSONObject respnse=new JSONObject(result);
-                JSONObject info=respnse.getJSONObject("info");
-                JSONArray records=respnse.getJSONArray("records");
-                if((info.getString("status")).equals("success"))
-                {
+                JSONObject respnse = new JSONObject(result);
+                JSONObject info = respnse.getJSONObject("info");
+                JSONArray records = respnse.getJSONArray("records");
+                if ((info.getString("status")).equals("success")) {
                     progress.dismiss();
-                    for(int i=0;i<records.length();i++)
-                    {
-                        JSONObject posts=records.getJSONObject(i);
-                        Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
-                        Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
-                        Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");
-                        Log.d("dislikes",""+posts.getInt("dislikes"));String dislikesc=""+posts.getInt("dislikes");
-                        Log.d("comments",""+posts.getInt("comments"));String commentsc=""+posts.getInt("comments");
-                        Log.d("time",""+posts.getString("time"));
-                        Log.d("lat",""+posts.getDouble("lat"));
-                        Log.d("long",""+posts.getDouble("long"));
-                        Log.d("location",posts.getString("location"));String locations=posts.getString("location");
-                        Log.d("distance",""+posts.getDouble("distance"));
-                        Log.d("sec_name",""+posts.getString("sec_name"));String name=posts.getString("sec_name");
-                        Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
-                        Log.d("like",""+posts.getInt("like"));String mlike=""+posts.getInt("like");
-                        Log.d("dislike",""+posts.getInt("dislike"));String mdisllike=""+posts.getInt("dislike");
+                    for (int i = 0; i < records.length(); i++) {
+                        JSONObject posts = records.getJSONObject(i);
+                        Log.d("pid", "" + posts.getInt("pid"));
+                        String pid = "" + posts.getInt("pid");
+                        Log.d("pic", "" + posts.getString("pic"));
+                        String pic = "" + posts.getString("pic");
+                        Log.d("likes", "" + posts.getInt("likes"));
+                        String likesc = "" + posts.getInt("likes");
+                        Log.d("dislikes", "" + posts.getInt("dislikes"));
+                        String dislikesc = "" + posts.getInt("dislikes");
+                        Log.d("comments", "" + posts.getInt("comments"));
+                        String commentsc = "" + posts.getInt("comments");
+                        Log.d("time", "" + posts.getString("time"));
+                        Log.d("lat", "" + posts.getDouble("lat"));
+                        Log.d("long", "" + posts.getDouble("long"));
+                        Log.d("location", posts.getString("location"));
+                        String locations = posts.getString("location");
+                        Log.d("distance", "" + posts.getDouble("distance"));
+                        Log.d("sec_name", "" + posts.getString("sec_name"));
+                        String name = posts.getString("sec_name");
+                        Log.d("profilepic", "" + posts.getString("profilepic"));
+                        String profile = posts.getString("profilepic");
+                        Log.d("like", "" + posts.getInt("like"));
+                        String mlike = "" + posts.getInt("like");
+                        Log.d("dislike", "" + posts.getInt("dislike"));
+                        String mdisllike = "" + posts.getInt("dislike");
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -285,63 +272,54 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
 //                        postGet=new PostGet(posts.getString("sec_name"),
 //                                ""+posts.getInt("like"),""+posts.getInt("comments"),
 //                                posts.getString("profilepic"),posts.getString("pic"));
-                        postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
+                        postGet = new PostGet(pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
                         postList.add(postGet);
                         myAdapter_post.notifyDataSetChanged();
                         swiper.setRefreshing(false);
                     }
-                }
-                else
-                {
+                } else {
                     progress.dismiss();
-                    Toast.makeText(getApplicationContext(),"Error getting records",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();
                 }
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
     }
-    public String POST(String url)
-    {
-        InputStream inputStream=null;
-        String json="";
-        result="";
-        try
-        {
-            HttpClient httpClient=new DefaultHttpClient();
-            HttpPost httpPost=new HttpPost(url);
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.accumulate("uid",session.getUID());
-            jsonObject.accumulate("request","all");
-            jsonObject.accumulate("lat",gps.latitude);
-            jsonObject.accumulate("long",gps.longitude);
-            jsonObject.accumulate("dist",2);
-            json=jsonObject.toString();
-            Log.d("json",json);
-            StringEntity se=new StringEntity(json);
-            Log.d("Entity",""+se);
+
+    public String POST(String url) {
+        InputStream inputStream = null;
+        String json = "";
+        result = "";
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(url);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("uid", session.getUID());
+            jsonObject.accumulate("request", "all");
+            jsonObject.accumulate("lat", gps.latitude);
+            jsonObject.accumulate("long", gps.longitude);
+            jsonObject.accumulate("dist", 2);
+            json = jsonObject.toString();
+            Log.d("json", json);
+            StringEntity se = new StringEntity(json);
+            Log.d("Entity", "" + se);
             httpPost.setEntity(se);
             httpPost.setHeader("Accept", "application/json");
             httpPost.setHeader("Content-type", "application/json");
-            Log.d("Post",""+httpPost);
-            HttpResponse httpResponse=httpClient.execute(httpPost);
-            Log.d("Response",httpResponse.toString());
-            inputStream=httpResponse.getEntity().getContent();
-            Log.d("inputStream",inputStream.toString());
-            if(inputStream!=null)
-                result=convertInputStreamToString(inputStream);
+            Log.d("Post", "" + httpPost);
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            Log.d("Response", httpResponse.toString());
+            inputStream = httpResponse.getEntity().getContent();
+            Log.d("inputStream", inputStream.toString());
+            if (inputStream != null)
+                result = convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
-        }
-        catch (JSONException e)
-        {
+        } catch (JSONException e) {
             e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
@@ -350,12 +328,12 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
         return result;
     }
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
         inputStream.close();
         return result;
