@@ -119,18 +119,46 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
                 request="like";
 //                x = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())+1;
 //                postList.get(holder.getAdapterPosition()).setTotal_favours(x+"");
-                if(flag==0)
+               // int x=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours(like+" "));
+                int like= Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
+                int dislike=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes());
+
+
+
+                if(flag==0&&flagdis==0)
                 {
                     flag=1;
+                    flagdis=0;
+                    like++;
+                    postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
                 }
-                else
+                else if(flag==0&&flagdis==1){
+                    flag=1;
+                    flagdis=0;
+                    like++;
+                    dislike--;
+                    postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+                    postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
+
+                }
+                else if(flag==1&&flagdis==0)
                 {
+
                     flag=0;
+                    flagdis=0;
+                    like--;
+
+
+
+                    postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
+
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
                 }
 //                holder.do_like.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
-                postList.get(holder.getAdapterPosition()).setTotal_favours(like+"");
+               //postList.get(holder.getAdapterPosition()).setTotal_favours(like+"");
+              // int likes= Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
+
                 holder.total_favours.setText(like+"");
                 postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
                 holder.total_dislikes.setText(dislike+"");
@@ -145,15 +173,35 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             @Override
             public void onClick(View v)
             {
+                int dislike=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes());
+                int like=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
+
                 request="dislike";
-                if(flagdis==0)
+                if(flagdis==0&&flag==0)
                 {
                     flagdis=1;
+                    flag=0;
+                    dislike++;
+                    postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
+
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
                 }
-                else
+                else if(flagdis==0&&flag==1){
+                    flagdis=1;
+                    flag=0;
+                    dislike++;
+                    like--;
+                    postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
+                    postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
+
+                }
+                else if(flagdis==1&&flag==0)
                 {
+                    dislike--;
                     flagdis=0;
+                    flag=0;
+                    postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
+
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
                 }
 //                holder.do_dislike.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
@@ -161,9 +209,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 //                postList.get(holder.getAdapterPosition()).setTotal_favours(z+"");
 //                int y = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes())+1;
 //                postList.get(holder.getAdapterPosition()).setTotal_dislikes(y+"");
-                postList.get(holder.getAdapterPosition()).setTotal_favours(like+"");
                 holder.total_favours.setText(like+"");
-                postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
                 holder.total_dislikes.setText(dislike+"");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
                 notifyItemChanged(holder.getAdapterPosition());
