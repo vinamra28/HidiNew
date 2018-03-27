@@ -1,9 +1,11 @@
 package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,9 +16,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -44,12 +54,14 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
     private RecyclerView recyclerView;
     SessionManager session;
     GPSTracker gps;
+    CoordinatorLayout constraintLayout;
     boolean bool ;
     ProgressDialog progress;
     private MyAdapter_post myAdapter_post;
     private GestureDetector gestureDetector;
     String result="";
     SwipeRefreshLayout swiper;
+    private PopupWindow popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,6 +90,7 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         };
         BottomNavigationView navigation = findViewById(R.id.navigation);
         recyclerView = findViewById(R.id.recyclerView);
+        constraintLayout = findViewById(R.id.post_layout);
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
@@ -89,8 +102,28 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
                 switch(item.getItemId())
                 {
                     case R.id.filter:
-                        Intent intent=new Intent(PostActivity.this,PostActivityLocation.class);
-                        startActivity(intent);
+                            initiatepopupWindow();
+                            constraintLayout.setAlpha(.2f);
+//                            constraintLayout.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    constraintLayout.setAlpha(1);
+//                                }
+//                            });
+//                            recyclerView.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    constraintLayout.setAlpha(1);
+//                                }
+//                            });
+                        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                            @Override
+                            public void onDismiss() {
+                                constraintLayout.setAlpha(1);
+                            }
+                        });
+//                        Intent intent=new Intent(PostActivity.this,PostActivityLocation.class);
+//                        startActivity(intent);
                         return true;
                 }
                 return false;
@@ -106,6 +139,42 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         });
 
+    }
+    private void initiatepopupWindow() {
+        try {
+            LayoutInflater inflater = (LayoutInflater) PostActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.pop_up_on_plus, (ViewGroup) findViewById(R.id.pop_up_on_plus));
+            popupWindow = new PopupWindow(layout, 420, 350, true);
+            popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 473);
+            ImageButton location=layout.findViewById(R.id.text_img);
+            location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent=new Intent(PostActivity.this,PostActivityLocation.class);
+                    startActivity(intent);
+                }
+            });
+            ImageButton tags=layout.findViewById(R.id.camera_img);
+            tags.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent=new Intent(PostActivity.this,PostActivityTag.class);
+                    startActivity(intent);
+                }
+            });
+//            TextView textView = layout.findViewById(R.id.new_post_header);
+//            imageView1 = layout.findViewById(R.id.imageView1);
+//            EditText editText = layout.findViewById(R.id.post_text);
+//            Button button_mood = layout.findViewById(R.id.button_mood);
+//            Button button_send = layout.findViewById(R.id.button_send);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
     @Override
     public void onRefresh()

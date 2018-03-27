@@ -27,10 +27,12 @@ public class PostActivityTag extends AppCompatActivity
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         materialSpinner.setAdapter(adapter);
-        materialSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        materialSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String selecttag= (String) parent.getItemAtPosition(position);
             }
 
             @Override
