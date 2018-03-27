@@ -11,7 +11,8 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class PostActivityTag extends AppCompatActivity {
+public class PostActivityTag extends AppCompatActivity
+{
 
     MaterialSpinner materialSpinner;
     List<String> list = new ArrayList<>();

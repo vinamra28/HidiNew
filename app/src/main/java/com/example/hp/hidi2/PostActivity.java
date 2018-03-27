@@ -3,6 +3,7 @@ package com.example.hp.hidi2;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -79,6 +81,21 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            {
+                switch(item.getItemId())
+                {
+                    case R.id.filter:
+                        Intent intent=new Intent(PostActivity.this,PostActivityLocation.class);
+                        startActivity(intent);
+                        return true;
+                }
+                return false;
+            }
+        });
         swiper.post(new Runnable()
         {
             @Override

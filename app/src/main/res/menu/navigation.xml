@@ -7,8 +7,8 @@
         android:title="Person"
     />
     <item
-        android:id="@+id/sort_tag"
-        android:icon="@mipmap/ic_account_circle_white_24dp"
+        android:id="@+id/filter"
+        android:icon="@mipmap/ic_filter_list_white_24dp"
         android:title="@string/title_person"
         />
     <item
