@@ -77,8 +77,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SelectTags"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".PostActivityLocation"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".PostActivityLocation" />
+        <activity android:name=".PostActivityTag"></activity>
     </application>
 
 </manifest>

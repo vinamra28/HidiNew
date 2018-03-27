@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.wefika:flowlayout:0.3.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
     testImplementation 'junit:junit:4.12'
+    compile 'com.github.ganfra:material-spinner:1.1.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation files('libs/http-core-4.1.jar')
