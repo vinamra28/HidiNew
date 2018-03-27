@@ -106,19 +106,26 @@ public class VerifyOtp extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-                myAnim.setInterpolator(interpolator);
-                verifi.startAnimation(myAnim);
+//                final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
+//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+//                myAnim.setInterpolator(interpolator);
+//                verifi.startAnimation(myAnim);
                 progress.show();
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
-                if(request==1)
+                if(otp.length()!=0)
                 {
-                    new Verification().execute("http://hidi.org.in/hidi1/Auth/verifyotp.php");
+                    if(request==1)
+                    {
+                        new Verification().execute("http://hidi.org.in/hidi1/Auth/verifyotp.php");
+                    }
+                    else
+                    {
+                        new Verification().execute("http://hidi.org.in/hidi1/Auth/verifyotp2.php");
+                    }
                 }
                 else
                 {
-                    new Verification().execute("http://hidi.org.in/hidi1/Auth/verifyotp2.php");
+                    Toast.makeText(getApplicationContext(),"OTP not entered",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -295,16 +302,18 @@ public class VerifyOtp extends AppCompatActivity
                     progress.dismiss();
                     checking.setVisibility(View.VISIBLE);
                     log.setVisibility(View.VISIBLE);
+                    verifi.setEnabled(false);
                     log.setOnClickListener(new View.OnClickListener()
                     {
                         @Override
                         public void onClick(View v)
                         {
                             progress.setMessage("Loading.....");
-                            final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
-                            MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-                            myAnim.setInterpolator(interpolator);
-                            log.startAnimation(myAnim);
+//                            final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
+//                            MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+//                            myAnim.setInterpolator(interpolator);
+//                            log.startAnimation(myAnim);
+
                             progress.show();
                             if(request==1)
                             {

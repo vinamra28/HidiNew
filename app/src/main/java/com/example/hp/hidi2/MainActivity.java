@@ -153,10 +153,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-                myAnim.setInterpolator(interpolator);
-                fb.startAnimation(myAnim);
+//                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+//                myAnim.setInterpolator(interpolator);
+//                fb.startAnimation(myAnim);
             }
         });
         google.setOnClickListener(new View.OnClickListener()
@@ -164,10 +164,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-                myAnim.setInterpolator(interpolator);
-                google.startAnimation(myAnim);
+//                final Animation myAnim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.bounce);
+//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+//                myAnim.setInterpolator(interpolator);
+//                google.startAnimation(myAnim);
             }
         });
     }
