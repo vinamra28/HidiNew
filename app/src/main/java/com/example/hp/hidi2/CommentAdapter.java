@@ -46,14 +46,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return commentGets.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+    {
         public TextView user_name,user_comment,reply_button;
         public ImageView imageView;
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView)
+        {
             super(itemView);
             user_name = itemView.findViewById(R.id.comment_person_name);
             user_comment = itemView.findViewById(R.id.comment_by_user);

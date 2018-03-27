@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -35,6 +38,7 @@ public class SearchUser extends AppCompatActivity {
     //    SearchView.SearchAutoComplete searchAutoComplete;
     SearchView searchAutoComplete;
     String result = "";
+    ListView lv;
     SessionManager session;
     HashMap<String, Integer> hashMap = new HashMap<>();
     ArrayList<String> username = new ArrayList<>();
@@ -43,7 +47,7 @@ public class SearchUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
-
+        lv=findViewById(R.id.userList);
         searchAutoComplete = findViewById(R.id.searchuser);
 //        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -122,14 +126,56 @@ public class SearchUser extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject info = jsonObject.getJSONObject("info");
-                if (info.getString("status").equals("success")) {
+                if (info.getString("status").equals("success"))
+                {
                     JSONArray details = jsonObject.getJSONArray("details");
-                    for (int i = 0; i < details.length(); i++) {
+                    for (int i = 0; i < details.length(); i++)
+                    {
                         JSONObject user = details.getJSONObject(i);
                         hashMap.put(user.getString("secname"), user.getInt("uid"));
                         username.add(user.getString("secname"));
                     }
-                } else {
+                    final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(SearchUser.this,android.R.layout.simple_list_item_1,username);
+                    lv.setAdapter(arrayAdapter);
+                    searchAutoComplete.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+                    {
+                        @Override
+                        public boolean onQueryTextSubmit(String query)
+                        {
+                            if(username.contains(query))
+                            {
+                                arrayAdapter.getFilter().filter(query);
+                            }
+                            else
+                            {
+                                Toast.makeText(SearchUser.this, "No Users found", Toast.LENGTH_SHORT).show();
+                            }
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onQueryTextChange(String newText)
+                        {
+                            return false;
+                        }
+                    });
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                    {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                        {
+                            String name= (String) parent.getItemAtPosition(position);
+                            Log.d("User selected",name);
+                            int uid=hashMap.get(name);
+                            Bundle bundle =new Bundle();
+                            bundle.putInt("uid",uid);
+                            Intent intent=new Intent(SearchUser.this,NewUserProfile.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                else
+                {
                     Toast.makeText(SearchUser.this, "Unable to find User", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
