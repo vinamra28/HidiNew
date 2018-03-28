@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -92,6 +93,12 @@ public class NewUserProfile extends AppCompatActivity
 //                    session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
 //                            records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
                 }
+                dolove.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
             }
             catch (JSONException e)
             {
