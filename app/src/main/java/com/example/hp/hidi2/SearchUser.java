@@ -168,8 +168,10 @@ public class SearchUser extends AppCompatActivity {
                             Log.d("User selected",name);
                             int uid=hashMap.get(name);
                             Bundle bundle =new Bundle();
+                            bundle.putString("name",name);
                             bundle.putInt("uid",uid);
                             Intent intent=new Intent(SearchUser.this,NewUserProfile.class);
+                            intent.putExtras(bundle);
                             startActivity(intent);
                         }
                     });

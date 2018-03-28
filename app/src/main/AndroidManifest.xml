@@ -84,9 +84,12 @@
         <activity
             android:name=".PostActivityTag"
             android:screenOrientation="portrait" />
-        <activity android:name=".BlockActivity" />
-        <activity android:name=".SearchUser" />
-        <activity android:name=".NewUserProfile"></activity>
+        <activity android:name=".BlockActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchUser"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NewUserProfile"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
