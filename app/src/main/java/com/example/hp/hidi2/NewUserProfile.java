@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 public class NewUserProfile extends AppCompatActivity
 {
     SessionManager session;
-    TextView useradmire,userlove,uservisitors,userblocks,userhidies;
+    TextView useradmire,userlove,uservisitors,userhidies;
     Button following,blocking;
     DonutProgress userpopular;
     ImageView doadmire,dolove,visitorimg;
@@ -48,7 +48,6 @@ public class NewUserProfile extends AppCompatActivity
         userlove=findViewById(R.id.loveCount1);
         userpopular=findViewById(R.id.popularProgress1);
         uservisitors=findViewById(R.id.visitorsCount1);
-        userblocks =findViewById(R.id.blockCount1);
         userhidies=findViewById(R.id.hidiCount1);
         following=findViewById(R.id.follow);
         visitorimg=findViewById(R.id.visitorpic);
@@ -85,6 +84,11 @@ public class NewUserProfile extends AppCompatActivity
                 {
                     JSONObject records = jsonObject.getJSONObject("records");
                     Picasso.with(getApplicationContext()).load(records.getString("profilepic")).into(visitorimg);
+                    useradmire.setText(""+records.getInt("admires"));
+                    userlove.setText(""+records.getInt("love"));
+                    userpopular.setProgress((float) records.getDouble("popularity"));
+                    uservisitors.setText(""+records.getInt("visitors"));
+                    userhidies.setText(""+records.getInt("hidies"));
 //                    session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
 //                            records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
                 }
