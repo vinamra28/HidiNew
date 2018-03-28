@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "59850571310",
+    "firebase_url": "https://hidi-68cdb.firebaseio.com",
+    "project_id": "hidi-68cdb",
+    "storage_bucket": "hidi-68cdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59850571310:android:4a123119d82af587",
+        "android_client_info": {
+          "package_name": "com.example.hp.hidi2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59850571310-8lius72gvnn7100ncac8jmlphahvqliu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hp.hidi2",
+            "certificate_hash": "716bf218dd0ae05ead62433990c7bc5c34cc29b2"
+          }
+        },
+        {
+          "client_id": "59850571310-qrok0tojiinqrt34dovbe0fmads7uddv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7tN2VdlW33zpn2M4FR3C3caBiwNQYRnE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59850571310-1gk8r99f3d4lbh15k8juj6tqr2gs9d3h.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "KIET.hidi"
+              }
+            },
+            {
+              "client_id": "59850571310-qrok0tojiinqrt34dovbe0fmads7uddv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -180,6 +180,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="0"
+                android:id="@+id/dovisit"
                 android:text="Visitors"
                 android:textSize="16dp" />
 

@@ -84,12 +84,18 @@
         <activity
             android:name=".PostActivityTag"
             android:screenOrientation="portrait" />
-        <activity android:name=".BlockActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SearchUser"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NewUserProfile"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".BlockActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SearchUser"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewUserProfile"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ChatList" />
+        <activity android:name=".HidiListChat" />
+        <activity android:name=".SingleChat"></activity>
     </application>
 
 </manifest>

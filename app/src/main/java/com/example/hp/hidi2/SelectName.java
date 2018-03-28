@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,15 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -44,6 +54,9 @@ public class SelectName extends AppCompatActivity
     String result="",hidiName="";
     int uid=0;
     ArrayList<String> names=new ArrayList<>();
+    private FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
+    private static final String TAG = "AnonymousAuth";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -95,15 +108,45 @@ public class SelectName extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                final Animation myAnim = AnimationUtils.loadAnimation(SelectName.this, R.anim.bounce);
-                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-                myAnim.setInterpolator(interpolator);
-                nextt.startAnimation(myAnim);
+//                final Animation myAnim = AnimationUtils.loadAnimation(SelectName.this, R.anim.bounce);
+//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
+//                myAnim.setInterpolator(interpolator);
+//                nextt.startAnimation(myAnim);
                 dialog.show();
                 new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
+                //Registering user on Firebase
+
+                firebaseAuth = FirebaseAuth.getInstance();
+                final Task<AuthResult> resultTask = firebaseAuth.signInAnonymously();
+                resultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        if (resultTask.isSuccessful()){
+                            Toast.makeText(SelectName.this,"Success",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(SelectName.this,"Failed",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                //Saving data of user on firebase
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                databaseReference.child("users").child(uid+"").child("profilepic:").setValue("havsfua");
+                databaseReference.child("users").child(uid+"").child("username").setValue(hidiName);
             }
         });
     }
+
+
+
+//    @Override
+//    protected void onStart() {
+//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+////        updateUI(currentUser);
+//        super.onStart();
+//    }
+
     public void read()throws IOException
     {
         String str="";

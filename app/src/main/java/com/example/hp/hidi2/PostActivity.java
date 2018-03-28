@@ -176,9 +176,9 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void onLeftSwipe() {
 
-//        Intent intent=new Intent(PostActivity.this,HidiChatActivity.class);
-//        startActivity(intent);
-//        finish();
+        Intent intent=new Intent(PostActivity.this,ChatList.class);
+        startActivity(intent);
+        finish();
     }
 
     private void onRightSwipe() {

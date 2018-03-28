@@ -72,7 +72,7 @@ public class Accounts extends AppCompatActivity
     TextView admire,love,visitors,hidies,blocks;
     Button see_notifications,my_journey;
     static int PICK_IMAGE_REQUEST = 1;
-    TextView block_text;
+    TextView block_text,txtdovisit;
     String mPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String result="";
@@ -98,6 +98,7 @@ public class Accounts extends AppCompatActivity
         hidies=findViewById(R.id.hidiCount);
         blocks=findViewById(R.id.blockCount);
         block_text = findViewById(R.id.block);
+        txtdovisit = findViewById(R.id.dovisit);
         see_notifications=findViewById(R.id.notificationButton);
         imageView_plus = findViewById(R.id.statusButton);
         my_journey=findViewById(R.id.journeyButton);
@@ -305,6 +306,12 @@ public class Accounts extends AppCompatActivity
                 {
                     Intent intent =new Intent(Accounts.this,MyJourneyActivity.class);
                     startActivity(intent);
+                }
+            });
+            txtdovisit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Accounts.this,UnlockVisitors.class));
                 }
             });
         }

@@ -7,10 +7,86 @@
     tools:context="com.example.hp.hidi2.UnlockVisitors">
 
     <RelativeLayout
+        android:id="@+id/visitors_display_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hidi_image_one"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:id="@+id/hidi_name_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/second_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/first_name">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hidi_image_two"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:id="@+id/hidi_name_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/third_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/second_name">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/hidi_image_three"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/goku" />
+
+            <TextView
+                android:id="@+id/hidi_name_three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="40dp"
+                android:text="" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/layout_lock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
         <!--android:layout_below="@+id/visitors_display_layout"-->
         <TextView
             android:id="@+id/text_add"
@@ -56,11 +132,11 @@
             android:gravity="center">
 
             <Button
+                android:id="@+id/show_unlocked_visitors"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:id="@+id/show_unlocked_visitors"
                 android:background="@drawable/cornr_round"
                 android:text="SHOW UNLOCKED VISITORS"
                 android:textColor="#42a5f5" />
