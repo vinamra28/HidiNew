@@ -95,7 +95,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ChatList" />
         <activity android:name=".HidiListChat" />
-        <activity android:name=".SingleChat"></activity>
+        <activity android:name=".SingleChat" />
+        <activity android:name=".AddPeople"></activity>
     </application>
 
 </manifest>

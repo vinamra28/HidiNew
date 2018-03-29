@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -30,33 +28,25 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-public class HidiListChat extends AppCompatActivity
-{
+public class AddPeople extends AppCompatActivity {
+
     String result = "";
     SessionManager session;
     ArrayList<ChatListSet> chatListSets=new ArrayList<>();
     RecyclerView recyclerView;
     ChatListAdapter chatListAdapter;
     ProgressDialog progressDialog;
-    ImageView imageViewaddpeople;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();
     ArrayList<String> arrayListsecname = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hidi_list_chat);
+        setContentView(R.layout.activity_add_people);
         session = new SessionManager(getApplicationContext());
-        recyclerView = findViewById(R.id.recyclerViewChatFriend);
-        imageViewaddpeople = findViewById(R.id.addpeople);
-        imageViewaddpeople.setImageResource(R.drawable.ic_group_add_black_24dp);
-        imageViewaddpeople.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HidiListChat.this,AddPeople.class));
-            }
-        });
+        recyclerView = findViewById(R.id.recyclerViewAddPeople);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressDialog = new ProgressDialog(this);
@@ -111,7 +101,7 @@ public class HidiListChat extends AppCompatActivity
         inputStream.close();
         return result;
     }
-    private class hidiList extends AsyncTask<String,Void,String>{
+    private class hidiList extends AsyncTask<String,Void,String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
