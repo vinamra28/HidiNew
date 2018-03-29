@@ -92,6 +92,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".NewUserProfile"
+            android:theme="@style/AccountsTheme"
             android:screenOrientation="portrait" />
         <activity android:name=".ChatList" />
         <activity android:name=".HidiListChat" />

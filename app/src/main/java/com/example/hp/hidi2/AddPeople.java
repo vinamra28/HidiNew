@@ -32,9 +32,9 @@ public class AddPeople extends AppCompatActivity {
 
     String result = "";
     SessionManager session;
-    ArrayList<ChatListSet> chatListSets=new ArrayList<>();
+    ArrayList<AddPeopleSet> AddPeopleSets=new ArrayList<>();
     RecyclerView recyclerView;
-    ChatListAdapter chatListAdapter;
+    AddPeopleAdapter chatListAdapter;
     ProgressDialog progressDialog;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();
@@ -113,7 +113,7 @@ public class AddPeople extends AppCompatActivity {
             Log.d("result",result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                ChatListSet chatListSet;
+                AddPeopleSet AddPeopleSet;
                 JSONObject info =  jsonObject.getJSONObject("info");
                 if (info.getString("status").equals("success")){
                     progressDialog.dismiss();
@@ -128,11 +128,11 @@ public class AddPeople extends AppCompatActivity {
                         arrayListsecname.add(secname);
                         String profilepic=myhidi.getString("profilepic");
                         arrayListprofilepic.add(profilepic);
-                        chatListSet=new ChatListSet(profilepic,secname,uid);
+                        AddPeopleSet=new AddPeopleSet(profilepic,uid,secname);
                         Log.d("profilepic",profilepic);
-                        chatListSets.add(chatListSet);
+                        AddPeopleSets.add(AddPeopleSet);
                     }
-                    chatListAdapter = new ChatListAdapter(getApplicationContext(),chatListSets);
+                    chatListAdapter = new AddPeopleAdapter(getApplicationContext(),AddPeopleSets);
                     recyclerView.setAdapter(chatListAdapter);
                 }
             } catch (JSONException e) {

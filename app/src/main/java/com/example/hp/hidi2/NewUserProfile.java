@@ -38,6 +38,7 @@ public class NewUserProfile extends AppCompatActivity
     ImageView doadmire,dolove,visitorimg;
     String result="";
     int uid;
+    private ActionBar toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +47,7 @@ public class NewUserProfile extends AppCompatActivity
         setContentView(R.layout.activity_new_user_profile);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
+        toolBar = getSupportActionBar();
         useradmire=findViewById(R.id.admireCount1);
         userlove=findViewById(R.id.loveCount1);
         userpopular=findViewById(R.id.popularProgress1);
@@ -58,6 +60,7 @@ public class NewUserProfile extends AppCompatActivity
         dolove=findViewById(R.id.dolove);
         Bundle bundle=getIntent().getExtras();
         String name=bundle.getString("name");
+        toolBar.setTitle(name);
         uid=bundle.getInt("uid");
         new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/visit.php");
     }
