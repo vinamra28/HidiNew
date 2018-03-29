@@ -21,6 +21,7 @@ public class SessionManager
     public static final String KEY_UID="uid";
     public static final String KEY_NAME="username";
     public static final String KEY_SECNAME="secretName";
+    public static final String KEY_PROFILEPIC="profilepic";
     public static final String KEY_INDEXPATH="indexpath";
     public static final String KEY_ADMIRE="admire";
     public static final String KEY_LOVE="love";
@@ -67,8 +68,9 @@ public class SessionManager
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
-    public void accountDetails(String secname,int admire,int love,int visitors,double popularity,int hidies,int blocks)
+    public void accountDetails(String profilepic,String secname,int admire,int love,int visitors,double popularity,int hidies,int blocks,int indexpath)
     {
+        editor.putString(KEY_PROFILEPIC,profilepic);
         editor.putString(KEY_SECNAME,secname);
         editor.putString(KEY_ADMIRE,""+admire);
         editor.putString(KEY_LOVE,""+love);
@@ -76,22 +78,8 @@ public class SessionManager
         editor.putString(KEY_HIDIES,""+hidies);
         editor.putString(KEY_BLOCKS,""+blocks);
         editor.putString(KEY_POPULARITY,""+(float)popularity);
+        editor.putInt(KEY_INDEXPATH,indexpath);
         editor.commit();
-    }
-    public void saveLoc(double latitude,double longitude)
-    {
-        editor.putString(KEY_LAT,""+latitude);
-        editor.putString(KEY_LONG,""+longitude);
-        editor.commit();
-    }
-    public void saveIndex(int index)
-    {
-        editor.putInt(KEY_INDEXPATH,index);
-        editor.commit();
-    }
-    public int getIndex()
-    {
-        return sharedPreferences.getInt(KEY_INDEXPATH,0);
     }
     public HashMap<String,String> getUserDetails()
     {
@@ -107,13 +95,30 @@ public class SessionManager
         user.put(KEY_BLOCKS,sharedPreferences.getString(KEY_BLOCKS,"0"));
         return user;
     }
+    public void saveLoc(double latitude,double longitude)
+    {
+        editor.putString(KEY_LAT,""+latitude);
+        editor.putString(KEY_LONG,""+longitude);
+        editor.commit();
+    }
     public int getUID()
     {
         return sharedPreferences.getInt(KEY_UID,0);
     }
-
+    public int getIndex()
+    {
+        return sharedPreferences.getInt(KEY_INDEXPATH,0);
+    }
     public String getSecname()
     {
-        return sharedPreferences.getString(KEY_SECNAME,null);
+        return sharedPreferences.getString(KEY_SECNAME,"");
+    }
+    public String getProfilepic()
+    {
+        return sharedPreferences.getString(KEY_PROFILEPIC,"");
+    }
+    public void setSecname(String secname)
+    {
+        editor.putString(KEY_SECNAME,secname);
     }
 }

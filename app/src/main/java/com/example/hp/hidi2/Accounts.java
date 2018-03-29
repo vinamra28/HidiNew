@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.test.mock.MockPackageManager;
@@ -77,6 +78,7 @@ public class Accounts extends AppCompatActivity
     String mPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String result="";
+     ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -91,6 +93,7 @@ public class Accounts extends AppCompatActivity
         }
         session=new SessionManager(getApplicationContext());
 //        session.checkLogin();
+        toolbar=getSupportActionBar();
         userdp = findViewById(R.id.profilepic);
         progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);
@@ -271,10 +274,11 @@ public class Accounts extends AppCompatActivity
                     visitors.setText(""+records.getInt("visitors"));
                     hidies.setText(""+records.getInt("hidies"));
                     blocks.setText(""+records.getInt("blocks"));
-                    session.saveIndex(records.getInt("indexpath"));
                     progress.setProgress((float) records.getDouble("popularity"));
-                    session.accountDetails(records.getString("secname"),records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
-                        records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
+                    toolbar.setTitle(records.getString("secname"));
+                    session.accountDetails(records.getString("profilepic"),records.getString("secname"),
+                            records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
+                        records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"),records.getInt("indexpath"));
                 }
                 else
                 {
@@ -284,6 +288,8 @@ public class Accounts extends AppCompatActivity
                     hidies.setText(user.get(KEY_HIDIES));
                     blocks.setText(user.get(KEY_BLOCKS));
                     love.setText(user.get(KEY_LOVE));
+                    progress.setProgress(Float.parseFloat(user.get(KEY_POPULARITY)));
+
                 }
             }
             catch (JSONException e)

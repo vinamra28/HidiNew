@@ -53,6 +53,7 @@ public class SelectName extends AppCompatActivity
     Button nextt;
     String result="",hidiName="";
     int uid=0;
+    SessionManager session;
     ArrayList<String> names=new ArrayList<>();
     private FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
@@ -64,6 +65,7 @@ public class SelectName extends AppCompatActivity
         setContentView(R.layout.activity_select_name);
         Bundle bundle=getIntent().getExtras();
         uid=bundle.getInt("UID");
+        session=new SessionManager(getApplicationContext());
         dialog=new ProgressDialog(this);
         dialog.setMessage("Registering...");
         dialog.setCancelable(false);
@@ -188,6 +190,7 @@ public class SelectName extends AppCompatActivity
                 String status=info.getString("status");
                 if(status.equals("success"))
                 {
+                    session.setSecname(hidiName);
                     dialog.dismiss();
                     Intent intent = new Intent(SelectName.this, PostActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
