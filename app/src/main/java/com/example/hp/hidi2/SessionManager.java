@@ -21,7 +21,7 @@ public class SessionManager
     public static final String KEY_UID="uid";
     public static final String KEY_NAME="username";
     public static final String KEY_SECNAME="secretName";
-    public static final String KEY_PROFILEPIC="profilepic";
+    public static final String KEY_INDEXPATH="indexpath";
     public static final String KEY_ADMIRE="admire";
     public static final String KEY_LOVE="love";
     public static final String KEY_POPULARITY="popularity";
@@ -67,8 +67,9 @@ public class SessionManager
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
-    public void accountDetails(int admire,int love,int visitors,double popularity,int hidies,int blocks)
+    public void accountDetails(String secname,int admire,int love,int visitors,double popularity,int hidies,int blocks)
     {
+        editor.putString(KEY_SECNAME,secname);
         editor.putString(KEY_ADMIRE,""+admire);
         editor.putString(KEY_LOVE,""+love);
         editor.putString(KEY_VISITORS,""+visitors);
@@ -83,18 +84,27 @@ public class SessionManager
         editor.putString(KEY_LONG,""+longitude);
         editor.commit();
     }
+    public void saveIndex(int index)
+    {
+        editor.putInt(KEY_INDEXPATH,index);
+        editor.commit();
+    }
+    public int getIndex()
+    {
+        return sharedPreferences.getInt(KEY_INDEXPATH,0);
+    }
     public HashMap<String,String> getUserDetails()
     {
         HashMap<String,String> user=new HashMap<>();
-        user.put(KEY_MOBILE,sharedPreferences.getString(KEY_MOBILE,null));
-        user.put(KEY_NAME,sharedPreferences.getString(KEY_NAME,null));
-        user.put(KEY_SECNAME,sharedPreferences.getString(KEY_SECNAME,null));
-        user.put(KEY_ADMIRE,sharedPreferences.getString(KEY_ADMIRE,null));
-        user.put(KEY_LOVE,sharedPreferences.getString(KEY_LOVE,null));
+        user.put(KEY_MOBILE,sharedPreferences.getString(KEY_MOBILE,""));
+        user.put(KEY_NAME,sharedPreferences.getString(KEY_NAME,""));
+        user.put(KEY_SECNAME,sharedPreferences.getString(KEY_SECNAME,""));
+        user.put(KEY_ADMIRE,sharedPreferences.getString(KEY_ADMIRE,"0"));
+        user.put(KEY_LOVE,sharedPreferences.getString(KEY_LOVE,"0"));
         user.put(KEY_POPULARITY,sharedPreferences.getString(KEY_POPULARITY,"0.0"));
-        user.put(KEY_VISITORS,sharedPreferences.getString(KEY_VISITORS,null));
-        user.put(KEY_HIDIES,sharedPreferences.getString(KEY_HIDIES,null));
-        user.put(KEY_BLOCKS,sharedPreferences.getString(KEY_BLOCKS,null));
+        user.put(KEY_VISITORS,sharedPreferences.getString(KEY_VISITORS,"0"));
+        user.put(KEY_HIDIES,sharedPreferences.getString(KEY_HIDIES,"0"));
+        user.put(KEY_BLOCKS,sharedPreferences.getString(KEY_BLOCKS,"0"));
         return user;
     }
     public int getUID()

@@ -66,6 +66,7 @@ public class Accounts extends AppCompatActivity
     float x1, x2, y1, y2;
     DonutProgress progress;
     Uri URI;
+    HashMap<String,String> user;
     String[] FILE;
     String ImageDecode;
     ImageView imageView_plus,userdp;
@@ -102,6 +103,13 @@ public class Accounts extends AppCompatActivity
         see_notifications=findViewById(R.id.notificationButton);
         imageView_plus = findViewById(R.id.statusButton);
         my_journey=findViewById(R.id.journeyButton);
+        user=session.getUserDetails();
+        admire.setText(user.get(KEY_ADMIRE));
+        love.setText(user.get(KEY_LOVE));
+        progress.setProgress(Float.parseFloat(user.get(KEY_POPULARITY)));
+        visitors.setText(user.get(KEY_VISITORS));
+        hidies.setText(user.get(KEY_HIDIES));
+        blocks.setText(user.get(KEY_BLOCKS));
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.index);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(55f);
@@ -249,13 +257,6 @@ public class Accounts extends AppCompatActivity
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
-            HashMap<String,String> user=session.getUserDetails();
-            admire.setText(user.get(KEY_ADMIRE));
-            visitors.setText(user.get(KEY_VISITORS));
-            hidies.setText(user.get(KEY_HIDIES));
-            blocks.setText(user.get(KEY_BLOCKS));
-            love.setText(user.get(KEY_LOVE));
-            progress.setProgress(Float.parseFloat(user.get(KEY_POPULARITY)));
             Log.d("Result", result);
             try
             {
@@ -265,7 +266,14 @@ public class Accounts extends AppCompatActivity
                 {
                     JSONObject records = res.getJSONObject("records");
                     Picasso.with(getApplicationContext()).load(records.getString("profilepic")).into(userdp);
-                    session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
+                    admire.setText(""+records.getInt("admire"));
+                    love.setText(""+records.getInt("love"));
+                    visitors.setText(""+records.getInt("visitors"));
+                    hidies.setText(""+records.getInt("hidies"));
+                    blocks.setText(""+records.getInt("blocks"));
+                    session.saveIndex(records.getInt("indexpath"));
+                    progress.setProgress((float) records.getDouble("popularity"));
+                    session.accountDetails(records.getString("secname"),records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
                         records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
                 }
                 else

@@ -70,6 +70,7 @@ public class PostActivityLocation extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                recyclerView.setAdapter(null);
                 dist=2;
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
@@ -79,6 +80,7 @@ public class PostActivityLocation extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                recyclerView.setAdapter(null);
                 dist=4;
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
@@ -88,6 +90,7 @@ public class PostActivityLocation extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                recyclerView.setAdapter(null);
                 dist=8;
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
@@ -145,7 +148,7 @@ public class PostActivityLocation extends AppCompatActivity
 //                                posts.getString("profilepic"),posts.getString("pic"));
                         postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
-                        myAdapter_post.notifyDataSetChanged();
+//                        myAdapter_post.notifyDataSetChanged();
                     }
                 }
                 else
