@@ -66,9 +66,10 @@
                     <!--android:backgroundTint="@color/green_dark"-->
                     <!--android:foreground="@drawable/ic_send_black_24dp"/>-->
                 <android.support.design.widget.FloatingActionButton
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:id="@+id/send"
+                    android:backgroundTint="#66bb6a"
                     android:src="@drawable/ic_send_black_24dp"/>
             </LinearLayout>
 

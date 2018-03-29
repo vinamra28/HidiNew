@@ -47,7 +47,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class PostActivity extends AppCompatActivity {
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;
@@ -74,7 +74,7 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         progress.setMessage("Loading....");
         progress.setCancelable(false);
         progress.setIndeterminate(false);
-        progress.show();
+
         gps = new GPSTracker(this);
         session.saveLoc(gps.latitude, gps.longitude);
         myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
@@ -87,7 +87,18 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         BottomNavigationView navigation = findViewById(R.id.navigation);
         recyclerView = findViewById(R.id.recyclerView);
         constraintLayout = findViewById(R.id.post_layout);
+//        new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
+        progress.show();
+        swiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.e("dcd","cde");
+                new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
+            }
+        });
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        swiper.setRefreshing(true);
+        new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
         layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -125,13 +136,7 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
                 return false;
             }
         });
-        swiper.post(new Runnable() {
-            @Override
-            public void run() {
-//                swiper.setRefreshing(true);
-                new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
-            }
-        });
+
 
     }
 
@@ -167,12 +172,13 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
-    @Override
+   /* @Override
     public void onRefresh() {
 
         // Fetching data from server
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
-    }
+        progress.show();
+    }*/
 
     private void onLeftSwipe() {
 
@@ -239,6 +245,8 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
                 JSONArray records = respnse.getJSONArray("records");
                 if ((info.getString("status")).equals("success")) {
                     progress.dismiss();
+                    swiper.setRefreshing(false);
+
                     for (int i = 0; i < records.length(); i++) {
                         JSONObject posts = records.getJSONObject(i);
                         Log.d("pid", "" + posts.getInt("pid"));
@@ -275,7 +283,6 @@ public class PostActivity extends AppCompatActivity implements SwipeRefreshLayou
                         postGet = new PostGet(pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
                         postList.add(postGet);
                         myAdapter_post.notifyDataSetChanged();
-                        swiper.setRefreshing(false);
                     }
                 } else {
                     progress.dismiss();

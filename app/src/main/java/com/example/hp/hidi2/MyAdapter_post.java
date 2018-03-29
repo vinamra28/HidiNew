@@ -3,6 +3,7 @@ package com.example.hp.hidi2;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,7 +108,11 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             @Override
             public void onClick(View v)
             {
+                int pid= Integer.parseInt(postList.get(holder.getAdapterPosition()).getPid());
+                Bundle bundle=new Bundle();
+                bundle.putInt("pid",pid);
                 Intent intent = new Intent(v.getContext(), Arguments.class);
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
             }
         });

@@ -21,6 +21,7 @@ public class SessionManager
     public static final String KEY_UID="uid";
     public static final String KEY_NAME="username";
     public static final String KEY_SECNAME="secretName";
+    public static final String KEY_PROFILEPIC="profilepic";
     public static final String KEY_ADMIRE="admire";
     public static final String KEY_LOVE="love";
     public static final String KEY_POPULARITY="popularity";
@@ -99,5 +100,10 @@ public class SessionManager
     public int getUID()
     {
         return sharedPreferences.getInt(KEY_UID,0);
+    }
+
+    public String getSecname()
+    {
+        return sharedPreferences.getString(KEY_SECNAME,null);
     }
 }

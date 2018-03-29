@@ -16,41 +16,42 @@ import java.util.List;
  * Created by HP on 15-Mar-18.
  */
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>
+{
     private Context context;
     private List<CommentGet> commentGets;
     public CommentGet commentGet;
 
-    public CommentAdapter(Context context, List<CommentGet> commentGets) {
+    public CommentAdapter(Context context, List<CommentGet> commentGets)
+    {
         this.context = context;
         this.commentGets = commentGets;
     }
-
-    public CommentAdapter(List<CommentGet> commentGets) {
+    public CommentAdapter(List<CommentGet> commentGets)
+    {
         this.commentGets = commentGets;
     }
-
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+    {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_design,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
         commentGet = commentGets.get(holder.getAdapterPosition());
-        Picasso.with(context).load("url").into(holder.imageView);
+        Picasso.with(context).load(commentGet.getUser_dp()).into(holder.imageView);
         holder.user_name.setText(commentGet.getUser_name());
         holder.user_comment.setText(commentGet.getUser_comment());
-        holder.reply_button.setText(commentGet.getReply_commnet());
+//        holder.reply_button.setText(commentGet.getReply_commnet());
     }
-
     @Override
     public int getItemCount()
+
     {
         return commentGets.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         public TextView user_name,user_comment,reply_button;

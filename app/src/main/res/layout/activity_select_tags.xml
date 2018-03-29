@@ -229,20 +229,20 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addTags"
-        android:layout_width="46dp"
-        android:layout_height="53dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/green_dark"
-        android:foreground="@drawable/ic_send_black_24dp"
+        android:backgroundTint="#66bb6a"
+        android:src="@drawable/ic_send_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.983"
-        app:rippleColor="@color/green_dark" />
+         />
 
 </android.support.constraint.ConstraintLayout>

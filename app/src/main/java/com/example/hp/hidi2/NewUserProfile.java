@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.squareup.picasso.Picasso;
@@ -79,6 +80,10 @@ public class NewUserProfile extends AppCompatActivity
             Log.d("result",result);
             try
             {
+                if(result.length()==0)
+                {
+                    Toast.makeText(NewUserProfile.this,"Unable to load",Toast.LENGTH_SHORT).show();
+                }
                 JSONObject jsonObject=new JSONObject(result);
                 JSONObject info=jsonObject.getJSONObject("info");
                 if(info.getString("status").equals("success"))
@@ -93,10 +98,36 @@ public class NewUserProfile extends AppCompatActivity
 //                    session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
 //                            records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
                 }
-                dolove.setOnClickListener(new View.OnClickListener() {
+                else
+                {
+                    Toast.makeText(NewUserProfile.this,""+info.getString("message"),Toast.LENGTH_SHORT).show();
+                }
+                dolove.setOnClickListener(new View.OnClickListener()
+                {
                     @Override
-                    public void onClick(View v) {
-
+                    public void onClick(View v)
+                    {
+                    }
+                });
+                doadmire.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                    }
+                });
+                following.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                    }
+                });
+                blocking.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
                     }
                 });
             }

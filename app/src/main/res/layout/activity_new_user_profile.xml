@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/AccountsTheme"
+    style="@style/AccountsTheme"
     tools:context="com.example.hp.hidi2.NewUserProfile">
 
     <!--<android.support.v7.widget.Toolbar-->

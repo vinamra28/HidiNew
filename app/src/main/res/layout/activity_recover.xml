@@ -79,6 +79,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <EditText
+                android:id="@+id/oldno"
                 android:layout_width="335dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -105,6 +106,7 @@
             app:layout_constraintVertical_bias="0.009">
 
             <EditText
+                android:id="@+id/newno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -131,6 +133,7 @@
             app:layout_constraintVertical_bias="0.0">
 
             <EditText
+                android:id="@+id/oldpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
