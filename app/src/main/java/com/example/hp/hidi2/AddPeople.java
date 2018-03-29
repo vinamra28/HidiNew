@@ -3,6 +3,7 @@ package com.example.hp.hidi2;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,11 +36,12 @@ public class AddPeople extends AppCompatActivity {
     ArrayList<AddPeopleSet> AddPeopleSets=new ArrayList<>();
     RecyclerView recyclerView;
     AddPeopleAdapter chatListAdapter;
+    ArrayList<String> arrayListpeople;
     ProgressDialog progressDialog;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();
     ArrayList<String> arrayListsecname = new ArrayList<>();
-
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,15 @@ public class AddPeople extends AppCompatActivity {
         setContentView(R.layout.activity_add_people);
         session = new SessionManager(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerViewAddPeople);
+        floatingActionButton = findViewById(R.id.proceedgroup);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayListpeople = chatListAdapter.getAdapterArrayList();
+                Log.d("arraylistfinal", String.valueOf(arrayListpeople));
+                startActivity(new Intent(AddPeople.this,GroupDeclaration.class));
+            }
+        });
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressDialog = new ProgressDialog(this);

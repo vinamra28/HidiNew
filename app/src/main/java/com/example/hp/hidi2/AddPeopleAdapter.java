@@ -49,6 +49,7 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
     @Override
     public void onBindViewHolder(final AddPeopleAdapter.ViewHolder holder, int position) {
         addPeopleSet = addPeopleSets.get(holder.getAdapterPosition());
+        final AddPeopleSet addPeople = addPeopleSets.get(position);
         holder.txtname.setText(addPeopleSet.getName());
         Picasso.with(context).load(addPeopleSet.getUrl()).into(holder.circleImageView);
         Log.d("in", String.valueOf(index));
@@ -60,21 +61,20 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     color = R.color.colorAccent;
                     allindex[holder.getAdapterPosition()] = 1;
                     Log.d("blue", String.valueOf(allindex[holder.getAdapterPosition()]));
-                    personname = addPeopleSet.getName();
+                    personname = addPeople.getName();
                     Log.d("addpersonname", personname);
                     arrayListpeopleadded.add(personname);
                 } else {
                     color = R.color.back_color;
                     allindex[holder.getAdapterPosition()] = 0;
                     Log.d("white", String.valueOf(allindex[holder.getAdapterPosition()]));
-                    personname = addPeopleSet.getName();
+                    personname = addPeople.getName();
                     Log.d("removepersonname", personname);
                     arrayListpeopleadded.remove(personname);
                 }
                 holder.constraintLayout.setBackgroundColor(color);
             }
         });
-        Log.d("ArrayList", String.valueOf(arrayListpeopleadded));
     }
 
     @Override
@@ -93,5 +93,10 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
             txtname = itemView.findViewById(R.id.friendname);
             constraintLayout = itemView.findViewById(R.id.constraintlayout);
         }
+    }
+
+    public ArrayList<String> getAdapterArrayList(){
+        Log.d("ArrayListadapter", String.valueOf(arrayListpeopleadded));
+        return arrayListpeopleadded;
     }
 }

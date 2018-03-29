@@ -92,12 +92,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".NewUserProfile"
-            android:theme="@style/AccountsTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme" />
         <activity android:name=".ChatList" />
         <activity android:name=".HidiListChat" />
         <activity android:name=".SingleChat" />
-        <activity android:name=".AddPeople"></activity>
+        <activity android:name=".AddPeople" />
+        <activity android:name=".GroupDeclaration"></activity>
     </application>
 
 </manifest>
