@@ -37,6 +37,8 @@ public class AddPeople extends AppCompatActivity {
     RecyclerView recyclerView;
     AddPeopleAdapter chatListAdapter;
     ArrayList<String> arrayListpeople;
+    ArrayList<String> arrayListimage;
+    ArrayList<String> arrayListUidAddedpeople;
     ProgressDialog progressDialog;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();
@@ -53,9 +55,19 @@ public class AddPeople extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arrayListpeople = chatListAdapter.getAdapterArrayList();
-                Log.d("arraylistfinal", String.valueOf(arrayListpeople));
-                startActivity(new Intent(AddPeople.this,GroupDeclaration.class));
+                arrayListpeople = chatListAdapter.getAdapterArrayListName();
+                Log.d("arraylistfinalname", String.valueOf(arrayListpeople));
+                arrayListimage = chatListAdapter.getAdapterArrayListImage();
+                Log.d("arraylistfinalimage", String.valueOf(arrayListimage));
+                arrayListUidAddedpeople = chatListAdapter.getAdapterArrayListUid();
+                Log.d("arraylistfinalUid", String.valueOf(arrayListUidAddedpeople));
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("arraylistsendname",arrayListpeople);
+                bundle.putStringArrayList("arraylistsendimage",arrayListimage);
+                bundle.putStringArrayList("arraylistsendUid",arrayListUidAddedpeople);
+                Intent intent = new Intent(AddPeople.this,GroupDeclaration.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         recyclerView.setHasFixedSize(true);

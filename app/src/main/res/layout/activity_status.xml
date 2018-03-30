@@ -2,38 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/background"
-    android:orientation="vertical"
     android:background="@color/backcolor"
+    android:orientation="vertical"
     tools:context="com.example.hp.hidi2.StatusActivity">
+
     <View
+        android:id="@+id/views"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:id="@+id/views"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp" />
+
     <EditText
         android:id="@+id/text"
-        android:layout_below="@+id/views"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/linearsLyo"
+        android:layout_below="@+id/views"
         android:background="@android:color/transparent"
         android:gravity="center"
+        android:hint="Type a status"
         android:maxLength="120"
         android:maxLines="12"
-        android:layout_above="@+id/linearsLyo"
-        android:hint="Type a status"
         android:textColorHint="#000"
         android:textSize="35sp" />
+
     <LinearLayout
+        android:id="@+id/linearsLyo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearsLyo"
         android:layout_alignParentBottom="true"
-        android:weightSum="4"
+        android:layout_margin="20dp"
         android:orientation="horizontal"
-        android:layout_margin="20dp">
+        android:weightSum="4">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,37 +48,34 @@
                 android:id="@+id/color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/ic_color_lens_black_24dp" />
         </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/send"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:background="@drawable/ic_send_black_24dp"/>-->
-                <!--<com.github.clans.fab.FloatingActionButton-->
-                    <!--android:id="@+id/send"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--app:rippleColor="@color/green_dark"-->
-                    <!--android:backgroundTint="@color/green_dark"-->
-                    <!--android:foreground="@drawable/ic_send_black_24dp"/>-->
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:id="@+id/send"
-                    app:backgroundTint="#66bb6a"
-                    android:src="@drawable/ic_send_black_24dp"/>
-            </LinearLayout>
-
-
-
-
+            <!--<ImageView-->
+            <!--android:id="@+id/send"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/ic_send_black_24dp"/>-->
+            <!--<com.github.clans.fab.FloatingActionButton-->
+            <!--android:id="@+id/send"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:rippleColor="@color/green_dark"-->
+            <!--android:backgroundTint="@color/green_dark"-->
+            <!--android:foreground="@drawable/ic_send_black_24dp"/>-->
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/send"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_send_black_24dp"
+                app:backgroundTint="#66bb6a" />
+        </LinearLayout>
 
 
     </LinearLayout>

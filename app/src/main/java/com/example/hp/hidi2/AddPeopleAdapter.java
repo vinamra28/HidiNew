@@ -24,10 +24,12 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
     private Context context;
     private List<AddPeopleSet> addPeopleSets;
     AddPeopleSet addPeopleSet;
-    ArrayList<String> arrayListpeopleadded = new ArrayList<>();
+    ArrayList<String> arrayListpeopleaddedname = new ArrayList<>();
+    ArrayList<String> arrayListpeopleaddedimage = new ArrayList<>();
+    ArrayList<String>  arrayListpeopleUid = new ArrayList<>();
     int index ;
     int allindex[];
-    String personname;
+    String personname,personimageurl,personuid;
 
     public AddPeopleAdapter(Context context, List<AddPeopleSet> addPeopleSets) {
         this.context = context;
@@ -62,15 +64,21 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     allindex[holder.getAdapterPosition()] = 1;
                     Log.d("blue", String.valueOf(allindex[holder.getAdapterPosition()]));
                     personname = addPeople.getName();
+                    personimageurl = addPeople.getUrl();
+                    personuid = addPeople.getUid();
                     Log.d("addpersonname", personname);
-                    arrayListpeopleadded.add(personname);
+                    arrayListpeopleaddedimage.add(personimageurl);
+                    arrayListpeopleaddedname.add(personname);
+                    arrayListpeopleUid.add(personuid);
                 } else {
                     color = R.color.back_color;
                     allindex[holder.getAdapterPosition()] = 0;
                     Log.d("white", String.valueOf(allindex[holder.getAdapterPosition()]));
                     personname = addPeople.getName();
                     Log.d("removepersonname", personname);
-                    arrayListpeopleadded.remove(personname);
+                    arrayListpeopleaddedimage.remove(personimageurl);
+                    arrayListpeopleaddedname.remove(personname);
+                    arrayListpeopleUid.remove(personuid);
                 }
                 holder.constraintLayout.setBackgroundColor(color);
             }
@@ -95,8 +103,16 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
         }
     }
 
-    public ArrayList<String> getAdapterArrayList(){
-        Log.d("ArrayListadapter", String.valueOf(arrayListpeopleadded));
-        return arrayListpeopleadded;
+    public ArrayList<String> getAdapterArrayListName(){
+        Log.d("ArrayListadapterName", String.valueOf(arrayListpeopleaddedname));
+        return arrayListpeopleaddedname;
+    }
+    public ArrayList<String> getAdapterArrayListImage(){
+        Log.d("ArrayListadapterImage", String.valueOf(arrayListpeopleaddedimage));
+        return arrayListpeopleaddedimage;
+    }
+    public ArrayList<String> getAdapterArrayListUid(){
+        Log.d("ArrayListadapter", String.valueOf(arrayListpeopleUid));
+        return arrayListpeopleUid;
     }
 }

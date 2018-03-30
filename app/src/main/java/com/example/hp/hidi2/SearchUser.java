@@ -164,9 +164,10 @@ public class SearchUser extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id)
                         {
-                            String name= (String) parent.getItemAtPosition(position);
+                            String name1= (String) parent.getItemAtPosition(position);
+                            String name = name1;
                             Log.d("User selected",name);
-                            int uid=hashMap.get(name);
+                            int uid=hashMap.get(name1);
                             Bundle bundle =new Bundle();
                             bundle.putString("name",name);
                             bundle.putInt("uid",uid);

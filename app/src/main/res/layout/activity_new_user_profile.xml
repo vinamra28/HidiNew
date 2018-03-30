@@ -8,12 +8,12 @@
     tools:context="com.example.hp.hidi2.NewUserProfile">
 
     <!--<android.support.v7.widget.Toolbar-->
-        <!--android:layout_width="357dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:layout_constraintVertical_bias="0.0"></android.support.v7.widget.Toolbar>-->
+    <!--android:layout_width="357dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"-->
+    <!--app:layout_constraintVertical_bias="0.0"></android.support.v7.widget.Toolbar>-->
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -87,7 +87,8 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0" />
+                android:textColor="#000"
+                android:text="Admire" />
 
             <ImageView
                 android:id="@+id/dolove"
@@ -106,7 +107,8 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="0" />
+                android:text="Love"
+                android:textColor="#000"/>
 
 
         </LinearLayout>
@@ -257,10 +259,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginHorizontal="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -270,37 +270,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-
-        <Button
-            android:id="@+id/follow"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:text="Follow"
-            android:textAllCaps="false"
-            android:textSize="16dp" />
+            android:weightSum="3">
 
-        <!--<Button-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/Base.Widget.AppCompat.Button.Borderless"/>-->
+            <Button
+                android:id="@+id/follow"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".9"
+                android:background="@drawable/buttonborder"
+                android:text="Follow"
+                android:textAllCaps="false"
+                android:textSize="16dp" />
 
-        <Button
-            android:id="@+id/blockuser"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="16dp"
-            android:gravity="center"
-            android:text="Block"
-            android:textAllCaps="false"
-            android:textSize="16dp" />
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2" />
+
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:id="@+id/blockuser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".9"
+                android:gravity="center"
+                android:text="Block"
+                android:textAllCaps="false"
+                android:textSize="16dp"
+                android:background="@drawable/buttonborder" />
+        </LinearLayout>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

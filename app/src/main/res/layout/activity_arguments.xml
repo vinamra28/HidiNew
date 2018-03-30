@@ -6,54 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.hp.hidi2.Arguments">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:id="@+id/back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="10">
-
-                <ImageButton
-                    android:id="@+id/back_btn"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:background="@drawable/ic_arrow_back_black_24dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:layout_weight="6"
-                    android:gravity="center"
-                    android:text="ARGUMENTS"
-                    android:textColor="#000"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-
-        </RelativeLayout>
-
-
-    </android.support.v7.widget.CardView>
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewcmt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/mycomment"
-        android:layout_below="@+id/cardView"></android.support.v7.widget.RecyclerView>
+        android:layout_above="@+id/mycomment">
+
+    </android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:id="@+id/mycomment"

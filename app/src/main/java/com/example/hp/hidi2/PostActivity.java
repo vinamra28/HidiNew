@@ -1,8 +1,13 @@
 package com.example.hp.hidi2;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -140,6 +145,18 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Rect dialogBounds = new Rect();
+        getWindow().getDecorView().getHitRect(dialogBounds);
+
+        if (!dialogBounds.contains((int) ev.getX(), (int) ev.getY())) {
+            // Tapped outside so we finish the activity
+            this.finish();
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
     private void initiatepopupWindow() {
         try {
             LayoutInflater inflater = (LayoutInflater) PostActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -160,6 +177,24 @@ public class PostActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(PostActivity.this, PostActivityTag.class);
                     startActivity(intent);
+                }
+            });
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setFocusable(true);
+            popupWindow.setBackgroundDrawable(new BitmapDrawable(null,""));
+
+
+            Dialog dialog = new Dialog(this);
+            dialog.setCanceledOnTouchOutside(true);
+            popupWindow.setFocusable(true);
+            popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                    return false;
                 }
             });
 //            TextView textView = layout.findViewById(R.id.new_post_header);
