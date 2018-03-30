@@ -10,20 +10,20 @@
     <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/post_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#798081"
-        android:orientation="horizontal"
-        android:weightSum="10">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/post_header"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#798081"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="10">-->
 
-        <SearchView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--<SearchView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
 
-        </SearchView>
-    </LinearLayout>
+        <!--</SearchView>-->
+    <!--</LinearLayout>-->
 <android.support.v4.widget.SwipeRefreshLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

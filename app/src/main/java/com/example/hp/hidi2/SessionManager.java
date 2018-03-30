@@ -115,7 +115,7 @@ public class SessionManager
     }
     public String getProfilepic()
     {
-        return sharedPreferences.getString(KEY_PROFILEPIC,"");
+        return sharedPreferences.getString(KEY_PROFILEPIC,"http://hidi.org.in/hidi/account/image/"+getUID()+".png");
     }
     public void setSecname(String secname)
     {

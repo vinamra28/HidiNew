@@ -36,7 +36,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PostActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
         <activity
             android:name=".VerifyOtp"
             android:screenOrientation="portrait" />
@@ -99,6 +100,7 @@
         <activity android:name=".SingleChat" />
         <activity android:name=".AddPeople" />
         <activity android:name=".GroupDeclaration"></activity>
+        <!--<meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/GOOGLE_API_KEY"/>-->
     </application>
 
 </manifest>

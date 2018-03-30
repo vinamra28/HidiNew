@@ -155,6 +155,7 @@ public class Arguments extends AppCompatActivity {
                                 commentGet=new CommentGet(profilepic,sender_name,cmtText);
                                 commentGetList.add(commentGet);
                             }
+                            recyclerView.scrollToPosition(commentAdapter.getItemCount()-1);
                         }
                     }
                 }

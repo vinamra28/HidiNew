@@ -13,20 +13,28 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -66,6 +74,8 @@ public class PostActivity extends AppCompatActivity {
     String result = "";
     SwipeRefreshLayout swiper;
     private PopupWindow popupWindow;
+    private ActionBar toolbar;
+    TextView actionbars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +89,10 @@ public class PostActivity extends AppCompatActivity {
         progress.setMessage("Loading....");
         progress.setCancelable(false);
         progress.setIndeterminate(false);
-
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
         gps = new GPSTracker(this);
         session.saveLoc(gps.latitude, gps.longitude);
         myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
@@ -379,5 +392,50 @@ public class PostActivity extends AppCompatActivity {
             result += line;
         inputStream.close();
         return result;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the search menu action bar.
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.action_bar_search, menu);
+
+        // Get the search menu.
+        MenuItem searchMenu = menu.findItem(R.id.app_bar_menu_search);
+
+        // Get SearchView object.
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
+
+        // Get SearchView autocomplete object.
+        final SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setBackgroundColor(Color.argb(01,79,80,81));
+        searchAutoComplete.setTextColor(Color.WHITE);
+        searchAutoComplete.setDropDownBackgroundResource(android.R.color.white);
+        String dataArr[] = {"Apple", "Amazon", "Amd", "Microsoft", "Microwave", "MicroNews", "Intel", "Intelligence"};
+        ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, dataArr);
+        searchAutoComplete.setAdapter(newsAdapter);
+        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long id) {
+                String queryString = (String) adapterView.getItemAtPosition(itemIndex);
+                searchAutoComplete.setText("" + queryString);
+                Toast.makeText(PostActivity.this, "you clicked " + queryString, Toast.LENGTH_LONG).show();
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                AlertDialog alertDialog = new AlertDialog.Builder(PostActivity.this).create();
+                alertDialog.setMessage("Search keyword is " + query);
+                alertDialog.show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }

@@ -71,7 +71,7 @@ public class Accounts extends AppCompatActivity
     String[] FILE;
     String ImageDecode;
     ImageView imageView_plus,userdp;
-    TextView admire,love,visitors,hidies,blocks;
+    TextView admire,love,visitors,hidies,blocks,actionbars;
     Button see_notifications,my_journey;
     static int PICK_IMAGE_REQUEST = 1;
     TextView block_text,txtdovisit;
@@ -94,6 +94,10 @@ public class Accounts extends AppCompatActivity
         session=new SessionManager(getApplicationContext());
 //        session.checkLogin();
         toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
+        actionbars.setText("Posts");
         userdp = findViewById(R.id.profilepic);
         progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);
@@ -113,6 +117,7 @@ public class Accounts extends AppCompatActivity
         visitors.setText(user.get(KEY_VISITORS));
         hidies.setText(user.get(KEY_HIDIES));
         blocks.setText(user.get(KEY_BLOCKS));
+        actionbars.setText(session.getSecname());
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.index);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(55f);
@@ -275,7 +280,8 @@ public class Accounts extends AppCompatActivity
                     hidies.setText(""+records.getInt("hidies"));
                     blocks.setText(""+records.getInt("blocks"));
                     progress.setProgress((float) records.getDouble("popularity"));
-                    toolbar.setTitle(records.getString("secname"));
+//                    toolbar.setTitle(records.getString("secname"));
+                    actionbars.setText(records.getString("secname"));
                     session.accountDetails(records.getString("profilepic"),records.getString("secname"),
                             records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
                         records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"),records.getInt("indexpath"));
