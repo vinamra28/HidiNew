@@ -1,10 +1,8 @@
 package com.example.hp.hidi2;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,20 +22,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class SelectTags extends AppCompatActivity
 {
     Button button_arts,button_asia,button_australia,button_beauty,button_books,button_bussiness,button_carrees,button_cars,button_edu,button_europe;
     Button button_fitness,button_food,button_fun,button_games,button_health,button_it,button_math,button_add,button_law;
+
     ImageView tagging;
     SessionManager session;
     String result="";
     String tags="";
     int pid;
+    ArrayList<String> tagnames=new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -83,7 +80,9 @@ public class SelectTags extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
                 button_arts.setBackgroundResource(R.drawable.circular_round_click);
+
             }
         });
         button_asia.setOnClickListener(new View.OnClickListener() {
@@ -104,9 +103,11 @@ public class SelectTags extends AppCompatActivity
                 button_beauty.setBackgroundResource(R.drawable.circular_round_click);
             }
         });
-        button_books.setOnClickListener(new View.OnClickListener() {
+        button_books.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 button_books.setBackgroundResource(R.drawable.circular_round_click);
             }
         });
@@ -128,21 +129,27 @@ public class SelectTags extends AppCompatActivity
                 button_cars.setBackgroundResource(R.drawable.circular_round_click);
             }
         });
-        button_edu.setOnClickListener(new View.OnClickListener() {
+        button_edu.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 button_edu.setBackgroundResource(R.drawable.circular_round_click);
             }
         });
-        button_europe.setOnClickListener(new View.OnClickListener() {
+        button_europe.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 button_europe.setBackgroundResource(R.drawable.circular_round_click);
             }
         });
-        button_fitness.setOnClickListener(new View.OnClickListener() {
+        button_fitness.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 button_fitness.setBackgroundResource(R.drawable.circular_round_click);
             }
         });

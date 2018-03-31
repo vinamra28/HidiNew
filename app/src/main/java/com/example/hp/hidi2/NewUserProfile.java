@@ -195,7 +195,10 @@ public class NewUserProfile extends AppCompatActivity
         @Override
         protected String doInBackground(String... url)
         {
-            return POST(url[0]);
+            String abc=POST(url[0]);
+            Log.d("Post data",abc);
+            return abc;
+
         }
         @Override
         protected void onPostExecute(String s)
@@ -275,9 +278,16 @@ public class NewUserProfile extends AppCompatActivity
             inputStream=httpResponse.getEntity().getContent();
             Log.d("inputStream",inputStream.toString());
             if(inputStream!=null)
+            {
+                Log.d("if","if");
                 result=convertInputStreamToString(inputStream);
+            }
             else
+            {
+                Log.d("else","else");
                 result = "Did not work!";
+            }
+
         }
         catch (JSONException e)
         {
@@ -291,6 +301,7 @@ public class NewUserProfile extends AppCompatActivity
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.d("YEs","YEs");
         return result;
     }
     private static String convertInputStreamToString(InputStream inputStream) throws IOException

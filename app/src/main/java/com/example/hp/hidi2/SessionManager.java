@@ -117,6 +117,10 @@ public class SessionManager
     {
         return sharedPreferences.getString(KEY_PROFILEPIC,"http://hidi.org.in/hidi/account/image/"+getUID()+".png");
     }
+    public int getVisitors()
+    {
+        return Integer.parseInt(sharedPreferences.getString(KEY_VISITORS,""));
+    }
     public void setSecname(String secname)
     {
         editor.putString(KEY_SECNAME,secname);
