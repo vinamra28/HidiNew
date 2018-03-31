@@ -37,7 +37,7 @@
         <activity
             android:name=".PostActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AccountsTheme"/>
+            android:theme="@style/AccountsTheme" />
         <activity
             android:name=".VerifyOtp"
             android:screenOrientation="portrait" />
@@ -95,12 +95,27 @@
             android:name=".NewUserProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
-        <activity android:name=".ChatList" />
-        <activity android:name=".HidiListChat" />
-        <activity android:name=".SingleChat" />
-        <activity android:name=".AddPeople" />
-        <activity android:name=".GroupDeclaration"></activity>
-        <!--<meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/GOOGLE_API_KEY"/>-->
+        <activity
+            android:name=".ChatList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HidiListChat"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SingleChat"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AddPeople"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GroupDeclaration"
+            android:screenOrientation="portrait" />
+        <!-- <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/GOOGLE_API_KEY"/> -->
+        <activity
+            android:name=".MyHidiesPosts"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ShowUnlockedVisitors"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

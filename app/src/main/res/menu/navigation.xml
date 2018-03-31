@@ -12,7 +12,7 @@
         android:title="@string/title_person"
         />
     <item
-        android:id="@+id/my"
+        android:id="@+id/my_hidies"
         android:icon="@mipmap/ic_group_white_24dp"
         android:title="@string/title_my"
         />

@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.app.VoiceInteractor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class Arguments extends AppCompatActivity {
     SessionManager session;
     String result="";
     String time_stamp="",mycomment;
+    ProgressDialog progress;
     int pid;
     private List<CommentGet> commentGetList = new ArrayList<>();
 
@@ -56,8 +58,13 @@ public class Arguments extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         pid=bundle.getInt("pid");
         recyclerView = findViewById(R.id.recyclerViewcmt);
+        progress = new ProgressDialog(this);
+        progress.setMessage("Loading....");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
         commentAdapter=new CommentAdapter(getApplicationContext(),commentGetList);
         new loadCmt().execute("http://hidi.org.in/hidi/comments/showcomments.php");
+        progress.show();
         mycmt=findViewById(R.id.mycmt);
         mycmt.requestFocus();
         sendcmt=findViewById(R.id.sendcmt);
@@ -105,6 +112,7 @@ public class Arguments extends AppCompatActivity {
                 if(info.getString("status").equals("success"))
                 {
                     mycmt.clearFocus();
+
                 }
             }
             catch (JSONException e)
@@ -136,6 +144,7 @@ public class Arguments extends AppCompatActivity {
                     JSONObject info=jsonObject.getJSONObject("info");
                     if(info.getString("status").equals("success"))
                     {
+                        progress.dismiss();
                         JSONArray records=jsonObject.getJSONArray("records");
                         if(records.length()==0)
                         {

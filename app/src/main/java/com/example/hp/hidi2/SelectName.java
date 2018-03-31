@@ -134,7 +134,7 @@ public class SelectName extends AppCompatActivity
                 //Saving data of user on firebase
                 databaseReference = FirebaseDatabase.getInstance().getReference();
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                databaseReference.child("users").child(uid+"").child("profilepic:").setValue("havsfua");
+                databaseReference.child("users").child(uid+"").child("profilepic:").setValue("http://hidi.org.in/hidi/account/image/default.png");
                 databaseReference.child("users").child(uid+"").child("username").setValue(hidiName);
             }
         });

@@ -119,10 +119,16 @@ public class PostActivity extends AppCompatActivity {
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
         layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
-        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
+        {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    case R.id.my_hidies:
+                        startActivity(new Intent(PostActivity.this,MyHidiesPosts.class));
+                        return true;
                     case R.id.filter:
                         initiatepopupWindow();
                         constraintLayout.setAlpha(.2f);

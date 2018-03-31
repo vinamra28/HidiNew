@@ -38,7 +38,7 @@ public class NewUserProfile extends AppCompatActivity
     ImageView doadmire,dolove,visitorimg;
     String result="",result1="";
     int uid;
-    String request="";
+    String request="visit";
     private ActionBar toolBar;
 
     @Override
@@ -68,6 +68,43 @@ public class NewUserProfile extends AppCompatActivity
         actionbars.setText(name);
         uid=bundle.getInt("uid");
         new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/visit.php");
+        dolove.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                request="love";
+                new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+            }
+        });
+        doadmire.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                request="admire";
+                new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+            }
+        });
+        following.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                result="";
+                request="follow";
+                new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+            }
+        });
+        blocking.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                request="block";
+                new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+            }
+        });
     }
 
     private class HttpAsyncTask extends AsyncTask<String,Void,String>
@@ -110,43 +147,35 @@ public class NewUserProfile extends AppCompatActivity
                 {
                     Toast.makeText(NewUserProfile.this,""+info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
-                dolove.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        request="love";
-                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-                    }
-                });
-                doadmire.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        request="admire";
-                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-                    }
-                });
-                following.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        result="";
-                        request="follow";
-                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-                    }
-                });
-                blocking.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        request="block";
-                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-                    }
-                });
+
+//                doadmire.setOnClickListener(new View.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(View v)
+//                    {
+//                        request="admire";
+//                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+//                    }
+//                });
+//                following.setOnClickListener(new View.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(View v)
+//                    {
+//                        result="";
+//                        request="follow";
+//                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+//                    }
+//                });
+//                blocking.setOnClickListener(new View.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(View v)
+//                    {
+//                        request="block";
+//                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
+//                    }
+//                });
             }
             catch (JSONException e)
             {
@@ -159,22 +188,68 @@ public class NewUserProfile extends AppCompatActivity
     private class ProfileReq extends AsyncTask<String,Void,String>
     {
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
         }
         @Override
         protected String doInBackground(String... url)
         {
-            return POST1(url[0]);
+            return POST(url[0]);
         }
         @Override
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
-            Log.d("result",result1);
+            Log.d("Result",result);
+
         }
     }
-    public String POST1(String url)
+//    public String POST1(String url)
+//    {
+//        InputStream inputStream=null;
+//        String json="";
+//        result="";
+//        try
+//        {
+//            HttpClient httpClient=new DefaultHttpClient();
+//            HttpPost httpPost=new HttpPost(url);
+//            JSONObject jsonObject=new JSONObject();
+//            jsonObject.accumulate("uidVisitor",session.getUID());
+//            jsonObject.accumulate("request",request);
+//            jsonObject.accumulate("uidProfile",uid);
+//            json=jsonObject.toString();
+//            Log.d("json",json);
+//            StringEntity se=new StringEntity(json);
+//            Log.d("Entity",""+se);
+//            httpPost.setEntity(se);
+//            httpPost.setHeader("Accept", "application/json");
+//            httpPost.setHeader("Content-type", "application/json");
+//            Log.d("Post",""+httpPost);
+//            HttpResponse httpResponse=httpClient.execute(httpPost);
+//            Log.d("Response",httpResponse.toString());
+//            inputStream=httpResponse.getEntity().getContent();
+//            Log.d("inputStream",inputStream.toString());
+//            if(inputStream!=null)
+//                result=convertInputStreamToString(inputStream);
+//            else
+//                result = "Did not work!";
+//        }
+//        catch (JSONException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (UnsupportedEncodingException e)
+//        {
+//            e.printStackTrace();
+//        } catch (ClientProtocolException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+//    }
+    public String POST(String url)
     {
         InputStream inputStream=null;
         String json="";
@@ -218,50 +293,6 @@ public class NewUserProfile extends AppCompatActivity
         }
         return result;
     }
-    public String POST(String url)
-    {
-        InputStream inputStream=null;
-        String json="";
-        result="";
-        try
-        {
-            HttpClient httpClient=new DefaultHttpClient();
-            HttpPost httpPost=new HttpPost(url);
-            JSONObject jsonObject=new JSONObject();
-            jsonObject.accumulate("uidVisitor",session.getUID());
-            jsonObject.accumulate("request","visit");
-            jsonObject.accumulate("uidProfile",uid);
-            json=jsonObject.toString();
-            Log.d("json",json);
-            StringEntity se=new StringEntity(json);
-            Log.d("Entity",""+se);
-            httpPost.setEntity(se);
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-            Log.d("Post",""+httpPost);
-            HttpResponse httpResponse=httpClient.execute(httpPost);
-            Log.d("Response",httpResponse.toString());
-            inputStream=httpResponse.getEntity().getContent();
-            Log.d("inputStream",inputStream.toString());
-            if(inputStream!=null)
-                result=convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-        }
-        catch (JSONException e)
-        {
-            e.printStackTrace();
-        }
-        catch (UnsupportedEncodingException e)
-        {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
@@ -270,6 +301,7 @@ public class NewUserProfile extends AppCompatActivity
         while((line = bufferedReader.readLine()) != null)
             result += line;
         inputStream.close();
+        Log.d("result",result);
         return result;
     }
 }
