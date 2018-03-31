@@ -125,48 +125,60 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 //                x = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())+1;
 //                postList.get(holder.getAdapterPosition()).setTotal_favours(x+"");
                // int x=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours(like+" "));
-                int like= Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
-                int dislike=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes());
+                like= Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
+                dislike=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes());
 
 
 
                 if(flag==0&&flagdis==0)
                 {
+                    Log.d("likebothzero",like+"");
+                    Log.d("dislikebothzero",dislike+"");
                     flag=1;
                     flagdis=0;
                     like++;
+                    Log.d("likebothzero1",like+"");
+                    Log.d("dislikebothzero1",dislike+"");
+                    holder.total_favours.setText(Integer.toString(like));
+                    holder.total_dislikes.setText(Integer.toString(dislike));
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
                 }
                 else if(flag==0&&flagdis==1){
+                    Log.d("likeflagzero",like+"");
+                    Log.d("dislikelikezero",dislike+"");
                     flag=1;
                     flagdis=0;
                     like++;
                     dislike--;
+                    Log.d("likeflagzero1",like+"");
+                    Log.d("dislikelikezero1",dislike+"");
+                    holder.total_favours.setText(Integer.toString(like));
+                    holder.total_dislikes.setText(Integer.toString(dislike));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
 
                 }
                 else if(flag==1&&flagdis==0)
                 {
-
+                    Log.d("likefalgdiszero",like+"");
+                    Log.d("dislikeflagdiszero",dislike+"");
                     flag=0;
                     flagdis=0;
                     like--;
-
-
-
+                    Log.d("likefalgdiszero1",like+"");
+                    Log.d("dislikeflagdiszero1",dislike+"");
+                    holder.total_favours.setText(Integer.toString(like));
+                    holder.total_dislikes.setText(Integer.toString(dislike));
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
-
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
                 }
 //                holder.do_like.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
                //postList.get(holder.getAdapterPosition()).setTotal_favours(like+"");
               // int likes= Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
 
-                holder.total_favours.setText(like+"");
-                postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
-                holder.total_dislikes.setText(dislike+"");
+
+//                postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
                 Log.e(like+"",holder.getAdapterPosition()+"");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
                 notifyItemChanged(holder.getAdapterPosition());

@@ -89,6 +89,8 @@ public class GroupDeclaration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnUploadGroupDetails();
+                Intent intent1 = new Intent(GroupDeclaration.this,ChatList.class);
+                startActivity(intent1);
             }
         });
     }
@@ -116,10 +118,11 @@ public class GroupDeclaration extends AppCompatActivity {
                     GroupDeclerationSet groupDeclerationSet = new GroupDeclerationSet(session.getUID() + "", taskSnapshot.getDownloadUrl().toString(), "", "", "", editText.getText().toString(), "Group Chat");
                     String uploadUrl = databaseReference.push().getKey();
                     databaseReference.child("threads").child(uploadUrl).setValue(groupDeclerationSet);
-                    for (int j = 0;j<arrayListFinalGroupImage.size();j++){
+                    for (int j = 0; j < arrayListFinalGroupImage.size(); j++) {
                         String namehidi = arrayListFinalGroupName.get(j);
                         String uidhidi = arrayListFinalGroupUid.get(j);
                         databaseReference.child("threads").child(uploadUrl).child("participants").child(uidhidi).setValue(namehidi);
+                        databaseReference.child("users").child(uidhidi).child("threads").child(uploadUrl).setValue(true);
                     }
                 }
             })

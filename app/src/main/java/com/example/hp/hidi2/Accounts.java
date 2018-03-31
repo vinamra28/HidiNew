@@ -27,6 +27,10 @@ import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
@@ -78,6 +82,8 @@ public class Accounts extends AppCompatActivity
     String mPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String result="";
+    FirebaseAuth firebaseAuth;
+    DatabaseReference databaseReference;
      ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -98,6 +104,9 @@ public class Accounts extends AppCompatActivity
         toolbar.setCustomView(R.layout.set_middle_title);
         actionbars=findViewById(R.id.actionBarTitles);
         actionbars.setText("Posts");
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         userdp = findViewById(R.id.profilepic);
         progress=findViewById(R.id.popularProgress);
         admire=findViewById(R.id.admireCount);
@@ -274,6 +283,7 @@ public class Accounts extends AppCompatActivity
                 {
                     JSONObject records = res.getJSONObject("records");
                     Picasso.with(getApplicationContext()).load(records.getString("profilepic")).into(userdp);
+                    databaseReference.child("users").child(session.getUID()+"").child("profilepic:").setValue(records.getString("profilepic"));
                     admire.setText(""+records.getInt("admire"));
                     love.setText(""+records.getInt("love"));
                     visitors.setText(""+records.getInt("visitors"));
