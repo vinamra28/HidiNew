@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="ARTS" />
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="ASIA" />
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="AUSTARLIA" />
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="BEAUTY/STYLE" />
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="BOOKS" />
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="BUSSINESS" />
@@ -89,10 +89,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
-            android:text="CARREERS" />
+            android:text="CAREERS" />
 
         <Button
             android:id="@+id/cartransport"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="CAR/TRANSPORTATION" />
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="EDUCATION" />
@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="EUROPE" />
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="FOOD/DRINK" />
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="FUN/HUMOUR" />
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="GAMES" />
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="HEALTHCARE" />
@@ -177,7 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="FITNESS" />
@@ -188,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="MATHEMATICS" />
@@ -199,7 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="ADVENTURE" />
@@ -210,7 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="IT/PROGRAMMING" />
@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
-            android:background="#1e88e5"
+            android:background="@drawable/undo_button"
             android:drawableRight="@drawable/ic_check_black_24dp"
             android:paddingLeft="8dp"
             android:text="LAW/LEGAL" />

@@ -63,7 +63,7 @@ public class PostActivityLocation extends AppCompatActivity
         km8=findViewById(R.id.eightkm);
         progress=new ProgressDialog(this);
         recyclerView=findViewById(R.id.recyclerViewkm);
-        myAdapter_post = new MyAdapter_post(PostActivityLocation.this,postList,session.getUID(),"filter");
+
 
         km2.setOnClickListener(new View.OnClickListener()
         {
@@ -142,12 +142,14 @@ public class PostActivityLocation extends AppCompatActivity
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(myAdapter_post);
+
 //                        postGet=new PostGet(posts.getString("sec_name"),
 //                                ""+posts.getInt("like"),""+posts.getInt("comments"),
 //                                posts.getString("profilepic"),posts.getString("pic"));
                         postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
+                        myAdapter_post = new MyAdapter_post(PostActivityLocation.this,postList,session.getUID(),"filter");
+                        recyclerView.setAdapter(myAdapter_post);
 //                        myAdapter_post.notifyDataSetChanged();
                     }
                 }

@@ -1,6 +1,7 @@
 package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,7 +12,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -63,6 +67,8 @@ public class StatusActivity extends AppCompatActivity
     String[] FILE;
     String ImageDecode;
     static int PICK_IMAGE_REQUEST = 1;
+    private static final int REQUEST_CODE_PERMISSION = 2;
+    String mPermission1= android.Manifest.permission.ACCESS_FINE_LOCATION;
     int t=1;
     int pid=0;
     @Override
@@ -82,6 +88,30 @@ public class StatusActivity extends AppCompatActivity
 //        backgroundLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         colorBack= findViewById(R.id.color);
         gps=new GPSTracker(this);
+//        if(gps.latitude==0.0||gps.longitude==0.0)
+//        {
+//            AlertDialog.Builder alert=new AlertDialog.Builder(getApplicationContext());
+//            alert.setTitle("Location error");
+//            alert.setMessage("Enable location to post the status....");
+//            alert.setPositiveButton("Enable", new DialogInterface.OnClickListener()
+//            {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which)
+//                {
+//                    try
+//                    {
+//                        if (ActivityCompat.checkSelfPermission(this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
+//                        {
+//                            ActivityCompat.requestPermissions(this, new String[]{mPermission1},REQUEST_CODE_PERMISSION);
+//                        }
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//        }
         if(gps.canGetLocation())
         {
             lat=gps.latitude;
@@ -92,6 +122,17 @@ public class StatusActivity extends AppCompatActivity
         }
         else
         {
+            try
+            {
+                if (ActivityCompat.checkSelfPermission(this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(this, new String[]{mPermission1},REQUEST_CODE_PERMISSION);
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
             gps.showSettingsAlert();
         }
         colorBack.setOnClickListener(new View.OnClickListener()
@@ -120,10 +161,25 @@ public class StatusActivity extends AppCompatActivity
                     bitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
                     byteArray = outputStream.toByteArray();
                     dialog.setMessage("Sending....");
-                    dialog.show();
-                    dialog.setCancelable(false);
-                    dialog.setIndeterminate(false);
-                    new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
+
+                    try
+                    {
+                        if (ActivityCompat.checkSelfPermission(StatusActivity.this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
+                        {
+                            ActivityCompat.requestPermissions(StatusActivity.this, new String[]{mPermission1},REQUEST_CODE_PERMISSION);
+                        }
+                        else
+                        {
+                            dialog.show();
+                            dialog.setCancelable(false);
+                            dialog.setIndeterminate(false);
+                            new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
                 else
                 {

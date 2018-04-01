@@ -1,8 +1,10 @@
 package com.example.hp.hidi2;
 
+import android.*;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -13,6 +15,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -23,6 +26,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -76,6 +80,7 @@ public class PostActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ActionBar toolbar;
     TextView actionbars;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

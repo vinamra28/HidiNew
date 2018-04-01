@@ -106,7 +106,11 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             @Override
             public void onClick(View v)
             {
+                int pid= Integer.parseInt(postList.get(holder.getAdapterPosition()).getPid());
+                Bundle bundle=new Bundle();
+                bundle.putInt("pid",pid);
                 Intent intent = new Intent(v.getContext(), Arguments.class);
+                intent.putExtras(bundle);
                 v.getContext().startActivity(intent);
             }
         });
@@ -153,6 +157,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
                     flag.set(holder.getAdapterPosition(),1);
                     flagdis.set(holder.getAdapterPosition(),0);
                     like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())+1);
+                    if(dislike.get(holder.getAdapterPosition())>0)
                     dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())-1);
                     Log.d("likeflagzero1",like+"");
                     Log.d("dislikelikezero1",dislike+"");
@@ -168,6 +173,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
                     Log.d("dislikeflagdiszero",dislike+"");
                     flag.set(holder.getAdapterPosition(),0);;
                     flagdis.set(holder.getAdapterPosition(),0);
+                    if(like.get(holder.getAdapterPosition())>0)
                     like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())-1);
                     Log.d("likefalgdiszero1",like+"");
                     Log.d("dislikeflagdiszero1",dislike+"");
@@ -208,6 +214,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
                 else if(flagdis.get(holder.getAdapterPosition())==0&&flag.get(holder.getAdapterPosition())==1){
                     flagdis.set(holder.getAdapterPosition(),1);
                     flag.set(holder.getAdapterPosition(),0);
+                    if(like.get(holder.getAdapterPosition())>0)
                     like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())-1);
                     dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition()+1));
 
@@ -216,7 +223,8 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 
                 }
                 else if(flagdis.get(holder.getAdapterPosition())==1&&flag.get(holder.getAdapterPosition())==0)
-                {   dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())-1);
+                {   if(dislike.get(holder.getAdapterPosition())>0)
+                    dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())-1);
 
                     flagdis.set(holder.getAdapterPosition(),0);
                     flag.set(holder.getAdapterPosition(),0);

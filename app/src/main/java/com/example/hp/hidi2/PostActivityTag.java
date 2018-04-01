@@ -62,7 +62,7 @@ public class PostActivityTag extends AppCompatActivity
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         materialSpinner.setAdapter(adapter);
-        myAdapter_post = new MyAdapter_post(PostActivityTag.this,postList,session.getUID(),"tag");
+
         materialSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
@@ -152,7 +152,7 @@ public class PostActivityTag extends AppCompatActivity
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(myAdapter_post);
+
 //                        postGet=new PostGet(posts.getString("sec_name"),
 //                                ""+posts.getInt("like"),""+posts.getInt("comments"),
 //                                posts.getString("profilepic"),posts.getString("pic"));
@@ -160,6 +160,8 @@ public class PostActivityTag extends AppCompatActivity
                         postList.add(postGet);
                         myAdapter_post.notifyDataSetChanged();
                     }
+                    myAdapter_post = new MyAdapter_post(PostActivityTag.this,postList,session.getUID(),"tag");
+                    recyclerView.setAdapter(myAdapter_post);
                 }
                 else
                 {
