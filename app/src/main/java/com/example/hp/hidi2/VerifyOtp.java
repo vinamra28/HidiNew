@@ -369,7 +369,7 @@ public class VerifyOtp extends AppCompatActivity
                     int uid=recordds.getInt("UID");
                     if(request==1)
                     {
-                        session.createLoginSession(uid,mobile);
+                        session.createLoginSession(uid,mobile,"login");
                         Intent intent=new Intent(VerifyOtp.this,PostActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
@@ -380,7 +380,7 @@ public class VerifyOtp extends AppCompatActivity
                         Log.d("UID",""+uid);
                         Bundle bundle=new Bundle();
                         bundle.putInt("UID",uid);
-                        session.createLoginSession(uid,mobile);
+                        session.createLoginSession(uid,mobile,"register");
                         Intent intent=new Intent(VerifyOtp.this,SelectName.class);
                         intent.putExtras(bundle);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

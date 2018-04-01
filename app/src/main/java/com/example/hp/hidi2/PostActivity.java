@@ -258,7 +258,7 @@ public class PostActivity extends AppCompatActivity {
 
         Intent intent=new Intent(PostActivity.this,ChatList.class);
         startActivity(intent);
-        finish();
+//        finish();
     }
 
     private void onRightSwipe() {

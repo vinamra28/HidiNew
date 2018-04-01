@@ -64,7 +64,6 @@ public class NewUserProfile extends AppCompatActivity
         dolove=findViewById(R.id.dolove);
         Bundle bundle=getIntent().getExtras();
         String name=bundle.getString("name");
-//        toolBar.setTitle(name);
         actionbars.setText(name);
         uid=bundle.getInt("uid");
         new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/visit.php");
@@ -135,47 +134,14 @@ public class NewUserProfile extends AppCompatActivity
                 {
                     JSONObject records = jsonObject.getJSONObject("records");
                     Picasso.with(getApplicationContext()).load(records.getString("profilepic")).into(visitorimg);
-//                    useradmire.setText(""+records.getInt("admires"));
-//                    userlove.setText(""+records.getInt("love"));
                     userpopular.setProgress((float) records.getDouble("popularity"));
                     uservisitors.setText(""+records.getInt("visitors"));
                     userhidies.setText(""+records.getInt("hidies"));
-//                    session.accountDetails(records.getInt("admire"),records.getInt("love"),records.getInt("visitors"),
-//                            records.getDouble("popularity"),records.getInt("hidies"),records.getInt("blocks"));
                 }
                 else
                 {
                     Toast.makeText(NewUserProfile.this,""+info.getString("message"),Toast.LENGTH_SHORT).show();
                 }
-
-//                doadmire.setOnClickListener(new View.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(View v)
-//                    {
-//                        request="admire";
-//                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-//                    }
-//                });
-//                following.setOnClickListener(new View.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(View v)
-//                    {
-//                        result="";
-//                        request="follow";
-//                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-//                    }
-//                });
-//                blocking.setOnClickListener(new View.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(View v)
-//                    {
-//                        request="block";
-//                        new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
-//                    }
-//                });
             }
             catch (JSONException e)
             {
@@ -208,50 +174,6 @@ public class NewUserProfile extends AppCompatActivity
 
         }
     }
-//    public String POST1(String url)
-//    {
-//        InputStream inputStream=null;
-//        String json="";
-//        result="";
-//        try
-//        {
-//            HttpClient httpClient=new DefaultHttpClient();
-//            HttpPost httpPost=new HttpPost(url);
-//            JSONObject jsonObject=new JSONObject();
-//            jsonObject.accumulate("uidVisitor",session.getUID());
-//            jsonObject.accumulate("request",request);
-//            jsonObject.accumulate("uidProfile",uid);
-//            json=jsonObject.toString();
-//            Log.d("json",json);
-//            StringEntity se=new StringEntity(json);
-//            Log.d("Entity",""+se);
-//            httpPost.setEntity(se);
-//            httpPost.setHeader("Accept", "application/json");
-//            httpPost.setHeader("Content-type", "application/json");
-//            Log.d("Post",""+httpPost);
-//            HttpResponse httpResponse=httpClient.execute(httpPost);
-//            Log.d("Response",httpResponse.toString());
-//            inputStream=httpResponse.getEntity().getContent();
-//            Log.d("inputStream",inputStream.toString());
-//            if(inputStream!=null)
-//                result=convertInputStreamToString(inputStream);
-//            else
-//                result = "Did not work!";
-//        }
-//        catch (JSONException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        catch (UnsupportedEncodingException e)
-//        {
-//            e.printStackTrace();
-//        } catch (ClientProtocolException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
     public String POST(String url)
     {
         InputStream inputStream=null;

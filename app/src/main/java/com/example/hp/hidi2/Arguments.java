@@ -138,13 +138,13 @@ public class Arguments extends AppCompatActivity {
             Log.d("result",result);
             if(result.length()!=0)
             {
+                progress.dismiss();
                 try
                 {
                     JSONObject jsonObject=new JSONObject(result);
                     JSONObject info=jsonObject.getJSONObject("info");
                     if(info.getString("status").equals("success"))
                     {
-                        progress.dismiss();
                         JSONArray records=jsonObject.getJSONArray("records");
                         if(records.length()==0)
                         {
@@ -166,6 +166,10 @@ public class Arguments extends AppCompatActivity {
                             }
                             recyclerView.scrollToPosition(commentAdapter.getItemCount()-1);
                         }
+                    }
+                    else
+                    {
+                        Toast.makeText(Arguments.this, "No comments present", Toast.LENGTH_SHORT).show();
                     }
                 }
                 catch (JSONException e)

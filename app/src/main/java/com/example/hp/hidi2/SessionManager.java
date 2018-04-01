@@ -16,6 +16,7 @@ public class SessionManager
     SharedPreferences.Editor editor;
     Context context;
     private static final String IS_LOGIN="isLoggedIn";
+    private static final String KEY_STATUS="status";
     private static final String PREF_NAME="Hidi_Session";
     public static final String KEY_MOBILE="mobileno";
     public static final String KEY_UID="uid";
@@ -38,11 +39,12 @@ public class SessionManager
         sharedPreferences=context.getSharedPreferences(PREF_NAME,PRIVATE_MODE);
         editor=sharedPreferences.edit();
     }
-    public void createLoginSession(int uid,String mobileno)
+    public void createLoginSession(int uid,String mobileno,String status)
     {
         editor.putBoolean(IS_LOGIN,true);
         editor.putInt(KEY_UID,uid);
         editor.putString(KEY_MOBILE,mobileno);
+        editor.putString(KEY_STATUS,status);
         editor.commit();
     }
     public boolean isLoggedIn()
@@ -115,7 +117,14 @@ public class SessionManager
     }
     public String getProfilepic()
     {
-        return sharedPreferences.getString(KEY_PROFILEPIC,"http://hidi.org.in/hidi/account/image/"+getUID()+".png");
+        if(sharedPreferences.getString(KEY_STATUS,"").equalsIgnoreCase("register"))
+        {
+            return sharedPreferences.getString(KEY_PROFILEPIC,"http://hidi.org.in/hidi/account/image/default.png");
+        }
+        else
+        {
+            return sharedPreferences.getString(KEY_PROFILEPIC,"http://hidi.org.in/hidi/account/image/"+getUID()+".png");
+        }
     }
     public int getVisitors()
     {
@@ -124,5 +133,11 @@ public class SessionManager
     public void setSecname(String secname)
     {
         editor.putString(KEY_SECNAME,secname);
+        editor.commit();
+    }
+    public void updateIndex(int indexpath)
+    {
+        editor.putInt(KEY_INDEXPATH,indexpath);
+        editor.commit();
     }
 }

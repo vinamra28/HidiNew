@@ -43,7 +43,6 @@ public class MyJourneyActivity extends AppCompatActivity
         setContentView(R.layout.activity_my_journey);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
-        myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID(),"my");
         recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
@@ -108,10 +107,11 @@ public class MyJourneyActivity extends AppCompatActivity
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(myAdapter_post);
                         PostGet postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
                     }
+                    myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID(),"my");
+                    recyclerView.setAdapter(myAdapter_post);
                 }
             }
             catch (JSONException e)

@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(MainActivity.this, Register.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
         recover.setOnClickListener(new View.OnClickListener()
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Intent intent = new Intent(MainActivity.this, Recover.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
         get.setOnClickListener(new View.OnClickListener()

@@ -124,6 +124,7 @@ public class GroupDeclaration extends AppCompatActivity {
                         databaseReference.child("threads").child(uploadUrl).child("participants").child(uidhidi).setValue(namehidi);
                         databaseReference.child("users").child(uidhidi).child("threads").child(uploadUrl).setValue(true);
                     }
+                    databaseReference.child("users").child(session.getUID()+"").child("threads").child(uploadUrl).setValue(true);
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {

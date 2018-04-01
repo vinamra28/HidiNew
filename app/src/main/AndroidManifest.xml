@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -24,29 +27,32 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Recover"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Register"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".PostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
             android:name=".VerifyOtp"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".SelectName"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Accounts"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/AccountsTheme" />
         <activity
             android:name=".Arguments"
@@ -97,7 +103,8 @@
             android:theme="@style/AccountsTheme" />
         <activity
             android:name=".ChatList"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".HidiListChat"
             android:screenOrientation="portrait" />

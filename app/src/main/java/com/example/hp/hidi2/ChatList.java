@@ -58,23 +58,28 @@ public class ChatList extends AppCompatActivity {
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 progressDialog.dismiss();
                 Log.d("message", dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren() + "");
                 Log.d("uid", session.getUID() + "");
-                for (DataSnapshot postSnapshot : dataSnapshot.child("users").child(String.valueOf(92 + "")).child("threads").getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren())
+                {
                     Log.d("postSnampshot", postSnapshot + "");
                     String uploadurl = postSnapshot.getKey();
                     Log.d("uploadurl", uploadurl);
                     arrayListUploadUrl.add(uploadurl);
                 }
                 Log.d("ArrayList", arrayListUploadUrl + "");
-                for (int j = 0; j < arrayListUploadUrl.size(); j++) {
+                for (int j = 0; j < arrayListUploadUrl.size(); j++)
+                {
                     final String groupUrl = arrayListUploadUrl.get(j);
                     Log.d("groupUrl", groupUrl);
-                    databaseReference.addValueEventListener(new ValueEventListener() {
+                    databaseReference.addValueEventListener(new ValueEventListener()
+                    {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(DataSnapshot dataSnapshot)
+                        {
                             String url = dataSnapshot.child("threads").child(groupUrl).child("groupImage").getValue() + "";
                             Log.d("url", url);
                             String groupname = dataSnapshot.child("threads").child(groupUrl).child("name").getValue() + "";
@@ -84,18 +89,16 @@ public class ChatList extends AppCompatActivity {
                             chatHistoryAdapter = new ChatHistoryAdapter(getApplicationContext(), chatHistorySets);
                             recyclerView.setAdapter(chatHistoryAdapter);
                         }
-
                         @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
+                        public void onCancelled(DatabaseError databaseError)
+                        {
                         }
                     });
                 }
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onCancelled(DatabaseError databaseError)
+            {
             }
         });
     }
