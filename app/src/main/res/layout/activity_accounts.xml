@@ -67,6 +67,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Admire" />
 
             <TextView
@@ -84,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="2"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:text="Love" />
 
@@ -131,6 +133,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text="Popularity"
                 android:textSize="16dp" />
 
@@ -180,6 +183,7 @@
                 android:layout_column="0"
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
+                android:textStyle="bold"
                 android:layout_row="0"
                 android:text="Visitors"
                 android:textSize="16dp" />
@@ -202,6 +206,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="1"
+                android:textStyle="bold"
                 android:text="My Hidies"
                 android:textSize="16dp" />
 
@@ -224,6 +229,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="2"
+                android:textStyle="bold"
                 android:text="Blocks"
                 android:textSize="16dp" />
 

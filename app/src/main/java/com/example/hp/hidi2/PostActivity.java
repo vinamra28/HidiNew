@@ -95,7 +95,6 @@ public class PostActivity extends AppCompatActivity {
         actionbars=findViewById(R.id.actionBarTitles);
         gps = new GPSTracker(this);
         session.saveLoc(gps.latitude, gps.longitude);
-        myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
         gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -196,6 +195,27 @@ public class PostActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(PostActivity.this, PostActivityTag.class);
                     startActivity(intent);
+                }
+            });
+            TextView textView_Loc = layout.findViewById(R.id.text_loc);
+            textView_Loc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(PostActivity.this,PostActivityLocation.class));
+                }
+            });
+            TextView textView_Tags = layout.findViewById(R.id.text_tag);
+            textView_Tags.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(PostActivity.this,PostActivityTag.class));
+                }
+            });
+            ImageButton imageButton_close = layout.findViewById(R.id.close_img);
+            imageButton_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(PostActivity.this,PostActivity.class));
                 }
             });
             popupWindow.setOutsideTouchable(true);
@@ -330,14 +350,15 @@ public class PostActivity extends AppCompatActivity {
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(myAdapter_post);
+
 //                        postGet=new PostGet(posts.getString("sec_name"),
 //                                ""+posts.getInt("like"),""+posts.getInt("comments"),
 //                                posts.getString("profilepic"),posts.getString("pic"));
                         postGet = new PostGet(pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
                         postList.add(postGet);
-                        myAdapter_post.notifyDataSetChanged();
                     }
+                    myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
+                    recyclerView.setAdapter(myAdapter_post);
                 } else {
                     progress.dismiss();
                     Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();

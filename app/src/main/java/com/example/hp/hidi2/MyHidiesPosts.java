@@ -44,7 +44,6 @@ public class MyHidiesPosts extends AppCompatActivity
         recyclerView=findViewById(R.id.myhidiesRecycler);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
-        myAdapter_post = new MyAdapter_post(MyHidiesPosts.this,postList,session.getUID(),"myhidies");
         gps=new GPSTracker(this);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
     }
@@ -79,18 +78,6 @@ public class MyHidiesPosts extends AppCompatActivity
                     for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);
-//                        Log.d("pid",""+posts.getInt("pid"));
-//                        Log.d("pic",""+posts.getString("pic"));
-//                        Log.d("likes",""+posts.getInt("likes"));
-//                        Log.d("dislikes",""+posts.getInt("dislikes"));
-//                        Log.d("comments",""+posts.getInt("comments"));
-//                        Log.d("time",""+posts.getString("time"));
-//                        Log.d("lat",""+posts.getDouble("lat"));
-//                        Log.d("long",""+posts.getDouble("long"));
-//                        Log.d("sec_name",""+posts.getString("sec_name"));
-//                        Log.d("profilepic",""+posts.getString("profilepic"));
-//                        Log.d("like",""+posts.getInt("like"));
-//                        Log.d("dislike",""+posts.getInt("dislike"));
                         Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
                         Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
                         Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");
@@ -105,13 +92,17 @@ public class MyHidiesPosts extends AppCompatActivity
                         Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
                         Log.d("like",""+posts.getInt("like"));String mlike=""+posts.getInt("like");
                         Log.d("dislike",""+posts.getInt("dislike"));String mdisllike=""+posts.getInt("dislike");
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(myAdapter_post);
                         PostGet postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
+                        Log.e("foll","sdcsdc");
                     }
+                    Log.e("foll","sdcsdfvgergregrec");
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setItemAnimator(new DefaultItemAnimator());
+                    myAdapter_post = new MyAdapter_post(MyHidiesPosts.this,postList,session.getUID(),"myhidies");
+                    recyclerView.setAdapter(myAdapter_post);
+
                 }
             }
             catch (JSONException e)

@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Posts"
-        android:textStyle="bold"
         android:textColor="#ffffff"
         android:id="@+id/actionBarTitles"
         android:textSize="25sp" />

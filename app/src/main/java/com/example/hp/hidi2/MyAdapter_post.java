@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHolder>
@@ -37,8 +38,8 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     String result="",request="";
     int pid,uid,x;PostGet post;
     String from="";
-    int flag=0,flagdis=0;
-    int like,dislike;
+    private List<Integer> flag= new ArrayList<>(); private List<Integer> flagdis = new ArrayList<>();
+   private List<Integer> like = new ArrayList<>(),dislike = new ArrayList<>();
 
     public MyAdapter_post(Context context, List<PostGet> postList,int uid,String from)
     {
@@ -46,6 +47,15 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         this.postList = postList;
         this.uid=uid;
         this.from=from;
+        Log.e("size",postList.size()+"");
+        for(int x=0;x<postList.size();x++){
+              flagdis.add(Integer.parseInt(postList.get(x).getDislike()));
+              flag.add(Integer.parseInt(postList.get(x).getLike()));
+              like.add(Integer.parseInt(postList.get(x).getTotal_favours()));
+            dislike.add(Integer.parseInt(postList.get(x).getTotal_dislikes()));
+
+        }
+        Log.e("dslike",flagdis.toString());Log.e("like",flag.toString());
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
@@ -63,14 +73,12 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         holder.user_name.setText(post.getUser_name());
         holder.post_location.setText(post.getPost_location());
         Picasso.with(context).load(post.getUser_post_image()).into(holder.image_posted);
-        holder.total_favours.setText(post.getTotal_favours());
-        like= Integer.parseInt(post.getTotal_favours());
-        dislike= Integer.parseInt(post.getTotal_dislikes());
+        holder.total_favours.setText(like.get(position).toString());
       holder.do_like.setImageDrawable(post.getDo_like());
         holder.do_arguments.setText(post.getDo_arguments());
         holder.image_argument.setImageDrawable(post.getImage_argument());
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
-        holder.total_dislikes.setText(post.getTotal_dislikes());
+        holder.total_dislikes.setText(dislike.get(position).toString());
         pid=Integer.parseInt(post.getPid());
         holder.setIsRecyclable(false);
 //        try
@@ -84,15 +92,14 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 //        {
 //            e.printStackTrace();
 //        }
-        if(post.getLike().equals("1"))
+        if(flag.get(holder.getAdapterPosition()) == 1)
         {
-            holder.do_like.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
-            flag=1;
+            holder.do_like.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
         }
-        if(post.getDislike().equals("1"))
+        else if(flagdis.get(holder.getAdapterPosition()) == 1)
         {
-            holder.do_dislike.setBackground(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
-            flagdis=1;
+            holder.do_dislike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
+
         }
         holder.do_arguments.setOnClickListener(new View.OnClickListener()
         {
@@ -125,51 +132,47 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 //                x = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours())+1;
 //                postList.get(holder.getAdapterPosition()).setTotal_favours(x+"");
                // int x=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours(like+" "));
-                like= Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
-                dislike=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes());
 
-
-
-                if(flag==0&&flagdis==0)
+                if(flag.get(holder.getAdapterPosition())==0&&flagdis.get(holder.getAdapterPosition())==0)
                 {
                     Log.d("likebothzero",like+"");
                     Log.d("dislikebothzero",dislike+"");
-                    flag=1;
-                    flagdis=0;
-                    like++;
+                    flag.set(holder.getAdapterPosition(),1);
+                    flagdis.set(holder.getAdapterPosition(),0);
+                    like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())+1);
                     Log.d("likebothzero1",like+"");
                     Log.d("dislikebothzero1",dislike+"");
-                    holder.total_favours.setText(Integer.toString(like));
-                    holder.total_dislikes.setText(Integer.toString(dislike));
+                    holder.total_favours.setText(Integer.toString(like.get(holder.getAdapterPosition())));
+                    holder.total_dislikes.setText(Integer.toString(dislike.get(holder.getAdapterPosition())));
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
                 }
-                else if(flag==0&&flagdis==1){
+                else if(flag.get(holder.getAdapterPosition())==0&&flagdis.get(holder.getAdapterPosition())==1){
                     Log.d("likeflagzero",like+"");
                     Log.d("dislikelikezero",dislike+"");
-                    flag=1;
-                    flagdis=0;
-                    like++;
-                    dislike--;
+                    flag.set(holder.getAdapterPosition(),1);
+                    flagdis.set(holder.getAdapterPosition(),0);
+                    like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())+1);
+                    dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())-1);
                     Log.d("likeflagzero1",like+"");
                     Log.d("dislikelikezero1",dislike+"");
-                    holder.total_favours.setText(Integer.toString(like));
-                    holder.total_dislikes.setText(Integer.toString(dislike));
+                    holder.total_favours.setText(Integer.toString(like.get(holder.getAdapterPosition())));
+                    holder.total_dislikes.setText(Integer.toString(dislike.get(holder.getAdapterPosition())));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
 
                 }
-                else if(flag==1&&flagdis==0)
+                else if(flag.get(holder.getAdapterPosition())==1&&flagdis.get(holder.getAdapterPosition())==0)
                 {
                     Log.d("likefalgdiszero",like+"");
                     Log.d("dislikeflagdiszero",dislike+"");
-                    flag=0;
-                    flagdis=0;
-                    like--;
+                    flag.set(holder.getAdapterPosition(),0);;
+                    flagdis.set(holder.getAdapterPosition(),0);
+                    like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())-1);
                     Log.d("likefalgdiszero1",like+"");
                     Log.d("dislikeflagdiszero1",dislike+"");
-                    holder.total_favours.setText(Integer.toString(like));
-                    holder.total_dislikes.setText(Integer.toString(dislike));
+                    holder.total_favours.setText(Integer.toString(like.get(holder.getAdapterPosition())));
+                    holder.total_dislikes.setText(Integer.toString(dislike.get(holder.getAdapterPosition())));
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
                 }
@@ -190,33 +193,33 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             @Override
             public void onClick(View v)
             {
-                int dislike=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes());
-                int like=Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_favours());
 
                 request="dislike";
-                if(flagdis==0&&flag==0)
+                if(flagdis.get(holder.getAdapterPosition())==0&&flag.get(holder.getAdapterPosition())==0)
                 {
-                    flagdis=1;
-                    flag=0;
-                    dislike++;
+                    flagdis.set(holder.getAdapterPosition(),1);
+                    flag.set(holder.getAdapterPosition(),0);
+                    dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())+1);
+
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
 
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
                 }
-                else if(flagdis==0&&flag==1){
-                    flagdis=1;
-                    flag=0;
-                    dislike++;
-                    like--;
+                else if(flagdis.get(holder.getAdapterPosition())==0&&flag.get(holder.getAdapterPosition())==1){
+                    flagdis.set(holder.getAdapterPosition(),1);
+                    flag.set(holder.getAdapterPosition(),0);
+                    like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())-1);
+                    dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition()+1));
+
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
 
                 }
-                else if(flagdis==1&&flag==0)
-                {
-                    dislike--;
-                    flagdis=0;
-                    flag=0;
+                else if(flagdis.get(holder.getAdapterPosition())==1&&flag.get(holder.getAdapterPosition())==0)
+                {   dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())-1);
+
+                    flagdis.set(holder.getAdapterPosition(),0);
+                    flag.set(holder.getAdapterPosition(),0);
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));
 
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_black_24dp));
@@ -226,8 +229,8 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 //                postList.get(holder.getAdapterPosition()).setTotal_favours(z+"");
 //                int y = Integer.parseInt(postList.get(holder.getAdapterPosition()).getTotal_dislikes())+1;
 //                postList.get(holder.getAdapterPosition()).setTotal_dislikes(y+"");
-                holder.total_favours.setText(like+"");
-                holder.total_dislikes.setText(dislike+"");
+                holder.total_favours.setText(like.get(holder.getAdapterPosition())+"");
+                holder.total_dislikes.setText(dislike.get(holder.getAdapterPosition())+"");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
                 notifyItemChanged(holder.getAdapterPosition());
                 notifyDataSetChanged();
@@ -287,8 +290,6 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             {
                 JSONObject jsonObject=new JSONObject(result);
                 JSONObject records=jsonObject.getJSONObject("records");
-                like=records.getInt("like");
-                dislike=records.getInt("dislike");
             }
             catch (JSONException e)
             {
