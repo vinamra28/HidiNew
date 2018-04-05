@@ -40,15 +40,15 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "59850571310-1gk8r99f3d4lbh15k8juj6tqr2gs9d3h.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "KIET.hidi"
-              }
-            },
-            {
               "client_id": "59850571310-qrok0tojiinqrt34dovbe0fmads7uddv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "59850571310-i1qbrca0bqkr8et3ufu83gadifkbohtj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.KIET.hidi"
+              }
             }
           ]
         },
