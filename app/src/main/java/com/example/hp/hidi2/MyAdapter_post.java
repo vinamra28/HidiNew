@@ -216,7 +216,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
                     flag.set(holder.getAdapterPosition(),0);
                     if(like.get(holder.getAdapterPosition())>0)
                     like.set(holder.getAdapterPosition(),like.get(holder.getAdapterPosition())-1);
-                    dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition()+1));
+                    dislike.set(holder.getAdapterPosition(),dislike.get(holder.getAdapterPosition())+1);
 
                     postList.get(holder.getAdapterPosition()).setDo_dislike(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
                     postList.get(holder.getAdapterPosition()).setDo_like(context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp));

@@ -6,6 +6,7 @@ package com.example.hp.hidi2;
 
 public class CommentGet
 {
+    public int cid;
     public String user_dp,user_name,user_comment,reply_commnet;
 
     public CommentGet(String user_name,String user_comment)
@@ -20,8 +21,9 @@ public class CommentGet
         this.user_comment = user_comment;
     }
 
-    public CommentGet(String user_dp, String user_name, String user_comment, String reply_commnet)
+    public CommentGet(int cid,String user_dp, String user_name, String user_comment, String reply_commnet)
     {
+        this.cid=cid;
         this.user_dp = user_dp;
         this.user_name = user_name;
         this.user_comment = user_comment;
@@ -63,5 +65,13 @@ public class CommentGet
 
     public void setReply_commnet(String reply_commnet) {
         this.reply_commnet = reply_commnet;
+    }
+
+    public int getCid() {
+        return cid;
+    }
+
+    public void setCid(int cid) {
+        this.cid = cid;
     }
 }

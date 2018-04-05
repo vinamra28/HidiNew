@@ -45,6 +45,7 @@ public class MyJourneyActivity extends AppCompatActivity
         session.checkLogin();
         recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
+        recyclerView.setAdapter(null);
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
     }
     private class Posts extends AsyncTask<String,Void,String>
@@ -71,6 +72,7 @@ public class MyJourneyActivity extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
+                    postList.clear();
                     if(records.length()==0)
                     {
                         Toast.makeText(getApplicationContext(),"No Posts Available",Toast.LENGTH_LONG).show();
