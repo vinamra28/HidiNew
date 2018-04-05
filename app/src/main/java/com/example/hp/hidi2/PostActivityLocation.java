@@ -121,6 +121,7 @@ public class PostActivityLocation extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
+                    postList.clear();
                     progress.dismiss();
                     for(int i=0;i<records.length();i++)
                     {

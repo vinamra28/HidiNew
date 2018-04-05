@@ -1,7 +1,6 @@
 package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -32,47 +30,41 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class Arguments extends AppCompatActivity {
+public class RepliesOnComments extends AppCompatActivity
+{
 
     RecyclerView recyclerView;
-    CommentAdapter commentAdapter;
-    EditText mycmt;
-    CommentGet commentGet;
-    Button sendcmt;
     SessionManager session;
+    EditText myreplies;
+    Button sendreplies;
     String result="";
-    String time_stamp="",mycomment;
+    ReplyGet replyGet;
+    ReplyAdapter replyAdapter;
     ProgressDialog progress;
-    int pid;
-    private List<CommentGet> commentGetList = new ArrayList<>();
+    String time_stamp="",myreply="";
+    int cid;
+    ArrayList<ReplyGet> replyGets=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arguments);
+        setContentView(R.layout.activity_replies_on_comments);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();
+        replyAdapter=new ReplyAdapter(getApplicationContext(),replyGets);
         Bundle bundle=getIntent().getExtras();
-        pid=bundle.getInt("pid");
-        recyclerView = findViewById(R.id.recyclerViewcmt);
-        progress = new ProgressDialog(this);
-        progress.setMessage("Loading....");
-        progress.setCancelable(false);
-        progress.setIndeterminate(false);
-        commentAdapter=new CommentAdapter(getApplicationContext(),commentGetList);
-        new loadCmt().execute("http://hidi.org.in/hidi/comments/showcomments.php");
-        progress.show();
-        mycmt=findViewById(R.id.mycmt);
-        mycmt.requestFocus();
-        sendcmt=findViewById(R.id.sendcmt);
+        cid=bundle.getInt("cid");
+        recyclerView=findViewById(R.id.recyclerViewrply);
+        myreplies=findViewById(R.id.myrply);
+        sendreplies=findViewById(R.id.sendrply);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(commentAdapter);
-        sendcmt.setOnClickListener(new View.OnClickListener()
+        recyclerView.setAdapter(replyAdapter);
+        new LoadReplies().execute("http://hidi.org.in/hidi/reply/showreplies.php");
+        sendreplies.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -80,15 +72,15 @@ public class Arguments extends AppCompatActivity {
                 Date date=new Date();
                 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 time_stamp=sdf.format(date);
-                mycomment=mycmt.getText().toString();
-                commentGet=new CommentGet(session.getProfilepic(),session.getSecname(),mycomment);
-                commentGetList.add(commentGet);
-                new sendCmt().execute("http://hidi.org.in/hidi/comments/addcomment.php");
-                mycmt.setText("");
+                myreply=myreplies.getText().toString();
+                replyGet=new ReplyGet(myreply,session.getSecname(),session.getProfilepic());
+                replyGets.add(replyGet);
+                new sendReply().execute("http://hidi.org.in/hidi/reply/addreply.php");
+                myreplies.setText("");
             }
         });
     }
-    private class sendCmt extends AsyncTask<String,Void,String>
+    private class sendReply extends AsyncTask<String,Void,String>
     {
         @Override
         protected void onPreExecute()
@@ -111,7 +103,7 @@ public class Arguments extends AppCompatActivity {
                 JSONObject info=jsonObject.getJSONObject("info");
                 if(info.getString("status").equals("success"))
                 {
-                    mycmt.clearFocus();
+                    myreplies.clearFocus();
 
                 }
             }
@@ -121,10 +113,11 @@ public class Arguments extends AppCompatActivity {
             }
         }
     }
-    private class loadCmt extends AsyncTask<String,Void,String>
+    private class LoadReplies extends AsyncTask<String,Void,String>
     {
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
         }
         @Override
@@ -132,54 +125,43 @@ public class Arguments extends AppCompatActivity {
         {
             return POST(url[0]);
         }
+
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s)
+        {
             super.onPostExecute(s);
-            Log.d("result",result);
-            if(result.length()!=0)
+            Log.d("Result",result);
+            try
             {
-                progress.dismiss();
-                try
+                JSONObject jsonObject=new JSONObject(result);
+                JSONObject info=jsonObject.getJSONObject("info");
+                if(info.getString("status").equals("success"))
                 {
-                    JSONObject jsonObject=new JSONObject(result);
-                    JSONObject info=jsonObject.getJSONObject("info");
-                    if(info.getString("status").equals("success"))
+                    JSONArray records=jsonObject.getJSONArray("records");
+                    if(records.length()!=0)
                     {
-                        JSONArray records=jsonObject.getJSONArray("records");
-                        if(records.length()==0)
+                        for(int i=0;i<records.length();i++)
                         {
-                            Toast.makeText(Arguments.this,"No comments at this moment",Toast.LENGTH_SHORT).show();
+                            JSONObject reply=records.getJSONObject(i);
+                            String text=reply.getString("text");
+                            String sec_name=reply.getString("sec_name");
+                            String profilepic=reply.getString("profilepic");
+                            replyGet=new ReplyGet(text,sec_name,profilepic);
+                            replyGets.add(replyGet);
+
                         }
-                        else
-                        {
-                            for(int i=0;i<records.length();i++)
-                            {
-                                JSONObject cmtno=records.getJSONObject(i);
-                                int cid_of_pid=cmtno.getInt("cid");
-                                int uid_of_sender=cmtno.getInt("uid");
-                                String cmtText=cmtno.getString("text");
-                                String timestamp=cmtno.getString("time");
-                                String sender_name=cmtno.getString("sec_name");
-                                String profilepic=cmtno.getString("profilepic");
-                                commentGet=new CommentGet(cid_of_pid,profilepic,sender_name,cmtText,"Reply");
-                                commentGetList.add(commentGet);
-                            }
-                            recyclerView.scrollToPosition(commentAdapter.getItemCount()-1);
-                        }
+
                     }
-                    else
-                    {
-                        Toast.makeText(Arguments.this, "No comments present", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
                 }
             }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
         }
     }
-    public String POST(String url) {
+    public String POST1(String url) {
         InputStream inputStream = null;
         String json = "";
         result = "";
@@ -188,7 +170,9 @@ public class Arguments extends AppCompatActivity {
             HttpPost httpPost = new HttpPost(url);
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("uid", session.getUID());
-            jsonObject.accumulate("pid", pid);
+            jsonObject.accumulate("cid", cid);
+            jsonObject.accumulate("text",myreply);
+            jsonObject.accumulate("time",time_stamp);
             json = jsonObject.toString();
             Log.d("json", json);
             StringEntity se = new StringEntity(json);
@@ -216,7 +200,7 @@ public class Arguments extends AppCompatActivity {
         }
         return result;
     }
-    public String POST1(String url) {
+    public String POST(String url) {
         InputStream inputStream = null;
         String json = "";
         result = "";
@@ -224,10 +208,7 @@ public class Arguments extends AppCompatActivity {
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(url);
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("uid", session.getUID());
-            jsonObject.accumulate("pid", pid);
-            jsonObject.accumulate("text",mycomment);
-            jsonObject.accumulate("time",time_stamp);
+            jsonObject.accumulate("cid", cid);
             json = jsonObject.toString();
             Log.d("json", json);
             StringEntity se = new StringEntity(json);

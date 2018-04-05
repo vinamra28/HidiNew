@@ -1,6 +1,8 @@
 package com.example.hp.hidi2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,13 +40,26 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         return new ViewHolder(view);
     }
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position)
+    public void onBindViewHolder(final ViewHolder holder, int position)
     {
         commentGet = commentGets.get(holder.getAdapterPosition());
         Picasso.with(context).load(commentGet.getUser_dp()).into(holder.imageView);
         holder.user_name.setText(commentGet.getUser_name());
         holder.user_comment.setText(commentGet.getUser_comment());
-//        holder.reply_button.setText(commentGet.getReply_commnet());
+        holder.reply_button.setText(commentGet.getReply_commnet());
+        holder.reply_button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                int cid=commentGets.get(holder.getAdapterPosition()).getCid();
+                Bundle bundle=new Bundle();
+                bundle.putInt("cid",cid);
+                Intent intent=new Intent(v.getContext(),RepliesOnComments.class);
+                intent.putExtras(bundle);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
     @Override
     public int getItemCount()

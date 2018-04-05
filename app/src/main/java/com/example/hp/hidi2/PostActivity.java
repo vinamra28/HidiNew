@@ -46,6 +46,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -80,6 +86,7 @@ public class PostActivity extends AppCompatActivity {
     private PopupWindow popupWindow;
     private ActionBar toolbar;
     TextView actionbars;
+    int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
 
     @Override
@@ -120,6 +127,19 @@ public class PostActivity extends AppCompatActivity {
         });
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
         swiper.setRefreshing(true);
+//        try
+//        {
+//            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(this);
+//            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+//        }
+//        catch (GooglePlayServicesRepairableException e)
+//        {
+//            // TODO: Handle the error.
+//        }
+//        catch (GooglePlayServicesNotAvailableException e)
+//        {
+//            // TODO: Handle the error.
+//        }
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
         layoutParams.setBehavior(new BottomNavigationBehavior());
         recyclerView.setOnTouchListener(gestureListener);
@@ -166,6 +186,23 @@ public class PostActivity extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                Log.d( "Place: ","" + place.getName());
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                // TODO: Handle the error.
+                Log.i("result", ""+status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
     @Override
@@ -433,41 +470,63 @@ public class PostActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.action_bar_search, menu);
 
         // Get the search menu.
-        MenuItem searchMenu = menu.findItem(R.id.app_bar_menu_search);
+//        MenuItem searchMenu = menu.findItem(R.id.app_bar_menu_search);
 
         // Get SearchView object.
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
+//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenu);
 
         // Get SearchView autocomplete object.
-        final SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        searchAutoComplete.setBackgroundColor(Color.argb(01,79,80,81));
-        searchAutoComplete.setTextColor(Color.WHITE);
-        searchAutoComplete.setDropDownBackgroundResource(android.R.color.white);
-        String dataArr[] = {"Apple", "Amazon", "Amd", "Microsoft", "Microwave", "MicroNews", "Intel", "Intelligence"};
-        ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, dataArr);
-        searchAutoComplete.setAdapter(newsAdapter);
-        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long id) {
-                String queryString = (String) adapterView.getItemAtPosition(itemIndex);
-                searchAutoComplete.setText("" + queryString);
-                Toast.makeText(PostActivity.this, "you clicked " + queryString, Toast.LENGTH_LONG).show();
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                AlertDialog alertDialog = new AlertDialog.Builder(PostActivity.this).create();
-                alertDialog.setMessage("Search keyword is " + query);
-                alertDialog.show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        final SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+//        searchAutoComplete.setBackgroundColor(Color.argb(01,79,80,81));
+//        searchAutoComplete.setTextColor(Color.WHITE);
+//        searchAutoComplete.setDropDownBackgroundResource(android.R.color.white);
+//        String dataArr[] = {"Apple", "Amazon", "Amd", "Microsoft", "Microwave", "MicroNews", "Intel", "Intelligence"};
+//        ArrayAdapter<String> newsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, dataArr);
+//        searchAutoComplete.setAdapter(newsAdapter);
+//        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int itemIndex, long id) {
+//                String queryString = (String) adapterView.getItemAtPosition(itemIndex);
+//                searchAutoComplete.setText("" + queryString);
+//                Toast.makeText(PostActivity.this, "you clicked " + queryString, Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                AlertDialog alertDialog = new AlertDialog.Builder(PostActivity.this).create();
+//                alertDialog.setMessage("Search keyword is " + query);
+//                alertDialog.show();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id=item.getItemId();
+        if(id==R.id.app_bar_menu_search)
+        {
+            try
+            {
+                Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(PostActivity.this);
+                startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            }
+            catch (GooglePlayServicesRepairableException e)
+            {
+                // TODO: Handle the error.
+            }
+            catch (GooglePlayServicesNotAvailableException e)
+            {
+                // TODO: Handle the error.
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -70,6 +70,7 @@ public class PostActivityTag extends AppCompatActivity
             {
                 String selecttag= (String) parent.getItemAtPosition(position);
                 tag=(String) parent.getItemAtPosition(position);
+                recyclerView.setAdapter(null);
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
 
@@ -128,6 +129,7 @@ public class PostActivityTag extends AppCompatActivity
                 JSONArray records=respnse.getJSONArray("records");
                 if((info.getString("status")).equals("success"))
                 {
+                    postList.clear();
                     if (records.length() ==0)
                     {
                         Toast.makeText(getApplicationContext(), "No posts available", Toast.LENGTH_SHORT).show();
