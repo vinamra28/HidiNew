@@ -60,7 +60,7 @@ public class ChatWindow extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        groupUid = bundle.getString("chatUid");
+        groupUid = bundle.getString("chatwindowuid");
         Log.d("groupChatWindowUid", groupUid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,19 +78,23 @@ public class ChatWindow extends AppCompatActivity {
                 for (int j = 0; j < arrayListuid.size(); j++) {
                     String setuid = arrayListuid.get(j);
                     Log.d("setuid",setuid);
-                    String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue()+"";
-                    Log.d("message",message);
-                    chatWindowSet = new ChatWindowSet(message);
-                    chatWindowSets.add(chatWindowSet);
                     if (setuid.equals(sessionManager.getUID()+"")){
+                        String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue()+"";
+                        Log.d("message",message);
+                        chatWindowSet = new ChatWindowSet(message);
+                        chatWindowSets.add(chatWindowSet);
                         chatWindowAdapter = new ChatWindowAdapter(getApplicationContext(),chatWindowSets);
                         recyclerView.setAdapter(chatWindowAdapter);
                     }
                     else {
+                        String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue()+"";
+                        Log.d("message",message);
+                        chatWindowSet = new ChatWindowSet(message);
+                        chatWindowSets.add(chatWindowSet);
                         chatWindowOpponentAdapter = new ChatWindowOpponentAdapter(getApplicationContext(),chatWindowSets);
                         recyclerView.setAdapter(chatWindowOpponentAdapter);
                     }
-
+                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount());
                 }
             }
 
