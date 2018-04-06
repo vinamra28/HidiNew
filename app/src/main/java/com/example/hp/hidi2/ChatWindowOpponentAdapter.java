@@ -2,6 +2,7 @@ package com.example.hp.hidi2;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class ChatWindowOpponentAdapter extends RecyclerView.Adapter<ChatWindowOp
     public void onBindViewHolder(ChatWindowOpponentAdapter.ViewHolder holder, int position) {
         chatWindowSet = chatWindowSets.get(position);
         holder.textView.setText(chatWindowSet.getMessage());
+        holder.setIsRecyclable(false);
+        Log.d("size",chatWindowSets.size()+"");
     }
 
     @Override

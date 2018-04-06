@@ -2,6 +2,7 @@ package com.example.hp.hidi2;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +26,18 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mymsg, parent, false);
-            ChatWindowAdapter.ViewHolder viewHoldermine = new ChatWindowAdapter.ViewHolder(v);
-            return viewHoldermine;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.mymsg, parent, false);
+        ChatWindowAdapter.ViewHolder viewHoldermine = new ChatWindowAdapter.ViewHolder(v);
+        return viewHoldermine;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         chatWindowSet = chatWindowSets.get(position);
         holder.textView.setText(chatWindowSet.getMessage());
+        holder.setIsRecyclable(false);
+        Log.d("size", chatWindowSets.size() + "");
+
     }
 
     @Override
@@ -43,6 +47,7 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+
         public ViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.mymsg);

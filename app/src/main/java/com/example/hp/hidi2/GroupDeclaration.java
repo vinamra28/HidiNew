@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -63,8 +64,8 @@ public class GroupDeclaration extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mStorageReference = FirebaseStorage.getInstance().getReference();
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        final Intent intent = getIntent();
+        final Bundle bundle = intent.getExtras();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         arrayListFinalGroupName = bundle.getStringArrayList("arraylistsendname");
@@ -89,8 +90,6 @@ public class GroupDeclaration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnUploadGroupDetails();
-                Intent intent1 = new Intent(GroupDeclaration.this,ChatList.class);
-                startActivity(intent1);
             }
         });
     }
@@ -124,7 +123,14 @@ public class GroupDeclaration extends AppCompatActivity {
                         databaseReference.child("threads").child(uploadUrl).child("participants").child(uidhidi).setValue(namehidi);
                         databaseReference.child("users").child(uidhidi).child("threads").child(uploadUrl).setValue(true);
                     }
-                    databaseReference.child("users").child(session.getUID()+"").child("threads").child(uploadUrl).setValue(true);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putInt("key", 0);
+                    Intent intent1 = new Intent(GroupDeclaration.this, ChatList.class);
+                    intent1.putExtras(bundle1);
+                    Log.e("bundle", bundle1 + "");
+                    startActivity(intent1);
+                    databaseReference.child("users").child(session.getUID() + "").child("threads").child(uploadUrl).setValue(true);
+                    finish();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {

@@ -73,28 +73,30 @@ public class ChatWindow extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.child("threads").child(groupUid).child("messages").getChildren()) {
                     personUid = dataSnapshot1.getKey();
                     arrayListuid.add(personUid);
-                }
+                }chatWindowSets = new ArrayList<>();
                 Log.d("arrayListUid", String.valueOf(arrayListuid));
                 for (int j = 0; j < arrayListuid.size(); j++) {
                     String setuid = arrayListuid.get(j);
-                    Log.d("setuid",setuid);
-                    if (setuid.equals(sessionManager.getUID()+"")){
-                        String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue()+"";
-                        Log.d("message",message);
+                    Log.d("setuid", setuid);
+                    String msguid = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("senderId").getValue()+"";
+                    Log.d("msguid",msguid);
+                    Log.d("cominguid",sessionManager.getUID()+"");
+                    if (msguid.equals(sessionManager.getUID() + "")) {
+                        String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue() + "";
+                        Log.d("message", message);
                         chatWindowSet = new ChatWindowSet(message);
                         chatWindowSets.add(chatWindowSet);
-                        chatWindowAdapter = new ChatWindowAdapter(getApplicationContext(),chatWindowSets);
+                        chatWindowAdapter = new ChatWindowAdapter(getApplicationContext(), chatWindowSets);
                         recyclerView.setAdapter(chatWindowAdapter);
-                    }
-                    else {
-                        String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue()+"";
-                        Log.d("message",message);
+                    } else {
+                        String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue() + "";
+                        Log.d("message", message);
                         chatWindowSet = new ChatWindowSet(message);
                         chatWindowSets.add(chatWindowSet);
-                        chatWindowOpponentAdapter = new ChatWindowOpponentAdapter(getApplicationContext(),chatWindowSets);
+                        chatWindowOpponentAdapter = new ChatWindowOpponentAdapter(getApplicationContext(), chatWindowSets);
                         recyclerView.setAdapter(chatWindowOpponentAdapter);
                     }
-                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount());
+                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
                 }
             }
 

@@ -31,9 +31,10 @@ public class ChatList extends AppCompatActivity {
     List<ChatHistorySet> chatHistorySets;
     ChatHistoryAdapter chatHistoryAdapter;
     SessionManager session;
+    int i = 0;
+    Bundle bundle;
     ChatHistorySet chatHistorySet;
     ArrayList<String> arrayListUploadUrl = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +43,16 @@ public class ChatList extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerViewChatHistory);
         recyclerView.setHasFixedSize(true);
+        if (bundle != null){
+            Bundle bundle = getIntent().getExtras();
+            i = bundle.getInt("key");
+        }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressDialog = new ProgressDialog(this);
         chatHistorySets = new ArrayList<>();
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
+        arrayListUploadUrl = new ArrayList<>();
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -58,47 +64,49 @@ public class ChatList extends AppCompatActivity {
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 progressDialog.dismiss();
+                chatHistorySets = new ArrayList<>();
                 Log.d("message", dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren() + "");
                 Log.d("uid", session.getUID() + "");
-                for (DataSnapshot postSnapshot : dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren())
-                {
+                arrayListUploadUrl = new ArrayList<>();
+                Log.d("arrayListUploadUrlsize", arrayListUploadUrl.size() + "");
+                for (DataSnapshot postSnapshot : dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren()) {
                     Log.d("postSnampshot", postSnapshot + "");
                     String uploadurl = postSnapshot.getKey();
                     Log.d("uploadurl", uploadurl);
                     arrayListUploadUrl.add(uploadurl);
                 }
                 Log.d("ArrayList", arrayListUploadUrl + "");
-                for (int j = 0; j < arrayListUploadUrl.size(); j++)
-                {
-                    final String groupUrl = arrayListUploadUrl.get(j);
-                    Log.d("groupUrl", groupUrl);
-                    databaseReference.addValueEventListener(new ValueEventListener()
-                    {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot)
-                        {
-                            String url = dataSnapshot.child("threads").child(groupUrl).child("groupImage").getValue() + "";
-                            Log.d("url", url);
-                            String groupname = dataSnapshot.child("threads").child(groupUrl).child("name").getValue() + "";
-                            Log.d("group", groupname);
-                            chatHistorySet = new ChatHistorySet(groupname, url);
-                            chatHistorySets.add(chatHistorySet);
-                            chatHistoryAdapter = new ChatHistoryAdapter(getApplicationContext(), chatHistorySets);
-                            recyclerView.setAdapter(chatHistoryAdapter);
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError)
-                        {
-                        }
-                    });
+                for (int j = 0; j < arrayListUploadUrl.size(); j++) {
+                    if (i == 0) {
+                        final String groupUrl = arrayListUploadUrl.get(j);
+                        Log.d("groupUrl", groupUrl);
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String url = dataSnapshot.child("threads").child(groupUrl).child("groupImage").getValue() + "";
+                                Log.d("url", url);
+                                String groupname = dataSnapshot.child("threads").child(groupUrl).child("name").getValue() + "";
+                                Log.d("group", groupname);
+                                chatHistorySet = new ChatHistorySet(groupname, url);
+                                chatHistorySets.add(chatHistorySet);
+                                chatHistoryAdapter = new ChatHistoryAdapter(getApplicationContext(), chatHistorySets);
+                                recyclerView.setAdapter(chatHistoryAdapter);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                    }
                 }
+                i = 1;
+                Log.d("chatHistorySetssize", chatHistorySets.size() + "" + "" + arrayListUploadUrl.size());
             }
+
             @Override
-            public void onCancelled(DatabaseError databaseError)
-            {
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }

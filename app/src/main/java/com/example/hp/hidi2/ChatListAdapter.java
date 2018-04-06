@@ -2,8 +2,10 @@ package com.example.hp.hidi2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     private Context context;
     private List<ChatListSet> chatListSets;
     ChatListSet chatListSet;
+    String uid;
+    String opponentname;
 
     public ChatListAdapter(Context context, List<ChatListSet> chatListSets) {
         this.context = context;
@@ -39,7 +43,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ChatListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ChatListAdapter.ViewHolder holder, int position) {
         chatListSet = chatListSets.get(holder.getAdapterPosition());
         holder.txtname.setText(chatListSet.getName());
         Picasso.with(context).load(chatListSet.getUrl()).into(holder.circleImageView);
@@ -47,6 +51,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,SingleChat.class);
+                uid = chatListSets.get(holder.getAdapterPosition()).getUid();
+                Log.d("opponentuid",uid);
+                opponentname = chatListSets.get(holder.getAdapterPosition()).getName();
+                Log.d("opponentname",opponentname);
+                Bundle bundle = new Bundle();
+                bundle.putString("opponentname",opponentname);
+                bundle.putString("opponentuid",uid);
+                intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

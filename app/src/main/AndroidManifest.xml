@@ -107,12 +107,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".HidiListChat"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SingleChat"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme" />
         <activity
             android:name=".AddPeople"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".GroupDeclaration"
@@ -124,14 +128,15 @@
         <activity
             android:name=".ShowUnlockedVisitors"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChatWindow"
+        <activity
+            android:name=".ChatWindow"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AccountsTheme"
-            android:launchMode="singleTop">
-        </activity>
-        <activity android:name=".RepliesOnComments"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"></activity>
+            android:theme="@style/AccountsTheme"></activity>
+        <activity
+            android:name=".RepliesOnComments"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
