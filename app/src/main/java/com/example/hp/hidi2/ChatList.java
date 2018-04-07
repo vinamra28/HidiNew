@@ -32,9 +32,11 @@ public class ChatList extends AppCompatActivity {
     ChatHistoryAdapter chatHistoryAdapter;
     SessionManager session;
     int i = 0;
+    public String groupUrl;
     Bundle bundle;
     ChatHistorySet chatHistorySet;
-    ArrayList<String> arrayListUploadUrl = new ArrayList<>();
+    ArrayList<String> arrayListUploadUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +45,14 @@ public class ChatList extends AppCompatActivity {
         session = new SessionManager(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerViewChatHistory);
         recyclerView.setHasFixedSize(true);
-        if (bundle != null){
-            Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
+        if (bundle != null) {
             i = bundle.getInt("key");
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         progressDialog = new ProgressDialog(this);
-        chatHistorySets = new ArrayList<>();
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
-        arrayListUploadUrl = new ArrayList<>();
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -65,48 +65,50 @@ public class ChatList extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                progressDialog.dismiss();
                 chatHistorySets = new ArrayList<>();
-                Log.d("message", dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren() + "");
-                Log.d("uid", session.getUID() + "");
-                arrayListUploadUrl = new ArrayList<>();
-                Log.d("arrayListUploadUrlsize", arrayListUploadUrl.size() + "");
-                for (DataSnapshot postSnapshot : dataSnapshot.child("users").child(String.valueOf(session.getUID())).child("threads").getChildren()) {
-                    Log.d("postSnampshot", postSnapshot + "");
-                    String uploadurl = postSnapshot.getKey();
-                    Log.d("uploadurl", uploadurl);
-                    arrayListUploadUrl.add(uploadurl);
-                }
-                Log.d("ArrayList", arrayListUploadUrl + "");
-                for (int j = 0; j < arrayListUploadUrl.size(); j++) {
-                    if (i == 0) {
-                        final String groupUrl = arrayListUploadUrl.get(j);
-                        Log.d("groupUrl", groupUrl);
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String url = dataSnapshot.child("threads").child(groupUrl).child("groupImage").getValue() + "";
-                                Log.d("url", url);
-                                String groupname = dataSnapshot.child("threads").child(groupUrl).child("name").getValue() + "";
-                                Log.d("group", groupname);
-                                chatHistorySet = new ChatHistorySet(groupname, url);
-                                chatHistorySets.add(chatHistorySet);
-                                chatHistoryAdapter = new ChatHistoryAdapter(getApplicationContext(), chatHistorySets);
-                                recyclerView.setAdapter(chatHistoryAdapter);
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
+                Log.d("chatHistorySize", chatHistorySets.size() + "");
+                String opponentname, opponentpic;
+                progressDialog.dismiss();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.child("users").child(session.getUID() + "").child("threads").getChildren()) {
+                    groupUrl = dataSnapshot1.getKey();
+                    String personalurl = groupUrl;
+                    Log.d("groupUrl", groupUrl);
+                    if (!groupUrl.contains("-")) {
+                        //checking for one to one chat
+                        String S[] = groupUrl.split("_");
+                        String s1 = S[0];
+                        Log.d("s1", s1);
+                        String s2 = S[1];
+                        Log.d("s2", s2);
+                        //checking for opponent name
+                        if (s1.equals(session.getUID() + "")) {
+                            groupUrl = s2;
+                        } else {
+                            groupUrl = s1;
+                        }
+                        opponentname = dataSnapshot.child("users").child(groupUrl).child("username").getValue() + "";
+                        Log.d("opponentname", opponentname);
+                        opponentpic = dataSnapshot.child("users").child(groupUrl).child("profilepic").getValue() + "";
+                        Log.d("opponentpic", opponentpic);
                     }
+                    //making group
+                    else {
+                        groupUrl = groupUrl;
+                        opponentname = dataSnapshot.child("threads").child(groupUrl).child("name").getValue() + "";
+                        Log.d("opponentname", opponentname);
+                        opponentpic = dataSnapshot.child("threads").child(groupUrl).child("groupImage").getValue() + "";
+                        Log.d("opponentpic", opponentpic);
+                    }
+                    chatHistorySet = new ChatHistorySet(opponentname, opponentpic);
+                    chatHistorySets.add(chatHistorySet);
+                    chatHistoryAdapter = new ChatHistoryAdapter(getApplicationContext(), chatHistorySets);
+                    recyclerView.setAdapter(chatHistoryAdapter);
                 }
-                i = 1;
-                Log.d("chatHistorySetssize", chatHistorySets.size() + "" + "" + arrayListUploadUrl.size());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

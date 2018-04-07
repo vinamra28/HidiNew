@@ -81,7 +81,7 @@ public class Arguments extends AppCompatActivity {
                 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 time_stamp=sdf.format(date);
                 mycomment=mycmt.getText().toString();
-                commentGet=new CommentGet(session.getProfilepic(),session.getSecname(),mycomment);
+                commentGet=new CommentGet(session.getProfilepic(),session.getSecname(),mycomment,"Reply");
                 commentGetList.add(commentGet);
                 new sendCmt().execute("http://hidi.org.in/hidi/comments/addcomment.php");
                 mycmt.setText("");

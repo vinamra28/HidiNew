@@ -75,12 +75,17 @@ public class SingleChat extends AppCompatActivity {
                 String secname = sessionManager.getSecname();
                 String timeStamp = "timeStamp";
                 String key = databaseReference.push().getKey();
-//                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(sessionManager.getUID());
-//                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(sessionManager.getSecname());
-//                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("text").setValue(messages);
-//                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(System.currentTimeMillis());
-//                databaseReference.child("threads").child(groupUid).child("messages").child(databaseReference.push().getKey()).child("senderId").setValue(sessionManager.getUID());
-//                databaseReference.child("threads").child(groupUid).child("messages").child(databaseReference.push().getKey()).child("senderId").setValue(messageSet);
+                databaseReference.child("users").child(sessionManager.getUID()+"").child("threads").child(sessionManager.getUID()+"_"+opponent_uid).setValue(true);
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("lastMessage").setValue("");
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("lastSender").setValue("");
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("lastUpdated").setValue("");
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("type").setValue("Private Chat");
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("messages").child(key).child("senderID").setValue(sessionManager.getUID());
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("messages").child(key).child("senderName").setValue(sessionManager.getSecname());
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("messages").child(key).child("text").setValue(messages);
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("messages").child(key).child("timestamp").setValue(System.currentTimeMillis());
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("participants").child(sessionManager.getUID()+"").setValue(sessionManager.getSecname());
+                databaseReference.child("threads").child(sessionManager.getUID()+"_"+opponent_uid).child("participants").child(opponent_uid).setValue(opponent_name);
             }
         });
     }

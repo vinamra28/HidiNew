@@ -65,22 +65,32 @@ public class ChatWindow extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                groupName = dataSnapshot.child("threads").child(groupUid).child("messages").child(String.valueOf(databaseReference.push())).child()
                 groupName = dataSnapshot.child("threads").child(groupUid).child("name").getValue() + "";
                 Log.d("groupname", groupName);
                 toolbar.setTitle(groupName);
-//                 dataSnapshot.child("threads").child(groupUid).child("messages").getChildren()
+                arrayListuid = new ArrayList<>();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.child("threads").child(groupUid).child("messages").getChildren()) {
                     personUid = dataSnapshot1.getKey();
                     arrayListuid.add(personUid);
-                }chatWindowSets = new ArrayList<>();
+                }
+                chatWindowSets = new ArrayList<>();
                 Log.d("arrayListUid", String.valueOf(arrayListuid));
                 for (int j = 0; j < arrayListuid.size(); j++) {
                     String setuid = arrayListuid.get(j);
                     Log.d("setuid", setuid);
-                    String msguid = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("senderId").getValue()+"";
-                    Log.d("msguid",msguid);
-                    Log.d("cominguid",sessionManager.getUID()+"");
+                    String msguid = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("senderId").getValue() + "";
+                    Log.d("msguid", msguid);
+                    Log.d("cominguid", sessionManager.getUID() + "");
                     if (msguid.equals(sessionManager.getUID() + "")) {
                         String message = dataSnapshot.child("threads").child(groupUid).child("messages").child(setuid).child("text").getValue() + "";
                         Log.d("message", message);
@@ -96,7 +106,7 @@ public class ChatWindow extends AppCompatActivity {
                         chatWindowOpponentAdapter = new ChatWindowOpponentAdapter(getApplicationContext(), chatWindowSets);
                         recyclerView.setAdapter(chatWindowOpponentAdapter);
                     }
-                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount()-1);
+                    recyclerView.scrollToPosition(recyclerView.getAdapter().getItemCount() - 1);
                 }
             }
 
@@ -109,6 +119,7 @@ public class ChatWindow extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 messages = editText.getText() + "";
+                editText.setText("");
                 String uid = sessionManager.getUID() + "";
                 String secname = sessionManager.getSecname();
                 String timeStamp = "timeStamp";
