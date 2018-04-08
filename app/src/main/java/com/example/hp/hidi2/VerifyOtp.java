@@ -106,10 +106,6 @@ public class VerifyOtp extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-//                final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
-//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-//                myAnim.setInterpolator(interpolator);
-//                verifi.startAnimation(myAnim);
                 progress.show();
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
                 if(otp.length()!=0)
@@ -309,11 +305,6 @@ public class VerifyOtp extends AppCompatActivity
                         public void onClick(View v)
                         {
                             progress.setMessage("Loading.....");
-//                            final Animation myAnim = AnimationUtils.loadAnimation(VerifyOtp.this, R.anim.bounce);
-//                            MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-//                            myAnim.setInterpolator(interpolator);
-//                            log.startAnimation(myAnim);
-
                             progress.show();
                             if(request==1)
                             {

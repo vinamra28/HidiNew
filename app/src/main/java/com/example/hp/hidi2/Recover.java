@@ -45,10 +45,6 @@ public class Recover extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-//                final Animation myAnim = AnimationUtils.loadAnimation(Recover.this, R.anim.bounce);
-//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-//                myAnim.setInterpolator(interpolator);
-//                recovery.startAnimation(myAnim);
                 txtoldno=earlierno.getText().toString();
                 txtnewno=changeno.getText().toString();
                 txtpaswd=passwords.getText().toString();

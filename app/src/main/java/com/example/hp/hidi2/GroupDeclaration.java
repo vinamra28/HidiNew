@@ -127,6 +127,7 @@ public class GroupDeclaration extends AppCompatActivity {
                     bundle1.putInt("key", 0);
                     Intent intent1 = new Intent(GroupDeclaration.this, ChatList.class);
                     intent1.putExtras(bundle1);
+                    intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     Log.e("bundle", bundle1 + "");
                     startActivity(intent1);
                     databaseReference.child("users").child(session.getUID() + "").child("threads").child(uploadUrl).setValue(true);

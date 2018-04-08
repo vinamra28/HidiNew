@@ -59,15 +59,18 @@ public class ChatWindow extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        groupUid = bundle.getString("chatwindowuid");
+        final Bundle bundle = intent.getExtras();
+        if(bundle!=null)
+        {groupUid = bundle.getString("chatwindowuid");
         Log.d("groupChatWindowUid", groupUid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 groupName = dataSnapshot.child("threads").child(groupUid).child("name").getValue() + "";
                 Log.d("groupname", groupName);
-                toolbar.setTitle(groupName);
+                Log.d("oppname",bundle.getString("oppname"));
+                toolbar.setTitle(bundle.getString("oppname"));
+//                toolbar.setTitle(groupName);
                 arrayListuid = new ArrayList<>();
             }
 
@@ -114,7 +117,7 @@ public class ChatWindow extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });}
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,5 +135,10 @@ public class ChatWindow extends AppCompatActivity {
 //                databaseReference.child("threads").child(groupUid).child("messages").child(databaseReference.push().getKey()).child("senderId").setValue(messageSet);
             }
         });
+    }
+    @Override
+    public void onBackPressed()
+    {
+        this.finish();
     }
 }

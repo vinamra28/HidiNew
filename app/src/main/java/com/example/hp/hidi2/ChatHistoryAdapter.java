@@ -53,7 +53,7 @@ public class ChatHistoryAdapter extends RecyclerView.Adapter<ChatHistoryAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -74,11 +74,14 @@ public class ChatHistoryAdapter extends RecyclerView.Adapter<ChatHistoryAdapter.
                         }
                         chatposition = position;
                         groupUid = arrayListUid.get(chatposition);
+                        String name=chatHistorySet.getName();
                         Log.d("groupUid", groupUid);
                         Bundle bundle = new Bundle();
+                        bundle.putString("oppname",name);
                         bundle.putString("chatwindowuid", groupUid);
                         Intent intent = new Intent(context, ChatWindow.class);
                         intent.putExtras(bundle);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(intent);
                     }
 

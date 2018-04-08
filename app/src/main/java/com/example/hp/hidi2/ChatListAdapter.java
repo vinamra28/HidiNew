@@ -50,14 +50,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,SingleChat.class);
+                Intent intent = new Intent(context,ChatWindow.class);
                 uid = chatListSets.get(holder.getAdapterPosition()).getUid();
                 Log.d("opponentuid",uid);
                 opponentname = chatListSets.get(holder.getAdapterPosition()).getName();
                 Log.d("opponentname",opponentname);
                 Bundle bundle = new Bundle();
-                bundle.putString("opponentname",opponentname);
-                bundle.putString("opponentuid",uid);
+                bundle.putString("oppname",opponentname);
+                bundle.putString("chatwindowuid",uid);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

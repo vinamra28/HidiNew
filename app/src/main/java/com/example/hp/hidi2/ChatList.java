@@ -58,8 +58,11 @@ public class ChatList extends AppCompatActivity {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ChatList.this, HidiListChat.class));
+            public void onClick(View v)
+            {
+                Intent intent=new Intent(ChatList.this, HidiListChat.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
         databaseReference.addValueEventListener(new ValueEventListener() {
