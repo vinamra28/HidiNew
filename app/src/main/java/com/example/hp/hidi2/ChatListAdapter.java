@@ -28,6 +28,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     private List<ChatListSet> chatListSets;
     ChatListSet chatListSet;
     String uid;
+    SessionManager session;
     String opponentname;
 
     public ChatListAdapter(Context context, List<ChatListSet> chatListSets) {
@@ -45,6 +46,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ChatListAdapter.ViewHolder holder, int position) {
         chatListSet = chatListSets.get(holder.getAdapterPosition());
+        session = new SessionManager(context);
         holder.txtname.setText(chatListSet.getName());
         Picasso.with(context).load(chatListSet.getUrl()).into(holder.circleImageView);
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +59,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 Log.d("opponentname",opponentname);
                 Bundle bundle = new Bundle();
                 bundle.putString("oppname",opponentname);
-                bundle.putString("chatwindowuid",uid);
+                bundle.putString("chatwindowuid",session.getUID()+"_"+uid);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

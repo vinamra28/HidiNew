@@ -58,9 +58,9 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int color;
+//                int color;
                 if (allindex[holder.getAdapterPosition()] == 0) {
-                    color = R.color.colorAccent;
+//                    color = R.color.colorAccent;
                     allindex[holder.getAdapterPosition()] = 1;
                     Log.d("blue", String.valueOf(allindex[holder.getAdapterPosition()]));
                     personname = addPeople.getName();
@@ -71,7 +71,7 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     arrayListpeopleaddedname.add(personname);
                     arrayListpeopleUid.add(personuid);
                 } else {
-                    color = R.color.back_color;
+//                    color = R.color.back_color;
                     allindex[holder.getAdapterPosition()] = 0;
                     Log.d("white", String.valueOf(allindex[holder.getAdapterPosition()]));
                     personname = addPeople.getName();
@@ -80,7 +80,7 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     arrayListpeopleaddedname.remove(personname);
                     arrayListpeopleUid.remove(personuid);
                 }
-                holder.constraintLayout.setBackgroundColor(color);
+//                holder.constraintLayout.setBackgroundColor(color);
             }
         });
     }

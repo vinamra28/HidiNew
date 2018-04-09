@@ -216,6 +216,7 @@ public class Accounts extends AppCompatActivity
             if(item.isCheckable())
             {
 //                restartActivity();
+//                restartActivity();
                 if(!item.isChecked())
                 {
                     item.setChecked(true);
@@ -290,7 +291,7 @@ public class Accounts extends AppCompatActivity
                 {
                     JSONObject records = res.getJSONObject("records");
                     Picasso.with(getApplicationContext()).load(records.getString("profilepic")).into(userdp);
-                    databaseReference.child("users").child(session.getUID()+"").child("profilepic:").setValue(records.getString("profilepic"));
+                    databaseReference.child("users").child(session.getUID()+"").child("profilepic").setValue(records.getString("profilepic"));
                     admire.setText(""+records.getInt("admire"));
                     love.setText(""+records.getInt("love"));
                     visitors.setText(""+records.getInt("visitors"));

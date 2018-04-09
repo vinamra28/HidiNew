@@ -123,14 +123,32 @@ public class ChatWindow extends AppCompatActivity {
             public void onClick(View v) {
                 messages = editText.getText() + "";
                 editText.setText("");
+                Log.d("messages",messages);
                 String uid = sessionManager.getUID() + "";
+                Log.d("uid",uid);
                 String secname = sessionManager.getSecname();
+                Log.d("secname",secname);
                 String timeStamp = "timeStamp";
+                Log.d("timeStamp",timeStamp);
                 String key = databaseReference.push().getKey();
-                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(sessionManager.getUID());
-                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(sessionManager.getSecname());
-                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("text").setValue(messages);
-                databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(System.currentTimeMillis());
+                Log.d("aman",databaseReference.push().getKey());
+                if (groupUid.contains("-")){
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(uid);
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(secname);
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("text").setValue(messages);
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(System.currentTimeMillis());
+                }
+                else {
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(uid);
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(secname);
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("text").setValue(messages);
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(System.currentTimeMillis());
+                    databaseReference.child("threads").child(groupUid).child("lastMessage").setValue(messages);
+                    databaseReference.child("threads").child(groupUid).child("lastSender").setValue("");
+                    databaseReference.child("threads").child(groupUid).child("lastUpdated").setValue(System.currentTimeMillis());
+                    databaseReference.child("threads").child(groupUid).child("type").setValue("Private Chat");
+                    databaseReference.child("users").child(sessionManager.getUID()+"").child("threads").child(groupUid).setValue("true");
+                }
 //                databaseReference.child("threads").child(groupUid).child("messages").child(databaseReference.push().getKey()).child("senderId").setValue(sessionManager.getUID());
 //                databaseReference.child("threads").child(groupUid).child("messages").child(databaseReference.push().getKey()).child("senderId").setValue(messageSet);
             }
