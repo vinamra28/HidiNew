@@ -62,10 +62,14 @@ public class NewUserProfile extends AppCompatActivity
         blocking=findViewById(R.id.blockuser);
         doadmire=findViewById(R.id.doadmire);
         dolove=findViewById(R.id.dolove);
+        dolove.setTag("0");
+        doadmire.setTag("0");
         Bundle bundle=getIntent().getExtras();
         String name=bundle.getString("name");
         actionbars.setText(name);
         uid=bundle.getInt("uid");
+        following.setTag("0");
+        blocking.setTag("0");
         new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/visit.php");
         dolove.setOnClickListener(new View.OnClickListener()
         {
@@ -73,6 +77,16 @@ public class NewUserProfile extends AppCompatActivity
             public void onClick(View v)
             {
                 request="love";
+                if(dolove.getTag()=="0")
+                {
+                    dolove.setTag("1");
+                    dolove.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
+                }
+                else
+                {
+                    dolove.setTag("0");
+                    dolove.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp));
+                }
                 new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
             }
         });
@@ -82,6 +96,16 @@ public class NewUserProfile extends AppCompatActivity
             public void onClick(View v)
             {
                 request="admire";
+                if(doadmire.getTag()=="0")
+                {
+                    doadmire.setTag("1");
+                    doadmire.setImageDrawable(getResources().getDrawable(R.drawable.ic_local_florist_red_24dp));
+                }
+                else
+                {
+                    doadmire.setTag("0");
+                    doadmire.setImageDrawable(getResources().getDrawable(R.drawable.ic_local_florist_black_24dp));
+                }
                 new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
             }
         });
@@ -90,6 +114,16 @@ public class NewUserProfile extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                if(following.getTag()=="0")
+                {
+                    following.setTag("1");
+                    following.setText("Unfollow");
+                }
+                else
+                {
+                    following.setTag("0");
+                    following.setText("Follow");
+                }
                 result="";
                 request="follow";
                 new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
@@ -101,6 +135,16 @@ public class NewUserProfile extends AppCompatActivity
             public void onClick(View v)
             {
                 request="block";
+                if(blocking.getTag()=="0")
+                {
+                    blocking.setTag("1");
+                    blocking.setText("Unblock");
+                }
+                else
+                {
+                    blocking.setTag("0");
+                    blocking.setText("Block");
+                }
                 new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
             }
         });
@@ -137,6 +181,22 @@ public class NewUserProfile extends AppCompatActivity
                     userpopular.setProgress((float) records.getDouble("popularity"));
                     uservisitors.setText(""+records.getInt("visitors"));
                     userhidies.setText(""+records.getInt("hidies"));
+                    if(records.getInt("admires")==1)
+                    {
+                        doadmire.setImageDrawable(getResources().getDrawable(R.drawable.ic_local_florist_red_24dp));
+                    }
+                    if(records.getInt("love")==1)
+                    {
+                        dolove.setImageDrawable(getResources().getDrawable(R.drawable.ic_favorite_black_24dp));
+                    }
+                    if(records.getInt("follow")==1)
+                    {
+                        following.setText("Unfollow");
+                    }
+                    if(records.getInt("block")==1)
+                    {
+                        blocking.setText("Unblock");
+                    }
                 }
                 else
                 {
