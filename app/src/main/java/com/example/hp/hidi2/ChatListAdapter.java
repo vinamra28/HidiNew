@@ -59,7 +59,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 Log.d("opponentname",opponentname);
                 Bundle bundle = new Bundle();
                 bundle.putString("oppname",opponentname);
-                bundle.putString("chatwindowuid",session.getUID()+"_"+uid);
+                bundle.putString("chatwindowuid",uid);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

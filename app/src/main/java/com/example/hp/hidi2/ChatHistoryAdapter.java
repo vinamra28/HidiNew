@@ -72,12 +72,31 @@ public class ChatHistoryAdapter extends RecyclerView.Adapter<ChatHistoryAdapter.
                             Log.d("uid", uid);
                             arrayListUid.add(uid);
                         }
+                        Log.d("ArrayList", arrayListUid + "");
                         chatposition = position;
                         groupUid = arrayListUid.get(chatposition);
-                        String name=chatHistorySet.getName();
+                        String name = "";
+                        if (!(groupUid.contains("-"))){
+                            String S[] = groupUid.split("_");
+                            String s1 = S[0];
+                            String s2 = S[1];
+                            if (s1.equals(session.getUID()+"")){
+                                name = dataSnapshot.child("users").child(s2).child("username").getValue()+"";
+                                Log.d("s2name",name);
+                            }
+                            else {
+                                name = dataSnapshot.child("users").child(s1).child("username").getValue()+"";
+                                Log.d("s1name",s1);
+                            }
+                        }
+                        else {
+                            name = dataSnapshot.child("threads").child(groupUid).child("name").getValue()+"";
+                        }
+                        Log.d("chat position", chatposition + "");
+                        Log.d("oppname", name);
                         Log.d("groupUid", groupUid);
                         Bundle bundle = new Bundle();
-                        bundle.putString("oppname",name);
+                        bundle.putString("oppname", name);
                         bundle.putString("chatwindowuid", groupUid);
                         Intent intent = new Intent(context, ChatWindow.class);
                         intent.putExtras(bundle);

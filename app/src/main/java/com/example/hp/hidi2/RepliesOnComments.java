@@ -58,11 +58,16 @@ public class RepliesOnComments extends AppCompatActivity
         cid=bundle.getInt("cid");
         recyclerView=findViewById(R.id.recyclerViewrply);
         myreplies=findViewById(R.id.myrply);
+        progress = new ProgressDialog(this);
+        progress.setIndeterminate(false);
+        progress.setCancelable(false);
+        progress.setTitle("Loading....");
         sendreplies=findViewById(R.id.sendrply);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(replyAdapter);
+        progress.show();
         new LoadReplies().execute("http://hidi.org.in/hidi/reply/showreplies.php");
         sendreplies.setOnClickListener(new View.OnClickListener()
         {
@@ -131,6 +136,7 @@ public class RepliesOnComments extends AppCompatActivity
         {
             super.onPostExecute(s);
             Log.d("Result",result);
+            progress.dismiss();
             try
             {
                 JSONObject jsonObject=new JSONObject(result);

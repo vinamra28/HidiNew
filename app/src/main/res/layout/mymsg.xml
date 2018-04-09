@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="end"
+    android:gravity="right"
     android:layout_marginTop="5dp"
+    android:orientation="horizontal"
     android:layout_marginBottom="5dp">
 
     <TextView
@@ -11,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:layout_alignParentEnd="true"
+        android:gravity="end"
+        android:layout_gravity="end"
         android:background="@drawable/rounded_corner1"
         android:padding="10dp"
         android:layout_marginEnd="5dp"
@@ -19,4 +23,4 @@
         android:text="a"
         android:textColor="#ffffff" />
 
-</RelativeLayout>
+</LinearLayout>

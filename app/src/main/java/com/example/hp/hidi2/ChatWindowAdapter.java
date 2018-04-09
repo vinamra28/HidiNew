@@ -54,3 +54,4 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
         }
     }
 }
+
