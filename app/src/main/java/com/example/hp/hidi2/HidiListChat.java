@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,6 +40,7 @@ public class HidiListChat extends AppCompatActivity
     ChatListAdapter chatListAdapter;
     ProgressDialog progressDialog;
     ImageView imageViewaddpeople;
+    TextView textView;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();
     ArrayList<String> arrayListsecname = new ArrayList<>();
@@ -49,6 +51,13 @@ public class HidiListChat extends AppCompatActivity
         setContentView(R.layout.activity_hidi_list_chat);
         session = new SessionManager(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerViewChatFriend);
+        textView = findViewById(R.id.newgroup);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HidiListChat.this,AddPeople.class));
+            }
+        });
         imageViewaddpeople = findViewById(R.id.addpeople);
         imageViewaddpeople.setImageResource(R.drawable.ic_group_add_black_24dp);
         imageViewaddpeople.setOnClickListener(new View.OnClickListener() {

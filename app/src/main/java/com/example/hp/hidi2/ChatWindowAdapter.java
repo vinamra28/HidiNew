@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,6 +19,8 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
     private Context context;
     private List<ChatWindowSet> chatWindowSets;
     ChatWindowSet chatWindowSet;
+    HashMap<String,String > hashMapadapter = new HashMap<>();
+    SessionManager sessionManager;
 
     public ChatWindowAdapter(Context context, List<ChatWindowSet> chatWindowSets) {
         this.context = context;
@@ -34,7 +37,20 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         chatWindowSet = chatWindowSets.get(position);
-        holder.textView.setText(chatWindowSet.getMessage());
+        sessionManager = new SessionManager(context);
+        Boolean test = chatWindowSet.getUid().equals(sessionManager.getUID()+"");
+        Log.d("test",test+"");
+        Log.d("chatwindowuid",chatWindowSet.getUid());
+        if (test){
+            holder.textViewmy.setText(chatWindowSet.getMessage());
+            Log.d("check","enter1");
+            holder.textViewopp.setVisibility(View.INVISIBLE);
+        }
+        else {
+            holder.textViewopp.setText(chatWindowSet.getMessage());
+            Log.d("check","enter2");
+            holder.textViewmy.setVisibility(View.INVISIBLE);
+        }
         holder.setIsRecyclable(false);
         Log.d("size", chatWindowSets.size() + "");
 
@@ -46,11 +62,12 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView textViewmy , textViewopp;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.mymsg);
+            textViewmy = itemView.findViewById(R.id.mymsg);
+            textViewopp = itemView.findViewById(R.id.opponentmsg);
         }
     }
 }
