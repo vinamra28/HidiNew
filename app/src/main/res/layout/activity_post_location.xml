@@ -28,8 +28,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/twokm"
-            android:background="@drawable/cornr_round"
+            android:background="@drawable/buttonborder"
             android:text="2km" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="4dp">
+
+        </View>
 
         <Button
             style="@style/Base.Widget.AppCompat.Button.Borderless"
@@ -37,8 +43,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/fourkm"
-            android:background="@drawable/cornr_round"
+            android:background="@drawable/buttonborder"
             android:text="4km" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="4dp">
+
+        </View>
 
         <Button
             style="@style/Base.Widget.AppCompat.Button.Borderless"
@@ -46,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/eightkm"
-            android:background="@drawable/cornr_round"
+            android:background="@drawable/buttonborder"
             android:text="8km" />
     </LinearLayout>
 
