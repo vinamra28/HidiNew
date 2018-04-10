@@ -170,10 +170,19 @@ public class StatusActivity extends AppCompatActivity
                         }
                         else
                         {
-                            dialog.show();
-                            dialog.setCancelable(false);
-                            dialog.setIndeterminate(false);
-                            new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
+                            session.saveLoc(gps.latitude,gps.longitude);
+                            if(gps.canGetLocation())
+                            {
+                                session.saveLoc(gps.latitude,gps.longitude);
+                                dialog.show();
+                                dialog.setCancelable(false);
+                                dialog.setIndeterminate(false);
+                                new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
+                            }
+                            else
+                            {
+                                gps.showSettingsAlert();
+                            }
                         }
                     }
                     catch (Exception e)
@@ -383,7 +392,6 @@ public class StatusActivity extends AppCompatActivity
         }
         return result;
     }
-
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
     {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

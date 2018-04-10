@@ -117,11 +117,11 @@ public class PostActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         constraintLayout = findViewById(R.id.post_layout);
 //        new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
-        progress.show();
         swiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Log.e("dcd","cde");
+                recyclerView.setAdapter(null);
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
         });
@@ -194,6 +194,7 @@ public class PostActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.d( "Place: ","" + place.getName());
+                Log.d("LATLNG",""+place.getLatLng());
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 // TODO: Handle the error.
@@ -356,6 +357,7 @@ public class PostActivity extends AppCompatActivity {
             Log.d("result", result);
             try {
                 PostGet postGet;
+                postList.clear();
                 JSONObject respnse = new JSONObject(result);
                 JSONObject info = respnse.getJSONObject("info");
                 JSONArray records = respnse.getJSONArray("records");

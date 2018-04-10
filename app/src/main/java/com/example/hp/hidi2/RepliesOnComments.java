@@ -1,6 +1,7 @@
 package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -58,15 +60,15 @@ public class RepliesOnComments extends AppCompatActivity
         cid=bundle.getInt("cid");
         recyclerView=findViewById(R.id.recyclerViewrply);
         myreplies=findViewById(R.id.myrply);
-        progress = new ProgressDialog(this);
-        progress.setIndeterminate(false);
-        progress.setCancelable(false);
-        progress.setTitle("Loading....");
         sendreplies=findViewById(R.id.sendrply);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(replyAdapter);
+        progress=new ProgressDialog(this);
+        progress.setIndeterminate(false);
+        progress.setCancelable(false);
+        progress.setTitle("Loading....");
         progress.show();
         new LoadReplies().execute("http://hidi.org.in/hidi/reply/showreplies.php");
         sendreplies.setOnClickListener(new View.OnClickListener()
@@ -82,6 +84,8 @@ public class RepliesOnComments extends AppCompatActivity
                 replyGets.add(replyGet);
                 new sendReply().execute("http://hidi.org.in/hidi/reply/addreply.php");
                 myreplies.setText("");
+                InputMethodManager inputMethodManager= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(myreplies.getWindowToken(),0);
             }
         });
     }
@@ -136,7 +140,7 @@ public class RepliesOnComments extends AppCompatActivity
         {
             super.onPostExecute(s);
             Log.d("Result",result);
-            progress.dismiss();
+
             try
             {
                 JSONObject jsonObject=new JSONObject(result);
@@ -146,6 +150,7 @@ public class RepliesOnComments extends AppCompatActivity
                     JSONArray records=jsonObject.getJSONArray("records");
                     if(records.length()!=0)
                     {
+                        progress.dismiss();
                         for(int i=0;i<records.length();i++)
                         {
                             JSONObject reply=records.getJSONObject(i);
@@ -154,9 +159,8 @@ public class RepliesOnComments extends AppCompatActivity
                             String profilepic=reply.getString("profilepic");
                             replyGet=new ReplyGet(text,sec_name,profilepic);
                             replyGets.add(replyGet);
-
                         }
-
+                        recyclerView.scrollToPosition(replyAdapter.getItemCount()-1);
                     }
                 }
             }

@@ -2,6 +2,8 @@ package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
 import android.app.VoiceInteractor;
+import android.content.Context;
+import android.hardware.input.InputManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -85,6 +88,8 @@ public class Arguments extends AppCompatActivity {
                 commentGetList.add(commentGet);
                 new sendCmt().execute("http://hidi.org.in/hidi/comments/addcomment.php");
                 mycmt.setText("");
+                InputMethodManager inputMethodManager= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(mycmt.getWindowToken(),0);
             }
         });
     }
