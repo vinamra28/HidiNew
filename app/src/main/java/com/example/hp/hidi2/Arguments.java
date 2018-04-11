@@ -69,7 +69,6 @@ public class Arguments extends AppCompatActivity {
         new loadCmt().execute("http://hidi.org.in/hidi/comments/showcomments.php");
         progress.show();
         mycmt=findViewById(R.id.mycmt);
-        mycmt.requestFocus();
         sendcmt=findViewById(R.id.sendcmt);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -162,6 +163,11 @@ public class RepliesOnComments extends AppCompatActivity
                         }
                         recyclerView.scrollToPosition(replyAdapter.getItemCount()-1);
                     }
+                }
+                else
+                {
+                    progress.dismiss();
+                    Toast.makeText(RepliesOnComments.this,"No replies at this moment",Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)
