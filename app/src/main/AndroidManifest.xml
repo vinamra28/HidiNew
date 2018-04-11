@@ -96,8 +96,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".SearchUser"
-            android:theme="@style/AccountsTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme" />
         <activity
             android:name=".NewUserProfile"
             android:screenOrientation="portrait"
@@ -132,11 +132,14 @@
         <activity
             android:name=".ChatWindow"
             android:screenOrientation="portrait"
-            android:theme="@style/AccountsTheme"></activity>
+            android:theme="@style/AccountsTheme" />
         <activity
             android:name=".RepliesOnComments"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity android:name=".AreaSortActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

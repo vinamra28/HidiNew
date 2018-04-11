@@ -201,6 +201,13 @@ public class PostActivity extends AppCompatActivity {
                 double longitude1=place.getLatLng().longitude;
                 Log.d("Latitiude",""+latitude1);
                 Log.d("Longitude",""+longitude1);
+                Bundle bundle =new Bundle();
+                bundle.putDouble("lat",latitude1);
+                bundle.putDouble("lng",longitude1);
+                bundle.putInt("uid",session.getUID());
+                Intent intent=new Intent(this,AreaSortActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 // TODO: Handle the error.
