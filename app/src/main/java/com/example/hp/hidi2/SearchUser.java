@@ -3,7 +3,9 @@ package com.example.hp.hidi2;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -40,7 +42,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SearchUser extends AppCompatActivity {
+public class SearchUser extends AppCompatActivity implements SearchUserAdapter.SearchedUserListener {
 
     //    SearchView.SearchAutoComplete searchAutoComplete;
     SearchView searchAutoComplete;
@@ -62,12 +64,16 @@ public class SearchUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
         recyclerViewsearchUser  = findViewById(R.id.userList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerViewsearchUser.setLayoutManager(layoutManager);
+        recyclerViewsearchUser.setItemAnimator(new DefaultItemAnimator());
         toolBar = getSupportActionBar();
+        toolBar.setTitle("");
 //        toolBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 //        toolBar.setCustomView(R.layout.set_middle_title);
 //        ActionBarTitle = findViewById(R.id.actionBarTitles);
 //        ActionBarTitle.setText("");
-        searchUserAdapter = new SearchUserAdapter(arrayList,this);
+        searchUserAdapter = new SearchUserAdapter(arrayList,this,this);
 //        lv=findViewById(R.id.userList);
 //        searchAutoComplete = findViewById(R.id.searchuser);
 ////        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,8 +89,8 @@ public class SearchUser extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.action_bar_search,menu);
-        MenuItem searchmenu = menu.findItem(R.id.app_bar_menu_search);
+        getMenuInflater().inflate(R.menu.action_bar_search1,menu);
+        MenuItem searchmenu = menu.findItem(R.id.app_bar_menu_search1);
         searchView = (SearchView) MenuItemCompat.getActionView(searchmenu);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -151,7 +157,6 @@ public class SearchUser extends AppCompatActivity {
         }
         return result;
     }
-
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";
@@ -160,6 +165,17 @@ public class SearchUser extends AppCompatActivity {
             result += line;
         inputStream.close();
         return result;
+    }
+
+    @Override
+    public void onContactSelected(ChatHistorySet chatHistorySet)
+    {
+        Bundle bundle =new Bundle();
+        bundle.putString("name",chatHistorySet.getName());
+        bundle.putInt("uid", Integer.parseInt(chatHistorySet.getUid()));
+        Intent intent=new Intent(SearchUser.this,NewUserProfile.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private class Posts extends AsyncTask<String, Void, String> {
@@ -189,8 +205,11 @@ public class SearchUser extends AppCompatActivity {
                         String username=user.getString("secname");
                         String uid=""+user.getInt("uid");
                         String pic=user.getString("profilepic");
-                        chatHistorySet=new ChatHistorySet(username,uid,pic);
-                        arrayList.add(chatHistorySet);
+                        if(user.getInt("uid")!=session.getUID())
+                        {
+                            chatHistorySet=new ChatHistorySet(username,uid,pic);
+                        }
+                            arrayList.add(chatHistorySet);
 //                        hashMap.put(user.getString("secname"), user.getInt("uid"));
 //                        username.add(user.getString("secname"));
                     }

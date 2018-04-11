@@ -26,9 +26,11 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
     private List<ChatHistorySet> searchUserSetsFiltered;
     private Context context;
     private ChatHistorySet chatHistorySet;
+    private SearchedUserListener listener;
 
-    public SearchUserAdapter(List<ChatHistorySet> chatHistorySets, Context context) {
+    public SearchUserAdapter(List<ChatHistorySet> chatHistorySets, Context context,SearchedUserListener listener) {
         this.searchUserSets = chatHistorySets;
+        this.listener=listener;
         this.context = context;
         this.searchUserSetsFiltered = chatHistorySets;
     }
@@ -69,6 +71,14 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
             circleImageView = itemView.findViewById(R.id.chathistoryimage);
             textView = itemView.findViewById(R.id.chathistoryname);
             constraintLayout = itemView.findViewById(R.id.chatHistoryCard);
+            itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    listener.onContactSelected(searchUserSetsFiltered.get(getAdapterPosition()));
+                }
+            });
         }
     }
 
@@ -100,5 +110,9 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
                 notifyDataSetChanged();
             }
         };
+    }
+    public interface SearchedUserListener
+    {
+        void onContactSelected(ChatHistorySet chatHistorySet);
     }
 }

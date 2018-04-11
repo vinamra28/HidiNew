@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -195,6 +196,11 @@ public class PostActivity extends AppCompatActivity {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.d( "Place: ","" + place.getName());
                 Log.d("LATLNG",""+place.getLatLng());
+//                Location searchedLocation=new Location(place.getLatLng());
+                double latitude1=place.getLatLng().latitude;
+                double longitude1=place.getLatLng().longitude;
+                Log.d("Latitiude",""+latitude1);
+                Log.d("Longitude",""+longitude1);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 // TODO: Handle the error.
