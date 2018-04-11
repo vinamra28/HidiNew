@@ -22,7 +22,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="1dp"
         android:elevation="12dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.077">
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:id="@+id/visitorpic"
@@ -68,6 +68,18 @@
             android:orientation="horizontal"
             android:weightSum="6">
 
+            <TextView
+                android:id="@+id/admireCount1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Admire"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/doadmire"
                 android:layout_width="wrap_content"
@@ -77,17 +89,17 @@
                 android:gravity="center"
                 android:src="@drawable/ic_local_florist_black_24dp" />
 
+
             <TextView
-                android:id="@+id/admireCount1"
+                android:id="@+id/loveCount1"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="Love"
                 android:textColor="#000"
-                android:text="Admire" />
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/dolove"
@@ -97,18 +109,6 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:src="@drawable/ic_favorite_border_black_24dp" />
-
-
-            <TextView
-                android:id="@+id/loveCount1"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:text="Love"
-                android:textColor="#000"/>
 
 
         </LinearLayout>
@@ -146,9 +146,9 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:textStyle="bold"
                 android:text="Popularity"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/popularProgress1"
@@ -196,9 +196,9 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="0"
-                android:textStyle="bold"
                 android:text="Visitors"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/visitorsCount1"
@@ -218,9 +218,9 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="1"
-                android:textStyle="bold"
                 android:text="My Hidies"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/hidiCount1"
@@ -265,13 +265,13 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.982">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -282,8 +282,8 @@
                 android:id="@+id/followuser"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".9"
+                android:layout_height="40dp"
+                android:layout_weight=".8"
                 android:background="@drawable/buttonborder"
                 android:text="Follow"
                 android:textAllCaps="false"
@@ -292,20 +292,20 @@
             <Button
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2" />
+                android:layout_height="40dp"
+                android:layout_weight="1.4" />
 
             <Button
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:id="@+id/blockuser"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".9"
+                android:layout_height="40dp"
+                android:layout_weight=".8"
+                android:background="@drawable/buttonborder"
                 android:gravity="center"
                 android:text="Block"
                 android:textAllCaps="false"
-                android:textSize="16dp"
-                android:background="@drawable/buttonborder" />
+                android:textSize="16dp" />
         </LinearLayout>
 
     </RelativeLayout>

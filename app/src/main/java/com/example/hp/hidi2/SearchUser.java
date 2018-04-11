@@ -1,7 +1,11 @@
 package com.example.hp.hidi2;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,10 +13,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -40,25 +47,72 @@ public class SearchUser extends AppCompatActivity {
     String result = "";
     ListView lv;
     SessionManager session;
-    HashMap<String, Integer> hashMap = new HashMap<>();
+//    HashMap<String, Integer> hashMap = new HashMap<>();
     ArrayList<String> username = new ArrayList<>();
+    RecyclerView recyclerViewsearchUser;
+    private ActionBar toolBar;
+//    TextView ActionBarTitle;
+    SearchUserAdapter searchUserAdapter;
+    ChatHistorySet chatHistorySet;
+    SearchView searchView;
+    ArrayList<ChatHistorySet> arrayList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_user);
-        lv=findViewById(R.id.userList);
-        searchAutoComplete = findViewById(R.id.searchuser);
-//        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String click_String = (String) parent.getItemAtPosition(position);
-//            }
-//        });
+        recyclerViewsearchUser  = findViewById(R.id.userList);
+        toolBar = getSupportActionBar();
+//        toolBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//        toolBar.setCustomView(R.layout.set_middle_title);
+//        ActionBarTitle = findViewById(R.id.actionBarTitles);
+//        ActionBarTitle.setText("");
+        searchUserAdapter = new SearchUserAdapter(arrayList,this);
+//        lv=findViewById(R.id.userList);
+//        searchAutoComplete = findViewById(R.id.searchuser);
+////        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+////            @Override
+////            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+////                String click_String = (String) parent.getItemAtPosition(position);
+////            }
+////        });
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         new Posts().execute("http://hidi.org.in/hidi/account/showvisitors.php");
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_search,menu);
+        MenuItem searchmenu = menu.findItem(R.id.app_bar_menu_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(searchmenu);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchUserAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchUserAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.app_bar_menu_search){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
     public String POST(String url) {
         InputStream inputStream = null;
@@ -132,50 +186,56 @@ public class SearchUser extends AppCompatActivity {
                     for (int i = 0; i < details.length(); i++)
                     {
                         JSONObject user = details.getJSONObject(i);
-                        hashMap.put(user.getString("secname"), user.getInt("uid"));
-                        username.add(user.getString("secname"));
+                        String username=user.getString("secname");
+                        String uid=""+user.getInt("uid");
+                        String pic=user.getString("profilepic");
+                        chatHistorySet=new ChatHistorySet(username,uid,pic);
+                        arrayList.add(chatHistorySet);
+//                        hashMap.put(user.getString("secname"), user.getInt("uid"));
+//                        username.add(user.getString("secname"));
                     }
-                    final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(SearchUser.this,android.R.layout.simple_list_item_1,username);
-                    lv.setAdapter(arrayAdapter);
-                    searchAutoComplete.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-                    {
-                        @Override
-                        public boolean onQueryTextSubmit(String query)
-                        {
-                            if(username.contains(query))
-                            {
-                                arrayAdapter.getFilter().filter(query);
-                            }
-                            else
-                            {
-                                Toast.makeText(SearchUser.this, "No Users found", Toast.LENGTH_SHORT).show();
-                            }
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onQueryTextChange(String newText)
-                        {
-                            return false;
-                        }
-                    });
-                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
-                    {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-                        {
-                            String name1= (String) parent.getItemAtPosition(position);
-                            String name = name1;
-                            Log.d("User selected",name);
-                            int uid=hashMap.get(name1);
-                            Bundle bundle =new Bundle();
-                            bundle.putString("name",name);
-                            bundle.putInt("uid",uid);
-                            Intent intent=new Intent(SearchUser.this,NewUserProfile.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
-                        }
-                    });
+                    recyclerViewsearchUser.setAdapter(searchUserAdapter);
+//                    final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(SearchUser.this,android.R.layout.simple_list_item_1,username);
+//                    lv.setAdapter(arrayAdapter);
+//                    searchAutoComplete.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+//                    {
+//                        @Override
+//                        public boolean onQueryTextSubmit(String query)
+//                        {
+//                            if(username.contains(query))
+//                            {
+//                                arrayAdapter.getFilter().filter(query);
+//                            }
+//                            else
+//                            {
+//                                Toast.makeText(SearchUser.this, "No Users found", Toast.LENGTH_SHORT).show();
+//                            }
+//                            return false;
+//                        }
+//
+//                        @Override
+//                        public boolean onQueryTextChange(String newText)
+//                        {
+//                            return false;
+//                        }
+//                    });
+//                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//                    {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//                        {
+//                            String name1= (String) parent.getItemAtPosition(position);
+//                            String name = name1;
+//                            Log.d("User selected",name);
+//                            int uid=hashMap.get(name1);
+//                            Bundle bundle =new Bundle();
+//                            bundle.putString("name",name);
+//                            bundle.putInt("uid",uid);
+//                            Intent intent=new Intent(SearchUser.this,NewUserProfile.class);
+//                            intent.putExtras(bundle);
+//                            startActivity(intent);
+//                        }
+//                    });
                 }
                 else
                 {
