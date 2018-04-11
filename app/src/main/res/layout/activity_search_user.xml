@@ -9,13 +9,6 @@
     android:orientation="vertical"
     tools:context="com.example.hp.hidi2.SearchUser">
 
-    <!--<ListView-->
-        <!--android:id="@+id/userList"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-    <!--</ListView>-->
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

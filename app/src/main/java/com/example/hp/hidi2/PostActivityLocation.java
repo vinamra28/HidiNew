@@ -67,16 +67,21 @@ public class PostActivityLocation extends AppCompatActivity {
         km2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (km2.getTag() == "0")
-                {
+                if (km4.getTag() == "1") {
+                    km4.setTag("0");
+                    km4.setBackgroundResource(R.drawable.buttonborder);
+                }
+                if (km8.getTag() == "1") {
+                    km8.setTag("0");
+                    km8.setBackgroundResource(R.drawable.buttonborder);
+                }
+                if (km2.getTag() == "0") {
                     km2.setTag("1");
                     recyclerView.setAdapter(null);
                     dist = 2;
                     new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
                     km2.setBackgroundResource(R.drawable.onclick248);
-                }
-                else
-                {
+                } else {
                     km2.setTag("0");
                     km2.setBackgroundResource(R.drawable.buttonborder);
                 }
@@ -85,16 +90,21 @@ public class PostActivityLocation extends AppCompatActivity {
         km4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (km4.getTag() == "0")
-                {
+                if (km8.getTag() == "1") {
+                    km8.setTag("0");
+                    km8.setBackgroundResource(R.drawable.buttonborder);
+                }
+                if (km2.getTag() == "1") {
+                    km2.setTag("0");
+                    km2.setBackgroundResource(R.drawable.buttonborder);
+                }
+                if (km4.getTag() == "0") {
                     km4.setTag("1");
                     recyclerView.setAdapter(null);
                     dist = 4;
                     new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
                     km4.setBackgroundResource(R.drawable.onclick248);
-                }
-                else
-                {
+                } else {
                     km4.setTag("0");
                     km4.setBackgroundResource(R.drawable.buttonborder);
                 }
@@ -103,6 +113,14 @@ public class PostActivityLocation extends AppCompatActivity {
         km8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (km2.getTag() == "1") {
+                    km2.setTag("0");
+                    km2.setBackgroundResource(R.drawable.buttonborder);
+                }
+                if (km4.getTag() == "1") {
+                    km4.setTag("0");
+                    km4.setBackgroundResource(R.drawable.buttonborder);
+                }
                 if (km8.getTag() == "0") {
                     km8.setTag("1");
                     recyclerView.setAdapter(null);
