@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -57,6 +58,7 @@ public class SearchUser extends AppCompatActivity implements SearchUserAdapter.S
     SearchUserAdapter searchUserAdapter;
     ChatHistorySet chatHistorySet;
     SearchView searchView;
+    ProgressDialog progress;
     ArrayList<ChatHistorySet> arrayList=new ArrayList<>();
 
     @Override
@@ -69,6 +71,10 @@ public class SearchUser extends AppCompatActivity implements SearchUserAdapter.S
         recyclerViewsearchUser.setItemAnimator(new DefaultItemAnimator());
         toolBar = getSupportActionBar();
         toolBar.setTitle("");
+        progress=new ProgressDialog(this);
+        progress.setTitle("Loading...");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
 //        toolBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 //        toolBar.setCustomView(R.layout.set_middle_title);
 //        ActionBarTitle = findViewById(R.id.actionBarTitles);
@@ -84,6 +90,7 @@ public class SearchUser extends AppCompatActivity implements SearchUserAdapter.S
 ////        });
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
+        progress.show();
         new Posts().execute("http://hidi.org.in/hidi/account/showvisitors.php");
     }
 
@@ -194,6 +201,7 @@ public class SearchUser extends AppCompatActivity implements SearchUserAdapter.S
             super.onPostExecute(s);
             Log.d("result", result);
             try {
+                progress.dismiss();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject info = jsonObject.getJSONObject("info");
                 if (info.getString("status").equals("success"))

@@ -118,14 +118,16 @@ public class NewUserProfile extends AppCompatActivity
                 {
                     following.setTag("1");
                     following.setText("Unfollow");
+                    result="";
+                    request="follow";
                 }
                 else
                 {
                     following.setTag("0");
                     following.setText("Follow");
+                    result="";
+                    request="unfollow";
                 }
-                result="";
-                request="follow";
                 new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
             }
         });
@@ -134,16 +136,18 @@ public class NewUserProfile extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                request="block";
+
                 if(blocking.getTag()=="0")
                 {
                     blocking.setTag("1");
                     blocking.setText("Unblock");
+                    request="block";
                 }
                 else
                 {
                     blocking.setTag("0");
                     blocking.setText("Block");
+                    request="unblock";
                 }
                 new ProfileReq().execute("http://hidi.org.in/hidi/account/update.php");
             }

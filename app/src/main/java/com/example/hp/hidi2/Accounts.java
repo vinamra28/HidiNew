@@ -207,20 +207,41 @@ public class Accounts extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
+        if(id==R.id.notifi_content)
+        {
+            if(item.isCheckable())
+            {
+                if(!item.isChecked())
+                {
+                    item.setChecked(true);
+                }
+                else
+                {
+                    item.setChecked(false);
+                }
+            }
+        }
         if (id == R.id.notification)
         {
-
+            if(item.isCheckable())
+            {
+                if(!item.isChecked())
+                {
+                    item.setChecked(true);
+                }
+                else
+                {
+                    item.setChecked(false);
+                }
+            }
         }
         if (id == R.id.night)
         {
             if(item.isCheckable())
             {
-                restartActivity();
-                restartActivity();
                 if(!item.isChecked())
                 {
                     item.setChecked(true);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
                 }
                 else
@@ -407,5 +428,13 @@ public class Accounts extends AppCompatActivity
             result += line;
         inputStream.close();
         return result;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity(new Intent(this,PostActivity.class));
+        finish();
+        super.onBackPressed();
     }
 }

@@ -64,7 +64,7 @@ public class Register extends AppCompatActivity
                     else
                         REQUEST_CODE=21;
                     dialog.show();
-                    new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
+                    new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
                 }
                 else
                 {

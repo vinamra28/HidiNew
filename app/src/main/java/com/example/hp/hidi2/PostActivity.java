@@ -71,7 +71,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity
+{
     private List<PostGet> postList = new ArrayList<>();
     View.OnTouchListener gestureListener;
     private RecyclerView recyclerView;

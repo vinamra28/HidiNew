@@ -111,17 +111,17 @@ public class VerifyOtp extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                progress.show();
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
                 if(otp.length()!=0)
                 {
+                    progress.show();
                     if(request==1)
                     {
-                        new Verification().execute("http://hidi.org.in/hidi1/Auth/verifyotp.php");
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp.php");
                     }
                     else
                     {
-                        new Verification().execute("http://hidi.org.in/hidi1/Auth/verifyotp2.php");
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp2.php");
                     }
                 }
                 else
@@ -313,11 +313,11 @@ public class VerifyOtp extends AppCompatActivity
                             progress.show();
                             if(request==1)
                             {
-                                new HttpAsyncTask().execute("http://hidi.org.in/hidi1/Auth/login.php");
+                                new HttpAsyncTask().execute("http://hidi.org.in/hidi/Auth/login.php");
                             }
                             else
                             {
-                                new HttpAsyncTask().execute("http://hidi.org.in/hidi1/Auth/register.php");
+                                new HttpAsyncTask().execute("http://hidi.org.in/hidi/Auth/register.php");
                             }
                         }
                     });

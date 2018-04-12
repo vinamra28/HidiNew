@@ -16,6 +16,12 @@
         android:enabled="true"
         android:checkable="true"/>
     <item
+        android:id="@+id/notifi_content"
+        android:title="Notification Content"
+        android:enabled="true"
+        android:checkable="true"/>
+
+    <item
         android:id="@+id/night"
         android:title="Night Mode"
         android:enabled="true"

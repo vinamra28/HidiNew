@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity
         google = findViewById(R.id.gplusButton);
         fb = findViewById(R.id.fbButton);
         phone = findViewById(R.id.phnumber);
+        fb.setVisibility(View.GONE);
+        google.setVisibility(View.GONE);
         session.saveLoc(gps.latitude,gps.longitude);
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.google);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity
                 get.startAnimation(myAnim);
                */ if(Pattern.matches("[6789][0-9]{9}",mobile))
                 {
-                     new Verification().execute("http://hidi.org.in/hidi1/Auth/getotp.php");
+                     new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
                 }
                 else
                 {
