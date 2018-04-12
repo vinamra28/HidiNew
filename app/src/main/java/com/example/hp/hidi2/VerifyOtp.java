@@ -25,6 +25,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -51,6 +56,9 @@ public class VerifyOtp extends AppCompatActivity
     int request=0,mPosition=-1;
     ImageView checking;
     String fcmid;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
+    DatabaseReference databaseReference;
     MyFirebaseInstanceIDService myFirebaseInstanceIDService;
     String texts[]={"Taste","Fuck","Love","Hidden","Look","Fear","Passion","Dreams","Suck","Adventure","Death",
                     "Friendship","Revenge","Lust","Freedom","Respect","Joke","Trust","Enemy"};
@@ -65,6 +73,9 @@ public class VerifyOtp extends AppCompatActivity
         session=new SessionManager(getApplicationContext());
         log=findViewById(R.id.login);
         adapterFlipper=findViewById(R.id.adapterFlipper);
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        user = firebaseAuth.getCurrentUser();
         progress=new ProgressDialog(this);
         progress.setMessage("Verifying....");
         progress.setCancelable(false);
@@ -363,6 +374,7 @@ public class VerifyOtp extends AppCompatActivity
                     progress.dismiss();
                     JSONObject recordds=res.getJSONObject("records");
                     int uid=recordds.getInt("UID");
+                    databaseReference.child("users").child(uid+"").child("fcm_token").setValue(fcmid);
                     if(request==1)
                     {
                         session.createLoginSession(uid,mobile,"login");
@@ -466,7 +478,7 @@ public class VerifyOtp extends AppCompatActivity
                 jsonObject.accumulate("username",user_name);
                 jsonObject.accumulate("password",user_password);
             }
-            jsonObject.accumulate("fcm_id",fcmid);
+            jsonObject.accumulate("fcmid",fcmid);
 //            JSONObject jss=new JSONObject();
 //            jss.accumulate("info",jsonObject);
             json=jsonObject.toString();

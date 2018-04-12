@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,7 +50,7 @@ public class GroupDeclaration extends AppCompatActivity {
     DatabaseReference databaseReference;
     EditText editText;
     CircleImageView circleImageView;
-    FloatingActionButton floatingActionButton;
+    ImageView floatingActionButton;
     public static final String STORAGE_PATH_GROUP = "group/";
     public static final int REQUEST_CODE = 1;
 

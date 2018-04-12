@@ -3,6 +3,7 @@ package com.example.hp.hidi2;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +54,8 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
         addPeopleSet = addPeopleSets.get(holder.getAdapterPosition());
         final AddPeopleSet addPeople = addPeopleSets.get(position);
         holder.txtname.setText(addPeopleSet.getName());
+        holder.check.setImageDrawable(addPeopleSet.getCheck());
+        holder.check.setVisibility(View.INVISIBLE);
         Picasso.with(context).load(addPeopleSet.getUrl()).into(holder.circleImageView);
         Log.d("in", String.valueOf(index));
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +69,11 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     personname = addPeople.getName();
                     personimageurl = addPeople.getUrl();
                     personuid = addPeople.getUid();
+                    holder.check.setVisibility(View.VISIBLE);
                     Log.d("addpersonname", personname);
                     arrayListpeopleaddedimage.add(personimageurl);
                     arrayListpeopleaddedname.add(personname);
                     arrayListpeopleUid.add(personuid);
-                    holder.constraintLayout.setBackgroundResource(R.drawable.onpeopleselect);
                 } else {
 //                    color = R.color.back_color;
                     allindex[holder.getAdapterPosition()] = 0;
@@ -78,6 +81,7 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     personname = addPeople.getName();
                     Log.d("removepersonname", personname);
                     arrayListpeopleaddedimage.remove(personimageurl);
+                    holder.check.setVisibility(View.INVISIBLE);
                     arrayListpeopleaddedname.remove(personname);
                     arrayListpeopleUid.remove(personuid);
                 }
@@ -95,11 +99,13 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
         ImageView circleImageView;
         TextView txtname;
         ConstraintLayout constraintLayout;
+        ImageView check;
 
         public ViewHolder(View itemView) {
             super(itemView);
             circleImageView = itemView.findViewById(R.id.friendimage);
             txtname = itemView.findViewById(R.id.friendname);
+            check = itemView.findViewById(R.id.check);
             constraintLayout = itemView.findViewById(R.id.constraintlayout);
         }
     }

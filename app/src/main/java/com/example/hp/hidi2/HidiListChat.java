@@ -50,17 +50,16 @@ public class HidiListChat extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hidi_list_chat);
-        session = new SessionManager(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerViewChatFriend);
+        imageViewaddpeople = findViewById(R.id.addpeople);
         textView = findViewById(R.id.newgroup);
+        session = new SessionManager(getApplicationContext());
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HidiListChat.this,AddPeople.class));
             }
         });
-        imageViewaddpeople = findViewById(R.id.addpeople);
-        imageViewaddpeople.setImageResource(R.drawable.ic_group_add_black_24dp);
         imageViewaddpeople.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
