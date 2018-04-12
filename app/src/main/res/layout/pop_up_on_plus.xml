@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="17dp"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="Location"
@@ -33,7 +33,7 @@
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:layout_weight="1.7"
                 android:src="@drawable/ic_location_on_black_24dp" />
 
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="17dp"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:text="Tags"
@@ -61,7 +61,7 @@
                 android:id="@+id/camera_img"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="1dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.7"
                 android:src="@drawable/ic_dvr_black_24dp" />
@@ -83,13 +83,20 @@
                 android:gravity="right"
                 android:textColor="#000" />
 
-            <ImageButton
-                android:id="@+id/close_img"
-                style="@style/Base.Widget.AppCompat.Button.Borderless"
+            <!--<ImageButton-->
+                <!--android:id="@+id/close_img"-->
+                <!--style="@style/Base.Widget.AppCompat.Button.Borderless"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1.8"-->
+                <!--android:src="@drawable/ic_action_navigation_close" />-->
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.8"
-                android:src="@drawable/ic_action_navigation_close" />
+                android:id="@+id/close_img"
+                android:background="@drawable/ic_close_black_24dp"
+                android:layout_weight="1.75"/>
 
         </LinearLayout>
 

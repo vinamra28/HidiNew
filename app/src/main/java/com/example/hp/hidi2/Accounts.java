@@ -215,17 +215,18 @@ public class Accounts extends AppCompatActivity
         {
             if(item.isCheckable())
             {
-//                restartActivity();
-//                restartActivity();
+                restartActivity();
+                restartActivity();
                 if(!item.isChecked())
                 {
                     item.setChecked(true);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
                 }
                 else
                 {
                     item.setChecked(false);
                 }
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
         }
         if (id == R.id.logout)
