@@ -44,10 +44,10 @@
               "client_type": 3
             },
             {
-              "client_id": "59850571310-i1qbrca0bqkr8et3ufu83gadifkbohtj.apps.googleusercontent.com",
+              "client_id": "59850571310-72rdomjnsdp8vf41n0k0ind4u267pfit.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.KIET.hidi"
+                "bundle_id": "com.KIET.hidi.test"
               }
             }
           ]

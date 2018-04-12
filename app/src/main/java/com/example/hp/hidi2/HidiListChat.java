@@ -3,6 +3,7 @@ package com.example.hp.hidi2;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,7 +40,7 @@ public class HidiListChat extends AppCompatActivity
     RecyclerView recyclerView;
     ChatListAdapter chatListAdapter;
     ProgressDialog progressDialog;
-    ImageView imageViewaddpeople;
+    FloatingActionButton imageViewaddpeople;
     TextView textView;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();

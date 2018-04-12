@@ -42,14 +42,14 @@ public class ChatWindowAdapter extends RecyclerView.Adapter<ChatWindowAdapter.Vi
         Log.d("test",test+"");
         Log.d("chatwindowuid",chatWindowSet.getUid());
         if (test){
-            holder.textViewmy.setText(chatWindowSet.getMessage());
+            holder.textViewopp.setText(chatWindowSet.getMessage());
             Log.d("check","enter1");
-            holder.textViewopp.setVisibility(View.INVISIBLE);
+            holder.textViewmy.setVisibility(View.INVISIBLE);
         }
         else {
-            holder.textViewopp.setText(chatWindowSet.getMessage());
+            holder.textViewmy.setText(chatWindowSet.getMessage());
             Log.d("check","enter2");
-            holder.textViewmy.setVisibility(View.INVISIBLE);
+            holder.textViewopp.setVisibility(View.INVISIBLE);
         }
         holder.setIsRecyclable(false);
         Log.d("size", chatWindowSets.size() + "");

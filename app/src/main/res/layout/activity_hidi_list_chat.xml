@@ -13,13 +13,22 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <!--<de.hdodenhof.circleimageview.CircleImageView-->
+            <!--android:layout_width="54dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_height="54dp"-->
+            <!--android:background="#eeeeee"-->
+            <!--android:id="@+id/addpeople"/>-->
+        <android.support.design.widget.FloatingActionButton
             android:layout_width="54dp"
+            android:layout_height="54dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_height="54dp"
-            android:background="#eeeeee"
-            android:id="@+id/addpeople"/>
+            android:id="@+id/addpeople"
+            android:src="@drawable/ic_group_add_black_24dp"
+            android:backgroundTint="@color/green"
+            android:layout_marginBottom="10dp" />
 
         <View
             android:layout_width="10dp"

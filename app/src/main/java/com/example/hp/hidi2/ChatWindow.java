@@ -64,6 +64,8 @@ public class ChatWindow extends AppCompatActivity {
             groupUid = bundle.getString("chatwindowuid");
             Log.d("groupChatWindowUid", groupUid);
             toolBar.setTitle(bundle.getString("oppname"));
+            bundle.clear();
+            bundle.remove("chatwindowuid");
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -151,6 +153,7 @@ public class ChatWindow extends AppCompatActivity {
                     databaseReference.child("users").child(sessionManager.getUID() + "").child("threads").child(groupUid).setValue("true");
                     databaseReference.child("users").child(s2).child("threads").child(groupUid).setValue("true");
                 }
+                bundle.clear();
             }
         });
     }

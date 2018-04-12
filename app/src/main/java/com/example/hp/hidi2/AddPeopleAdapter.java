@@ -70,6 +70,7 @@ public class AddPeopleAdapter extends RecyclerView.Adapter<AddPeopleAdapter.View
                     arrayListpeopleaddedimage.add(personimageurl);
                     arrayListpeopleaddedname.add(personname);
                     arrayListpeopleUid.add(personuid);
+                    holder.constraintLayout.setBackgroundResource(R.drawable.onpeopleselect);
                 } else {
 //                    color = R.color.back_color;
                     allindex[holder.getAdapterPosition()] = 0;

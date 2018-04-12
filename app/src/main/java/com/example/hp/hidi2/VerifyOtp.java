@@ -50,6 +50,8 @@ public class VerifyOtp extends AppCompatActivity
     String otp="",mobile="",result="",user_name="",user_password="";
     int request=0,mPosition=-1;
     ImageView checking;
+    String fcmid;
+    MyFirebaseInstanceIDService myFirebaseInstanceIDService;
     String texts[]={"Taste","Fuck","Love","Hidden","Look","Fear","Passion","Dreams","Suck","Adventure","Death",
                     "Friendship","Revenge","Lust","Freedom","Respect","Joke","Trust","Enemy"};
     @Override
@@ -57,6 +59,9 @@ public class VerifyOtp extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
+        myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
+        myFirebaseInstanceIDService.onTokenRefresh();
+        fcmid = myFirebaseInstanceIDService.refreshedToken;
         session=new SessionManager(getApplicationContext());
         log=findViewById(R.id.login);
         adapterFlipper=findViewById(R.id.adapterFlipper);
@@ -461,6 +466,7 @@ public class VerifyOtp extends AppCompatActivity
                 jsonObject.accumulate("username",user_name);
                 jsonObject.accumulate("password",user_password);
             }
+            jsonObject.accumulate("fcm_id",fcmid);
 //            JSONObject jss=new JSONObject();
 //            jss.accumulate("info",jsonObject);
             json=jsonObject.toString();
