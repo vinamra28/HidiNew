@@ -2,21 +2,27 @@ package com.example.hp.hidi2;
 
 import android.*;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -52,6 +58,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -82,6 +89,7 @@ public class PostActivity extends AppCompatActivity
     boolean bool;
     ProgressDialog progress;
     private MyAdapter_post myAdapter_post;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     private GestureDetector gestureDetector;
     String result = "";
     SwipeRefreshLayout swiper;
@@ -99,6 +107,21 @@ public class PostActivity extends AppCompatActivity
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         swiper = findViewById(R.id.refresh);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId  = getString(R.string.default_notification_channel_id);
+            String channelName = getString(R.string.default_notification_channel_name);
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
+        if (getIntent().getExtras() != null) {
+            for (String key : getIntent().getExtras().keySet()) {
+                Object value = getIntent().getExtras().get(key);
+                Log.d("HEllo", "Key: " + key + " Value: " + value);
+            }
+        }
         progress = new ProgressDialog(this);
         progress.setMessage("Loading....");
         progress.setCancelable(false);
@@ -268,13 +291,13 @@ public class PostActivity extends AppCompatActivity
                     startActivity(new Intent(PostActivity.this,PostActivityTag.class));
                 }
             });
-            ImageButton imageButton_close = layout.findViewById(R.id.close_img);
-            imageButton_close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(PostActivity.this,PostActivity.class));
-                }
-            });
+//            ImageButton imageButton_close = layout.findViewById(R.id.close_img);
+//            imageButton_close.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    startActivity(new Intent(PostActivity.this,PostActivity.class));
+//                }
+//            });
             popupWindow.setOutsideTouchable(true);
             popupWindow.setFocusable(true);
             popupWindow.setBackgroundDrawable(new BitmapDrawable(null,""));
@@ -301,8 +324,50 @@ public class PostActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//
+//                // checking for type intent filter
+//                if (intent.getAction().equals("registrationComplete")) {
+//                    // gcm successfully registered
+//                    // now subscribe to `global` topic to receive app wide notifications
+//                    FirebaseMessaging.getInstance().subscribeToTopic("global");
+//
+//                } else if (intent.getAction().equals("pushNotification")) {
+//                    // new push notification is received
+//
+//                    String message = intent.getStringExtra("message");
+//
+//                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+//
+////                    txtMessage.setText(message);
+//                }
+//            }
+//        };
     }
-
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // register GCM registration complete receiver
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+//                new IntentFilter("registrationComplete"));
+//
+//        // register new push message receiver
+//        // by doing this, the activity will be notified each time a new message arrives
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+//                new IntentFilter("pushNotification"));
+//
+//        // clear the notification area when the app is opened
+//        NotificationUtils.clearNotifications(getApplicationContext());
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+//        super.onPause();
+//    }
    /* @Override
     public void onRefresh() {
 

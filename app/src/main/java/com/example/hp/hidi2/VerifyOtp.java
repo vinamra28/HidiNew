@@ -461,7 +461,6 @@ public class VerifyOtp extends AppCompatActivity
             HttpClient httpClient=new DefaultHttpClient();
             HttpPost httpPost=new HttpPost(url);
             String json="";
-//            String json="(\"info\":{\"mobileno\":\"8791615905\",\"password\":\"Abcdef@123\"})";
             JSONObject jsonObject=new JSONObject();
             if(request==1)
             {
@@ -494,7 +493,7 @@ public class VerifyOtp extends AppCompatActivity
             inputStream=httpResponse.getEntity().getContent();
             Log.d("inputStream",inputStream.toString());
             if(inputStream!=null)
-                result=convertInputStreamToString1(inputStream);
+                result=convertInputStreamToString(inputStream);
             else
                 result = "Did not work!";
         }
@@ -517,16 +516,6 @@ public class VerifyOtp extends AppCompatActivity
         return result;
     }
     private static String convertInputStreamToString(InputStream inputStream) throws IOException
-    {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-        inputStream.close();
-        return result;
-    }
-    private static String convertInputStreamToString1(InputStream inputStream) throws IOException
     {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";

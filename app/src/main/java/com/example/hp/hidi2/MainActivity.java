@@ -1,25 +1,29 @@
 package com.example.hp.hidi2;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     String result = "";
     ImageButton google, fb;
     SessionManager session;
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission= Manifest.permission.READ_SMS;
     String mPermission1= Manifest.permission.ACCESS_FINE_LOCATION;
@@ -172,6 +177,63 @@ public class MainActivity extends AppCompatActivity
 //                google.startAnimation(myAnim);
             }
         });
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // checking for type intent filter
+                if (intent.getAction().equals("registrationComplete")) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic("global");
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals("pushNotification")) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+//                    txtMessage.setText(message);
+                }
+            }
+        };
+    }
+    private void displayFirebaseRegId() {
+//        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+//        String regId = pref.getString("regId", null);
+
+//        Log.e(TAG, "Firebase reg id: " + regId);
+//
+//        if (!TextUtils.isEmpty(regId))
+//            txtRegId.setText("Firebase Reg Id: " + regId);
+//        else
+//            txtRegId.setText("Firebase Reg Id is not received yet!");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // register GCM registration complete receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("registrationComplete"));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter("pushNotification"));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
     }
     private class Verification extends AsyncTask<String, Void, String>
     {

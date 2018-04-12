@@ -12,15 +12,16 @@ import static android.content.ContentValues.TAG;
  */
 
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService
+{
 
     String refreshedToken;
 
     @Override
-    public void onTokenRefresh() {
+    public void onTokenRefresh()
+    {
         // Get updated InstanceID token.
         refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-
     }
 }
