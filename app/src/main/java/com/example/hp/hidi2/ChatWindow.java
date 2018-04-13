@@ -29,7 +29,7 @@ public class ChatWindow extends AppCompatActivity {
 
     String groupUid = "";
     FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference,databaseReference_check;
+    DatabaseReference databaseReference,databaseReference_check,databaseReference_message;
     int position;
     EditText editText;
     ChatWindowAdapter chatWindowAdapter;
@@ -66,8 +66,11 @@ public class ChatWindow extends AppCompatActivity {
             groupUid = bundle.getString("chatwindowuid");
             Log.d("groupChatWindowUid", groupUid);
             toolBar.setTitle(bundle.getString("oppname"));
+            databaseReference_message=databaseReference.child("threads").child(groupUid+"").child("messages");
+            Log.d("mwsg",""+databaseReference_message);
             bundle.clear();
             bundle.remove("chatwindowuid");
+
             databaseReference_check.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,51 +93,23 @@ public class ChatWindow extends AppCompatActivity {
 
                 }
             });
-//            databaseReference.addValueEventListener(new ValueEventListener()
-//            {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot)
-//                {
-//                    arrayListAllMessages = new ArrayList<>();
-//                    ArrayList<String> senderID1=new ArrayList<>();
-//                    ArrayList<String> message1=new ArrayList<>();
-//                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("threads").child(groupUid).child("messages").getChildren())
-//                    {
-//                        String messagekey = dataSnapshot1.getKey();
-//                        Log.d("messagekey",messagekey);
-//                        String senderId = dataSnapshot.child("threads").child(groupUid).child("messages").child(messagekey).child("senderId").getValue() + "";
-//                        Log.d("senderId",senderId);
-//                        String text = dataSnapshot.child("threads").child(groupUid).child("messages").child(messagekey).child("text").getValue() + "";
-//                        Log.d("text",text);
-//                        message1.add(text);
-//                        senderID1.add(senderId);
-//                    }
-//                    Log.d("Sender id",""+senderID1);
-//                    Log.d("Messages",""+message1);
-//                    addLists(message1,senderID1);
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError)
-//                {
-//
-//                }
-//            });
-            databaseReference.addChildEventListener(new ChildEventListener()
+            databaseReference_message.addListenerForSingleValueEvent(new ValueEventListener()
             {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s)
+                public void onDataChange(DataSnapshot dataSnapshot)
                 {
+                    Log.d("Dataaa",""+dataSnapshot);
                     arrayListAllMessages = new ArrayList<>();
                     ArrayList<String> senderID1=new ArrayList<>();
                     ArrayList<String> message1=new ArrayList<>();
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("threads").child(groupUid).child("messages").getChildren())
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
                     {
+                        Log.d("!!!!",""+dataSnapshot1);
                         String messagekey = dataSnapshot1.getKey();
                         Log.d("messagekey",messagekey);
-                        String senderId = dataSnapshot.child("threads").child(groupUid).child("messages").child(messagekey).child("senderId").getValue() + "";
+                        String senderId = dataSnapshot.child(messagekey).child("senderId").getValue() + "";
                         Log.d("senderId",senderId);
-                        String text = dataSnapshot.child("threads").child(groupUid).child("messages").child(messagekey).child("text").getValue() + "";
+                        String text = dataSnapshot.child(messagekey).child("text").getValue() + "";
                         Log.d("text",text);
                         message1.add(text);
                         senderID1.add(senderId);
@@ -145,30 +120,11 @@ public class ChatWindow extends AppCompatActivity {
                 }
 
                 @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s)
-                {
-                    chatWindowAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot)
-                {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s)
-                {
-
-                }
-
-                @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
 
                 }
             });
-
         }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
