@@ -75,7 +75,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PostActivity extends AppCompatActivity
@@ -465,10 +468,21 @@ public class PostActivity extends AppCompatActivity
                         Log.d("comments", "" + posts.getInt("comments"));
                         String commentsc = "" + posts.getInt("comments");
                         Log.d("time", "" + posts.getString("time"));
+                        String time=posts.getString("time");
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try
+                        {
+                            Date date=sdf.parse(time);
+                            sdf=new SimpleDateFormat("MMMM,dd");
+                            time=sdf.format(date);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("lat", "" + posts.getDouble("lat"));
                         Log.d("long", "" + posts.getDouble("long"));
                         Log.d("location", posts.getString("location"));
-                        String locations = posts.getString("location");
+                        String locations = time+" "+posts.getString("location");
                         Log.d("distance", "" + posts.getDouble("distance"));
                         Log.d("sec_name", "" + posts.getString("sec_name"));
                         String name = posts.getString("sec_name");

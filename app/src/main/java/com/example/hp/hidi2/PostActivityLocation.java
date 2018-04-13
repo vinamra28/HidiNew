@@ -27,7 +27,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,6 +63,9 @@ public class PostActivityLocation extends AppCompatActivity {
         km4 = findViewById(R.id.fourkm);
         km8 = findViewById(R.id.eightkm);
         progress = new ProgressDialog(this);
+        progress.setTitle("Loading...");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
         recyclerView = findViewById(R.id.recyclerViewkm);
         km2.setTag("0");
         km4.setTag("0");
@@ -79,6 +85,7 @@ public class PostActivityLocation extends AppCompatActivity {
                     km2.setTag("1");
                     recyclerView.setAdapter(null);
                     dist = 2;
+                    progress.show();
                     new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
                     km2.setBackgroundResource(R.drawable.onclick248);
                 } else {
@@ -102,6 +109,7 @@ public class PostActivityLocation extends AppCompatActivity {
                     km4.setTag("1");
                     recyclerView.setAdapter(null);
                     dist = 4;
+                    progress.show();
                     new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
                     km4.setBackgroundResource(R.drawable.onclick248);
                 } else {
@@ -125,6 +133,7 @@ public class PostActivityLocation extends AppCompatActivity {
                     km8.setTag("1");
                     recyclerView.setAdapter(null);
                     dist = 8;
+                    progress.show();
                     new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
                     km8.setBackgroundResource(R.drawable.onclick248);
                 } else {
@@ -150,6 +159,7 @@ public class PostActivityLocation extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d("result", result);
+            progress.dismiss();
             try {
                 PostGet postGet;
                 JSONObject respnse = new JSONObject(result);
@@ -158,6 +168,11 @@ public class PostActivityLocation extends AppCompatActivity {
                 if ((info.getString("status")).equals("success")) {
                     postList.clear();
                     progress.dismiss();
+                    if(records.length()==0)
+                    {
+                        progress.dismiss();
+                        Toast.makeText(getApplicationContext(), "No posts available", Toast.LENGTH_SHORT).show();
+                    }
                     for (int i = 0; i < records.length(); i++) {
                         JSONObject posts = records.getJSONObject(i);
                         Log.d("pid", "" + posts.getInt("pid"));
@@ -171,10 +186,21 @@ public class PostActivityLocation extends AppCompatActivity {
                         Log.d("comments", "" + posts.getInt("comments"));
                         String commentsc = "" + posts.getInt("comments");
                         Log.d("time", "" + posts.getString("time"));
+                        String time=posts.getString("time");
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try
+                        {
+                            Date date=sdf.parse(time);
+                            sdf=new SimpleDateFormat("MMMM,dd");
+                            time=sdf.format(date);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("lat", "" + posts.getDouble("lat"));
                         Log.d("long", "" + posts.getDouble("long"));
                         Log.d("location", posts.getString("location"));
-                        String locations = posts.getString("location");
+                        String locations = time+" "+posts.getString("location");
                         Log.d("distance", "" + posts.getDouble("distance"));
                         Log.d("sec_name", "" + posts.getString("sec_name"));
                         String name = posts.getString("sec_name");
@@ -199,7 +225,7 @@ public class PostActivityLocation extends AppCompatActivity {
                     }
                 } else {
                     progress.dismiss();
-                    Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No posts available", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

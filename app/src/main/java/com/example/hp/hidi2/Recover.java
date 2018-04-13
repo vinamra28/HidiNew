@@ -56,7 +56,11 @@ public class Recover extends AppCompatActivity {
                 {
                     if(!(Pattern.matches("[6789][0-9]{9}",txtnewno)||Pattern.matches("[6789][0-9]{9}",txtoldno)))
                     {
-                        Toast.makeText(Recover.this, "Enter valid mobile no", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Recover.this, "Enter valid mobile number", Toast.LENGTH_SHORT).show();
+                    }
+                    if(!(Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}",txtpaswd)))
+                    {
+                        Toast.makeText(Recover.this, "Enter valid password", Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

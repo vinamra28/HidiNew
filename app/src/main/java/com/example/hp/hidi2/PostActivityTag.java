@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -43,7 +47,7 @@ public class PostActivityTag extends AppCompatActivity
     SessionManager session;
     private MyAdapter_post myAdapter_post;
     String tag="";
-
+    ProgressDialog progress;
     private List<PostGet> postList = new ArrayList<>();
     String result="";
 
@@ -59,6 +63,10 @@ public class PostActivityTag extends AppCompatActivity
         recyclerView=findViewById(R.id.recyclerViewTag);
         materialSpinner = (MaterialSpinner)findViewById(R.id.spinner);
         initItems();
+        progress=new ProgressDialog(this);
+        progress.setTitle("Loading...");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         materialSpinner.setAdapter(adapter);
@@ -71,6 +79,7 @@ public class PostActivityTag extends AppCompatActivity
                 String selecttag= (String) parent.getItemAtPosition(position);
                 tag=(String) parent.getItemAtPosition(position);
                 recyclerView.setAdapter(null);
+                progress.show();
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
 
@@ -119,6 +128,7 @@ public class PostActivityTag extends AppCompatActivity
         {
             super.onPostExecute(s);
             Log.d("result",result);
+            progress.dismiss();
             try
             {
                 PostGet postGet;
@@ -141,9 +151,20 @@ public class PostActivityTag extends AppCompatActivity
                         Log.d("dislikes",""+posts.getInt("dislikes"));String dislikesc=""+posts.getInt("dislikes");
                         Log.d("comments",""+posts.getInt("comments"));String commentsc=""+posts.getInt("comments");
                         Log.d("time",""+posts.getString("time"));
+                        String time=posts.getString("time");
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try
+                        {
+                            Date date=sdf.parse(time);
+                            sdf=new SimpleDateFormat("MMMM,dd");
+                            time=sdf.format(date);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("lat",""+posts.getDouble("lat"));
                         Log.d("long",""+posts.getDouble("long"));
-                        Log.d("location",posts.getString("location"));String locations=posts.getString("location");
+                        Log.d("location",posts.getString("location"));String locations=time+" "+posts.getString("location");
 //                        Log.d("distance",""+posts.getDouble("distance"));
                         Log.d("sec_name",""+posts.getString("sec_name"));String name=posts.getString("sec_name");
                         Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
@@ -165,7 +186,7 @@ public class PostActivityTag extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Error getting records",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"No posts available",Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)

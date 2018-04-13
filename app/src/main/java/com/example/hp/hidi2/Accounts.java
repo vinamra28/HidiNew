@@ -136,6 +136,7 @@ public class Accounts extends AppCompatActivity
         hidies.setText(user.get(KEY_HIDIES));
         blocks.setText(user.get(KEY_BLOCKS));
         actionbars.setText(session.getSecname());
+        see_notifications.setEnabled(false);
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.index);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(55f);
@@ -147,6 +148,16 @@ public class Accounts extends AppCompatActivity
         });
         userdp.setImageDrawable(roundedBitmapDrawable);
         new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
+        see_notifications.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent=new Intent(Accounts.this,AllNotificationsView.class);
+                startActivity(intent);
+            }
+        });
+
     }
     private void showFileChooser()
     {
@@ -223,45 +234,47 @@ public class Accounts extends AppCompatActivity
                 if(!item.isChecked())
                 {
                     item.setChecked(true);
+                    see_notifications.setEnabled(true);
                 }
                 else
                 {
                     item.setChecked(false);
+                    see_notifications.setEnabled(false);
                 }
             }
         }
-        if (id == R.id.notification)
-        {
-            if(item.isCheckable())
-            {
-                if(!item.isChecked())
-                {
-                    item.setChecked(true);
-                }
-                else
-                {
-                    item.setChecked(false);
-                }
-            }
-        }
-        if (id == R.id.night)
-        {
-            if(item.isCheckable())
-            {
-                if(!item.isChecked())
-                {
-                    item.setChecked(true);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    restartActivity();
-                }
-                else
-                {
-                    item.setChecked(false);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    restartActivity();
-                }
-            }
-        }
+//        if (id == R.id.notification)
+//        {
+//            if(item.isCheckable())
+//            {
+//                if(!item.isChecked())
+//                {
+//                    item.setChecked(true);
+//                }
+//                else
+//                {
+//                    item.setChecked(false);
+//                }
+//            }
+//        }
+//        if (id == R.id.night)
+//        {
+//            if(item.isCheckable())
+//            {
+//                if(!item.isChecked())
+//                {
+//                    item.setChecked(true);
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                    restartActivity();
+//                }
+//                else
+//                {
+//                    item.setChecked(false);
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                    restartActivity();
+//                }
+//            }
+//        }
         if (id == R.id.logout)
         {
             new LogOut().execute("http://hidi.org.in/hidi/Auth/logout.php");

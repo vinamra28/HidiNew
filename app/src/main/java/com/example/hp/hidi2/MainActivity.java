@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(),"Enter valid no.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Enter valid number",Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -1,5 +1,6 @@
 package com.example.hp.hidi2;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MyJourneyActivity extends AppCompatActivity
@@ -35,6 +39,7 @@ public class MyJourneyActivity extends AppCompatActivity
     private List<PostGet> postList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MyAdapter_post myAdapter_post;
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +51,11 @@ public class MyJourneyActivity extends AppCompatActivity
         recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
         recyclerView.setAdapter(null);
+        progress=new ProgressDialog(this);
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
+        progress.setTitle("Loading....");
+        progress.show();
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
     }
     private class Posts extends AsyncTask<String,Void,String>
@@ -65,6 +75,7 @@ public class MyJourneyActivity extends AppCompatActivity
         {
             super.onPostExecute(s);
             Log.d("result",result);
+            progress.dismiss();
             try
             {
                 JSONObject respnse=new JSONObject(result);
@@ -98,9 +109,20 @@ public class MyJourneyActivity extends AppCompatActivity
                         Log.d("dislikes",""+posts.getInt("dislikes"));String dislikesc=""+posts.getInt("dislikes");
                         Log.d("comments",""+posts.getInt("comments"));String commentsc=""+posts.getInt("comments");
                         Log.d("time",""+posts.getString("time"));
+                        String time=posts.getString("time");
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try
+                        {
+                            Date date=sdf.parse(time);
+                            sdf=new SimpleDateFormat("MMMM,dd");
+                            time=sdf.format(date);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("lat",""+posts.getDouble("lat"));
                         Log.d("long",""+posts.getDouble("long"));
-                        Log.d("location",posts.getString("location"));String locations=posts.getString("location");
+                        Log.d("location",posts.getString("location"));String locations=time+" "+posts.getString("location");
 //                        Log.d("distance",""+posts.getDouble("distance"));
                         Log.d("sec_name",""+posts.getString("sec_name"));String name=posts.getString("sec_name");
                         Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
@@ -114,6 +136,10 @@ public class MyJourneyActivity extends AppCompatActivity
                     }
                     myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID(),"my");
                     recyclerView.setAdapter(myAdapter_post);
+                }
+                else
+                {
+                    Toast.makeText(MyJourneyActivity.this,"No posts available",Toast.LENGTH_SHORT).show();
                 }
             }
             catch (JSONException e)

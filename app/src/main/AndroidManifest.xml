@@ -22,13 +22,14 @@
         android:roundIcon="@drawable/logo012"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_icon" />-->
+
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_icon" /> -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-        <!--<meta-data-->
-            <!--android:name="com.google.firebase.messaging.default_notification_channel_id" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.firebase.messaging.default_notification_channel_id" /> -->
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">
@@ -148,24 +149,29 @@
             android:name=".AreaSortActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity android:name=".CreatePassword"></activity>
+        <activity android:name=".CreatePassword"
+            android:screenOrientation="portrait"/>
+
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".MyFirebaseInstanceIDService">
+        <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".MyJobService"
+        <service
+            android:name=".MyJobService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
+
+        <activity android:name=".AllNotificationsView"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

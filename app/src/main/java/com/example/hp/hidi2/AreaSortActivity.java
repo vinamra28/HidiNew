@@ -25,7 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AreaSortActivity extends AppCompatActivity
@@ -48,6 +51,10 @@ public class AreaSortActivity extends AppCompatActivity
         uid=bundle.getInt("uid");
         recyclerView=findViewById(R.id.areaRecyler);
         progress=new ProgressDialog(this);
+        progress.setTitle("Loading...");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
+        progress.show();
         new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
 
     }
@@ -68,12 +75,14 @@ public class AreaSortActivity extends AppCompatActivity
             Log.d("result", result);
             try {
                 PostGet postGet;
+                progress.dismiss();
                 JSONObject respnse = new JSONObject(result);
                 JSONObject info = respnse.getJSONObject("info");
-                JSONArray records = respnse.getJSONArray("records");
-                if ((info.getString("status")).equals("success")) {
+                if ((info.getString("status")).equals("success"))
+                {
+                    JSONArray records = respnse.getJSONArray("records");
                     postList.clear();
-                    progress.dismiss();
+
                     for (int i = 0; i < records.length(); i++) {
                         JSONObject posts = records.getJSONObject(i);
                         Log.d("pid", "" + posts.getInt("pid"));
@@ -87,10 +96,21 @@ public class AreaSortActivity extends AppCompatActivity
                         Log.d("comments", "" + posts.getInt("comments"));
                         String commentsc = "" + posts.getInt("comments");
                         Log.d("time", "" + posts.getString("time"));
+                        String time=posts.getString("time");
+                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        try
+                        {
+                            Date date=sdf.parse(time);
+                            sdf=new SimpleDateFormat("MMMM,dd");
+                            time=sdf.format(date);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         Log.d("lat", "" + posts.getDouble("lat"));
                         Log.d("long", "" + posts.getDouble("long"));
                         Log.d("location", posts.getString("location"));
-                        String locations = posts.getString("location");
+                        String locations = time+" "+posts.getString("location");
                         Log.d("distance", "" + posts.getDouble("distance"));
                         Log.d("sec_name", "" + posts.getString("sec_name"));
                         String name = posts.getString("sec_name");
@@ -113,9 +133,11 @@ public class AreaSortActivity extends AppCompatActivity
                         recyclerView.setAdapter(myAdapter_post);
 //                        myAdapter_post.notifyDataSetChanged();
                     }
-                } else {
+                }
+                else
+                {
                     progress.dismiss();
-                    Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No posts available", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

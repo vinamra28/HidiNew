@@ -59,7 +59,11 @@ public class Register extends AppCompatActivity
                 passwd=passwords.getText().toString();
                 if(Pattern.matches("[6789][0-9]{9}",mobino)&&name.length()!=0)
                 {
-                    if(passwd.length()!=0)
+                    if(!Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}",passwd))
+                    {
+                        Toast.makeText(Register.this, "Enter valid paswword", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}",passwd))
                         REQUEST_CODE=22;
                     else
                         REQUEST_CODE=21;
