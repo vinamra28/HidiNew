@@ -81,6 +81,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Admire"
+                android:color="?attr/textColor"
                 android:textStyle="bold" />
 
             <TextView
@@ -91,6 +92,7 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:color="?attr/textColor"
                 android:text="0" />
 
             <TextView
@@ -100,6 +102,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Love"
+                android:color="?attr/textColor"
                 android:textStyle="bold" />
 
 
@@ -110,6 +113,7 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:color="?attr/textColor"
                 android:text="0" />
 
 
@@ -148,6 +152,7 @@
                 android:layout_weight="2"
                 android:gravity="center"
                 android:text="Popularity"
+                android:color="?attr/textColor"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -200,6 +205,7 @@
                 android:layout_row="0"
                 android:text="Visitors"
                 android:textSize="16dp"
+                android:color="?attr/textColor"
                 android:textStyle="bold" />
 
             <TextView
@@ -211,6 +217,7 @@
                 android:layout_margin="8dp"
                 android:layout_row="0"
                 android:text="0"
+                android:color="?attr/textColor"
                 android:textSize="16dp" />
 
             <TextView
@@ -220,6 +227,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="1"
+                android:color="?attr/textColor"
                 android:text="My Hidies"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -231,6 +239,7 @@
                 android:layout_column="1"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
+                android:color="?attr/textColor"
                 android:layout_row="1"
                 android:text="0"
                 android:textSize="16dp" />
@@ -243,6 +252,7 @@
                 android:layout_gravity="left"
                 android:layout_margin="8dp"
                 android:layout_row="2"
+                android:color="?attr/textColor"
                 android:text="Blocks"
                 android:textSize="16dp"
                 android:textStyle="bold" />
@@ -255,6 +265,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_row="2"
+                android:color="?attr/textColor"
                 android:text="0"
                 android:textSize="16dp" />
 
@@ -287,6 +298,7 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
+            android:color="?attr/textColor"
             android:background="@drawable/buttonborder"
             android:text="Notification"
             android:textAllCaps="false"
@@ -308,6 +320,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="16dp"
+            android:color="?attr/textColor"
             android:background="@drawable/buttonborder"
             android:gravity="center"
             android:text="My Journey"

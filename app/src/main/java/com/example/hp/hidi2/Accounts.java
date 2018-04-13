@@ -88,6 +88,14 @@ public class Accounts extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
+        {
+            setTheme(R.style.darkTheme);
+        }
+        else
+        {
+            setTheme(R.style.AccountsTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounts);
         try {
@@ -242,11 +250,14 @@ public class Accounts extends AppCompatActivity
                 if(!item.isChecked())
                 {
                     item.setChecked(true);
-
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    restartActivity();
                 }
                 else
                 {
                     item.setChecked(false);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    restartActivity();
                 }
             }
         }
@@ -284,8 +295,8 @@ public class Accounts extends AppCompatActivity
     public void restartActivity()
     {
         Intent mIntent = getIntent();
-        finish();
         startActivity(mIntent);
+        finish();
     }
     private class HttpAsyncTask extends AsyncTask<String,Void,String>
     {
