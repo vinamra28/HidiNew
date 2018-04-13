@@ -85,11 +85,10 @@ public class PostActivityTag extends AppCompatActivity
         list.add("Arts");
         list.add("Asia");
         list.add("Australia");
-        list.add("America");
         list.add("Beauty&Style");
         list.add("Books");
-        list.add("Bussiness");
-        list.add("Careers");
+        list.add("Business");
+        list.add("Carrers");
         list.add("Cars&Transporatation");
         list.add("Education");
         list.add("Europe");
@@ -97,11 +96,10 @@ public class PostActivityTag extends AppCompatActivity
         list.add("Food&Drink");
         list.add("Fun&Humor");
         list.add("Games");
-        list.add("HealthCare");
+        list.add("Healthcare");
         list.add("IT&Programming");
         list.add("Mathematics");
         list.add("Adventure");
-        list.add("Fun");
         list.add("Law&Legal");
     }
     private class Posts extends AsyncTask<String,Void,String>

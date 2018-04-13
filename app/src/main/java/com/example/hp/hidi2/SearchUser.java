@@ -207,6 +207,7 @@ public class SearchUser extends AppCompatActivity implements SearchUserAdapter.S
                 if (info.getString("status").equals("success"))
                 {
                     JSONArray details = jsonObject.getJSONArray("details");
+                    Log.d("Length",""+details.length());
                     for (int i = 0; i < details.length(); i++)
                     {
                         JSONObject user = details.getJSONObject(i);
@@ -216,11 +217,13 @@ public class SearchUser extends AppCompatActivity implements SearchUserAdapter.S
                         if(user.getInt("uid")!=session.getUID())
                         {
                             chatHistorySet=new ChatHistorySet(username,uid,pic);
-                        }
                             arrayList.add(chatHistorySet);
+                        }
+//                            arrayList.add(chatHistorySet);
 //                        hashMap.put(user.getString("secname"), user.getInt("uid"));
 //                        username.add(user.getString("secname"));
                     }
+                    Log.d("list",""+arrayList);
                     recyclerViewsearchUser.setAdapter(searchUserAdapter);
 //                    final ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(SearchUser.this,android.R.layout.simple_list_item_1,username);
 //                    lv.setAdapter(arrayAdapter);

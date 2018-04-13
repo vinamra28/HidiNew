@@ -262,7 +262,8 @@ public class PostActivity extends AppCompatActivity
             popupWindow = new PopupWindow(layout, 420, 350, true);
             popupWindow.showAtLocation(layout, Gravity.CENTER_VERTICAL, 0, 473);
             ImageButton location = layout.findViewById(R.id.text_img);
-            location.setOnClickListener(new View.OnClickListener() {
+            location.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(PostActivity.this, PostActivityLocation.class);
@@ -291,13 +292,13 @@ public class PostActivity extends AppCompatActivity
                     startActivity(new Intent(PostActivity.this,PostActivityTag.class));
                 }
             });
-//            ImageButton imageButton_close = layout.findViewById(R.id.close_img);
-//            imageButton_close.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    startActivity(new Intent(PostActivity.this,PostActivity.class));
-//                }
-//            });
+            TextView imageButton_close = layout.findViewById(R.id.close_img);
+            imageButton_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(PostActivity.this,PostActivity.class));
+                }
+            });
             popupWindow.setOutsideTouchable(true);
             popupWindow.setFocusable(true);
             popupWindow.setBackgroundDrawable(new BitmapDrawable(null,""));
@@ -439,11 +440,18 @@ public class PostActivity extends AppCompatActivity
                 postList.clear();
                 JSONObject respnse = new JSONObject(result);
                 JSONObject info = respnse.getJSONObject("info");
-                JSONArray records = respnse.getJSONArray("records");
+
                 if ((info.getString("status")).equals("success")) {
                     progress.dismiss();
+                    JSONArray records = respnse.getJSONArray("records");
                     swiper.setRefreshing(false);
-
+                    if(records.length()==0)
+                    {
+                        Intent intent=new Intent(PostActivity.this,Accounts.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
                     for (int i = 0; i < records.length(); i++) {
                         JSONObject posts = records.getJSONObject(i);
                         Log.d("pid", "" + posts.getInt("pid"));
@@ -482,8 +490,14 @@ public class PostActivity extends AppCompatActivity
                     }
                     myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
                     recyclerView.setAdapter(myAdapter_post);
-                } else {
+                }
+                else
+                {
                     progress.dismiss();
+                    Intent intent=new Intent(PostActivity.this,Accounts.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
                     Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {

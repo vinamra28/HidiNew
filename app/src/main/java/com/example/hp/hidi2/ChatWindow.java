@@ -14,6 +14,7 @@ import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +29,7 @@ public class ChatWindow extends AppCompatActivity {
 
     String groupUid = "";
     FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,databaseReference_check;
     int position;
     EditText editText;
     ChatWindowAdapter chatWindowAdapter;
@@ -48,9 +49,10 @@ public class ChatWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_window);
+        sessionManager = new SessionManager(getApplicationContext());
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        sessionManager = new SessionManager(getApplicationContext());
+        databaseReference_check=databaseReference.child("users").child(sessionManager.getUID()+"").child("threads");
         recyclerView = findViewById(R.id.recyclerViewChatWindow);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +68,7 @@ public class ChatWindow extends AppCompatActivity {
             toolBar.setTitle(bundle.getString("oppname"));
             bundle.clear();
             bundle.remove("chatwindowuid");
-            databaseReference.addValueEventListener(new ValueEventListener() {
+            databaseReference_check.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<String> arrayListthreads = new ArrayList<>();
@@ -88,10 +90,40 @@ public class ChatWindow extends AppCompatActivity {
 
                 }
             });
-            databaseReference.addValueEventListener(new ValueEventListener()
+//            databaseReference.addValueEventListener(new ValueEventListener()
+//            {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot)
+//                {
+//                    arrayListAllMessages = new ArrayList<>();
+//                    ArrayList<String> senderID1=new ArrayList<>();
+//                    ArrayList<String> message1=new ArrayList<>();
+//                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("threads").child(groupUid).child("messages").getChildren())
+//                    {
+//                        String messagekey = dataSnapshot1.getKey();
+//                        Log.d("messagekey",messagekey);
+//                        String senderId = dataSnapshot.child("threads").child(groupUid).child("messages").child(messagekey).child("senderId").getValue() + "";
+//                        Log.d("senderId",senderId);
+//                        String text = dataSnapshot.child("threads").child(groupUid).child("messages").child(messagekey).child("text").getValue() + "";
+//                        Log.d("text",text);
+//                        message1.add(text);
+//                        senderID1.add(senderId);
+//                    }
+//                    Log.d("Sender id",""+senderID1);
+//                    Log.d("Messages",""+message1);
+//                    addLists(message1,senderID1);
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError)
+//                {
+//
+//                }
+//            });
+            databaseReference.addChildEventListener(new ChildEventListener()
             {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
+                public void onChildAdded(DataSnapshot dataSnapshot, String s)
                 {
                     arrayListAllMessages = new ArrayList<>();
                     ArrayList<String> senderID1=new ArrayList<>();
@@ -113,6 +145,24 @@ public class ChatWindow extends AppCompatActivity {
                 }
 
                 @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s)
+                {
+                    chatWindowAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot)
+                {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s)
+                {
+
+                }
+
+                @Override
                 public void onCancelled(DatabaseError databaseError)
                 {
 
@@ -127,13 +177,13 @@ public class ChatWindow extends AppCompatActivity {
                 editText.setText("");
                 if (groupUid.contains("-")){
                     String key = databaseReference.push().getKey();
-                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(sessionManager.getUID());
-                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(sessionManager.getSecname());
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(""+sessionManager.getUID());
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(""+sessionManager.getSecname());
                     databaseReference.child("threads").child(groupUid).child("messages").child(key).child("text").setValue(messages);
-                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(System.currentTimeMillis());
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(""+System.currentTimeMillis());
                     databaseReference.child("threads").child(groupUid).child("lastMessage").setValue(messages);
-                    databaseReference.child("threads").child(groupUid).child("lastSender").setValue(sessionManager.getSecname());
-                    databaseReference.child("threads").child(groupUid).child("lastUpdated").setValue(System.currentTimeMillis());
+                    databaseReference.child("threads").child(groupUid).child("lastSender").setValue(""+sessionManager.getSecname());
+                    databaseReference.child("threads").child(groupUid).child("lastUpdated").setValue(""+System.currentTimeMillis());
                 }
                 else if (!groupUid.contains("-")&&groupUid.contains("_")){
                     Log.d("Else if", "1");
@@ -142,13 +192,13 @@ public class ChatWindow extends AppCompatActivity {
                     final String s2 = S[1];
                     Log.d("ABC", s1 + "+" + s2);
                     String key = databaseReference.push().getKey();
-                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(sessionManager.getUID());
-                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(sessionManager.getSecname());
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderId").setValue(""+sessionManager.getUID());
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("senderName").setValue(""+sessionManager.getSecname());
                     databaseReference.child("threads").child(groupUid).child("messages").child(key).child("text").setValue(messages);
-                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(System.currentTimeMillis());
+                    databaseReference.child("threads").child(groupUid).child("messages").child(key).child("timeStamp").setValue(""+System.currentTimeMillis());
                     databaseReference.child("threads").child(groupUid).child("lastMessage").setValue(messages);
-                    databaseReference.child("threads").child(groupUid).child("lastSender").setValue(sessionManager.getSecname());
-                    databaseReference.child("threads").child(groupUid).child("lastUpdated").setValue(System.currentTimeMillis());
+                    databaseReference.child("threads").child(groupUid).child("lastSender").setValue(""+sessionManager.getSecname());
+                    databaseReference.child("threads").child(groupUid).child("lastUpdated").setValue(""+System.currentTimeMillis());
                     databaseReference.child("threads").child(groupUid).child("type").setValue("Private Chat");
                     databaseReference.child("users").child(sessionManager.getUID() + "").child("threads").child(groupUid).setValue("true");
                     databaseReference.child("users").child(s2).child("threads").child(groupUid).setValue("true");

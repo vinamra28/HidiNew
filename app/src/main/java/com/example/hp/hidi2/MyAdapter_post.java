@@ -192,6 +192,21 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
 //                postList.get(holder.getAdapterPosition()).setTotal_dislikes(dislike+"");
                 Log.e(like + "", holder.getAdapterPosition() + "");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
+                try
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject records = jsonObject.getJSONObject("records");
+                    JSONObject info=jsonObject.getJSONObject("info");
+                    if(info.getString("status").equals("success"))
+                    {
+                        notifyItemChanged(holder.getAdapterPosition());
+                        notifyDataSetChanged();
+                    }
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
                 notifyItemChanged(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
@@ -237,6 +252,21 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
                 holder.total_favours.setText(like.get(holder.getAdapterPosition()) + "");
                 holder.total_dislikes.setText(dislike.get(holder.getAdapterPosition()) + "");
                 new PostUpdate().execute("http://hidi.org.in/hidi/post/update.php");
+                try
+                {
+                    JSONObject jsonObject = new JSONObject(result);
+                    JSONObject records = jsonObject.getJSONObject("records");
+                    JSONObject info=jsonObject.getJSONObject("info");
+                    if(info.getString("status").equals("success"))
+                    {
+                        notifyItemChanged(holder.getAdapterPosition());
+                        notifyDataSetChanged();
+                    }
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
                 notifyItemChanged(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
@@ -288,10 +318,14 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d("result", result);
-            try {
+            try
+            {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject records = jsonObject.getJSONObject("records");
-            } catch (JSONException e) {
+                JSONObject info=jsonObject.getJSONObject("info");
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
             }
         }

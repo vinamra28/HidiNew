@@ -1,6 +1,7 @@
 package com.example.hp.hidi2;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     String result = "";
     ImageButton google, fb;
     SessionManager session;
+    ProgressDialog progress;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission= Manifest.permission.READ_SMS;
@@ -107,6 +109,10 @@ public class MainActivity extends AppCompatActivity
         fb.setVisibility(View.GONE);
         google.setVisibility(View.GONE);
         session.saveLoc(gps.latitude,gps.longitude);
+        progress=new ProgressDialog(this);
+        progress.setTitle("Loading....");
+        progress.setCancelable(false);
+        progress.setIndeterminate(false);
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.google);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(125f);
@@ -147,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 get.startAnimation(myAnim);
                */ if(Pattern.matches("[6789][0-9]{9}",mobile))
                 {
+                    progress.show();
                      new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
                 }
                 else
@@ -254,6 +261,7 @@ public class MainActivity extends AppCompatActivity
         {
             super.onPostExecute(s);
             Log.d("Result", result);
+            progress.dismiss();
             //Toast.makeText(GenOtp.this,""+result,Toast.LENGTH_LONG).show();
             try
             {

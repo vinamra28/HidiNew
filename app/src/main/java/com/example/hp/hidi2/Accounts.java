@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -263,8 +264,7 @@ public class Accounts extends AppCompatActivity
         }
         if (id == R.id.logout)
         {
-            session.logoutUser();
-            finish();
+            new LogOut().execute("http://hidi.org.in/hidi/Auth/logout.php");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -386,6 +386,79 @@ public class Accounts extends AppCompatActivity
                 }
             });
         }
+    }
+    private class LogOut extends AsyncTask<String,Void,String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            return POST1(strings[0]);
+        }
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            try
+            {
+                JSONObject jsonObject=new JSONObject(s);
+                JSONObject info=jsonObject.getJSONObject("info");
+                if(info.getString("status").equals("success"))
+                {
+                    session.logoutUser();
+                    finish();
+                    Toast.makeText(Accounts.this,""+info.getString("message"),Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(Accounts.this,""+info.getString("message"),Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    public String POST1(String url)
+    {
+        InputStream inputStream=null;
+        String json="";
+        result="";
+        try
+        {
+            HttpClient httpClient=new DefaultHttpClient();
+            HttpPost httpPost=new HttpPost(url);
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.accumulate("UID",session.getUID());
+            json=jsonObject.toString();
+            Log.d("json",json);
+            StringEntity se=new StringEntity(json);
+            Log.d("Entity",""+se);
+            httpPost.setEntity(se);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+            Log.d("Post",""+httpPost);
+            HttpResponse httpResponse=httpClient.execute(httpPost);
+            Log.d("Response",httpResponse.toString());
+            inputStream=httpResponse.getEntity().getContent();
+            Log.d("inputStream",inputStream.toString());
+            if(inputStream!=null)
+                result=convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
     public String POST(String url)
     {
