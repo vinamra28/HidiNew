@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +19,7 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
     private Context context;
     private List<NotificationSet> notificationSets;
+    NotificationSet notificationSet;
 
     public NotificationAdapter(Context context, List<NotificationSet> notificationSets) {
         this.context = context;
@@ -30,7 +34,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position)
+    {
+        notificationSet=notificationSets.get(position);
+        holder.textViewwhat.setText(notificationSet.getWhatdid());
+        holder.textViewwho.setText(notificationSet.getWhodid());
+        String times=notificationSet.getTimestamp();
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try
+        {
+            Date date = sdf.parse(times);
+            sdf=new SimpleDateFormat("hh:mm a");
+            holder.textViewtime.setText(""+sdf.format(date));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -46,7 +66,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             textViewwhat = itemView.findViewById(R.id.whatdid);
-            textViewwho = itemView.findViewById(R.id.whatdid);
+            textViewwho = itemView.findViewById(R.id.whodid);
             textViewtime = itemView.findViewById(R.id.timestamp);
         }
     }

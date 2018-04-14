@@ -106,10 +106,8 @@ public class PostActivity extends AppCompatActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+    protected void onCreate(Bundle savedInstanceState)
+    {
         if(isNetworkAvailable()){
 
         }
@@ -145,6 +143,8 @@ public class PostActivity extends AppCompatActivity
             AlertDialog alert = alertDialogBuilder.create();
             alert.show();
         }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_post);
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         swiper = findViewById(R.id.refresh);

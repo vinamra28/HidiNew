@@ -276,6 +276,11 @@ public class Accounts extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item)
     {
         int id = item.getItemId();
+        if(id==R.id.createpass)
+        {
+            Intent intent=new Intent(this,CreatePassword.class);
+            startActivity(intent);
+        }
         if(id==R.id.notifi_content)
         {
             if(item.isCheckable())

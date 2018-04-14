@@ -35,7 +35,8 @@
                         android:layout_weight="1"
                         android:padding="3dp"
                         android:text="QWERTY"
-                        android:textSize="12sp" />
+                        android:textStyle="bold"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/whodid"
@@ -60,7 +61,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="TIME STAMP"
-                        android:textSize="10sp" />
+                        android:textAlignment="viewEnd"
+                        android:textStyle="bold"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
