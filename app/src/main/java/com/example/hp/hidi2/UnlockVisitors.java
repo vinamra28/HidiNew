@@ -13,6 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 
 import org.apache.http.HttpResponse;
@@ -32,160 +36,207 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-public class UnlockVisitors extends AppCompatActivity
-{
-    String result="";
+public class UnlockVisitors extends AppCompatActivity implements RewardedVideoAdListener {
+    String result = "";
     SessionManager session;
     int indexpath;
     int visitor_size;
-    LinearLayout first,second,third;
-    TextView nmfirst,nmsecond,nmthird;
+
+    LinearLayout first, second, third;
+    TextView nmfirst, nmsecond, nmthird;
     ImageButton unlock;
     Button showUnlocked;
-    ArrayList<String> visitName=new ArrayList<String>();
-    ArrayList<String> viewed=new ArrayList<String>();
+    private RewardedVideoAd mRewardedVideoAd;
+    ArrayList<String> visitName = new ArrayList<String>();
+    ArrayList<String> viewed = new ArrayList<String>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unlock_visitors);
-        session=new SessionManager(getApplicationContext());
+        session = new SessionManager(getApplicationContext());
         session.checkLogin();
-        first=findViewById(R.id.first_name);
-        nmfirst=findViewById(R.id.hidi_name_one);
-        second=findViewById(R.id.second_name);
-        nmsecond=findViewById(R.id.hidi_name_two);
-        third=findViewById(R.id.third_name);
-        nmthird=findViewById(R.id.hidi_name_three);
-        visitor_size=session.getVisitors();
-        unlock=findViewById(R.id.lock_btn);
-        showUnlocked=findViewById(R.id.show_unlocked_visitors);
-        indexpath=session.getIndex();
-        Log.d("indexpath",""+indexpath);
-        Log.d("total visitors",""+visitor_size);
+        MobileAds.initialize(this, "ca-app-pub-8097507647686370~9504269092");
+        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        mRewardedVideoAd.setRewardedVideoAdListener(UnlockVisitors.this);
+        loadRewardedVideoAd();
+        first = findViewById(R.id.first_name);
+        nmfirst = findViewById(R.id.hidi_name_one);
+        second = findViewById(R.id.second_name);
+        nmsecond = findViewById(R.id.hidi_name_two);
+        third = findViewById(R.id.third_name);
+        nmthird = findViewById(R.id.hidi_name_three);
+        visitor_size = session.getVisitors();
+        unlock = findViewById(R.id.lock_btn);
+        showUnlocked = findViewById(R.id.show_unlocked_visitors);
+        indexpath = session.getIndex();
+        Log.d("indexpath", "" + indexpath);
+        Log.d("total visitors", "" + visitor_size);
         new AllVisitors().execute("http://hidi.org.in/hidi/account/showvisitors.php");
-        showUnlocked.setOnClickListener(new View.OnClickListener()
-        {
+        showUnlocked.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Bundle bundle=new Bundle();
-                bundle.putStringArrayList("viewed",viewed);
-                Intent intent=new Intent(UnlockVisitors.this,ShowUnlockedVisitors.class);
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("viewed", viewed);
+                Intent intent = new Intent(UnlockVisitors.this, ShowUnlockedVisitors.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
-        unlock.setOnClickListener(new View.OnClickListener()
-        {
+        unlock.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                if(indexpath<visitor_size)
-                {
-                    if((visitor_size-indexpath)>=3)
-                    {
-                        first.setVisibility(View.VISIBLE);
-                        second.setVisibility(View.VISIBLE);
-                        third.setVisibility(View.VISIBLE);
-                        nmfirst.setText(visitName.get(indexpath+0));viewed.add(visitName.get(indexpath+0));
-                        nmsecond.setText(visitName.get(indexpath+1));viewed.add(visitName.get(indexpath+1));
-                        nmthird.setText(visitName.get(indexpath+2));viewed.add(visitName.get(indexpath+2));
-                        indexpath=indexpath+3;
-                    }
-                    else if((visitor_size-indexpath)==2)
-                    {
-                        first.setVisibility(View.VISIBLE);
-                        second.setVisibility(View.VISIBLE);
-                        third.setVisibility(View.INVISIBLE);
-                        nmfirst.setText(visitName.get(indexpath+0));viewed.add(visitName.get(indexpath+0));
-                        nmsecond.setText(visitName.get(indexpath+1));viewed.add(visitName.get(indexpath+1));
-                        indexpath=indexpath+2;
-                    }
-                    else if((visitor_size-indexpath)==1)
-                    {
-                        first.setVisibility(View.VISIBLE);
-                        second.setVisibility(View.INVISIBLE);
-                        third.setVisibility(View.INVISIBLE);
-                        nmfirst.setText(visitName.get(indexpath+0));viewed.add(visitName.get(indexpath+0));
-                        indexpath=indexpath+1;
-                    }
-                    session.updateIndex(indexpath);
-                    Log.d("indexpath",indexpath+"");
-                    Log.d("difference",""+(visitor_size-indexpath));
-                    new IndexUpdate().execute("http://hidi.org.in/hidi/account/updateindex.php");
+            public void onClick(View v) {
+
+                if (mRewardedVideoAd.isLoaded()) {
+                    Log.d("amanraj", "loadedyes");
+                    mRewardedVideoAd.show();
+                    Log.d("amanraj", "showed");
+
                 }
-                else
-                {
-                    first.setVisibility(View.INVISIBLE);
-                    second.setVisibility(View.VISIBLE);
-                    third.setVisibility(View.INVISIBLE);
-                    nmsecond.setText("No visitors left to be viewed");
-                    nmsecond.setTypeface(Typeface.DEFAULT_BOLD);
-                    nmsecond.setTextSize(20f);
-                }
+
+
             }
         });
 
     }
-    private class AllVisitors extends AsyncTask<String,Void,String>
-    {
+
+    private void loadRewardedVideoAd() {
+        Log.d("loadkaf", "loaded");
+        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+                new AdRequest.Builder().build());
+    }
+
+    public void showperson() {
+        Log.d("amanraj","calledshowpe");
+        if (indexpath < visitor_size) {
+            if ((visitor_size - indexpath) >= 3) {
+                first.setVisibility(View.VISIBLE);
+                second.setVisibility(View.VISIBLE);
+                third.setVisibility(View.VISIBLE);
+                nmfirst.setText(visitName.get(indexpath + 0));
+                viewed.add(visitName.get(indexpath + 0));
+                nmsecond.setText(visitName.get(indexpath + 1));
+                viewed.add(visitName.get(indexpath + 1));
+                nmthird.setText(visitName.get(indexpath + 2));
+                viewed.add(visitName.get(indexpath + 2));
+                indexpath = indexpath + 3;
+            } else if ((visitor_size - indexpath) == 2) {
+                first.setVisibility(View.VISIBLE);
+                second.setVisibility(View.VISIBLE);
+                third.setVisibility(View.INVISIBLE);
+                nmfirst.setText(visitName.get(indexpath + 0));
+                viewed.add(visitName.get(indexpath + 0));
+                nmsecond.setText(visitName.get(indexpath + 1));
+                viewed.add(visitName.get(indexpath + 1));
+                indexpath = indexpath + 2;
+            } else if ((visitor_size - indexpath) == 1) {
+                first.setVisibility(View.VISIBLE);
+                second.setVisibility(View.INVISIBLE);
+                third.setVisibility(View.INVISIBLE);
+                nmfirst.setText(visitName.get(indexpath + 0));
+                viewed.add(visitName.get(indexpath + 0));
+                indexpath = indexpath + 1;
+            }
+            session.updateIndex(indexpath);
+            Log.d("indexpath", indexpath + "");
+            Log.d("difference", "" + (visitor_size - indexpath));
+            new IndexUpdate().execute("http://hidi.org.in/hidi/account/updateindex.php");
+        } else {
+            first.setVisibility(View.INVISIBLE);
+            second.setVisibility(View.VISIBLE);
+            third.setVisibility(View.INVISIBLE);
+            nmsecond.setText("No visitors left to be viewed");
+            nmsecond.setTypeface(Typeface.DEFAULT_BOLD);
+            nmsecond.setTextSize(20f);
+        }
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+        Log.d("amanraj", "loaded");
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+        Log.d("amanraj", "Opened");
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+        Log.d("amanraj", "Started");
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+        //Toast.makeText(UnlockVisitors.this, "Watch ad to unloack Visitors", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+        Log.d("amanraj", "rewarded");
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+        Log.d("amanraj", "leftapplication");
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
+        Toast.makeText(UnlockVisitors.this, "Network slow can't load video", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRewardedVideoCompleted() {
+        Log.d("amanraj","completed");
+        showperson();
+
+    }
+
+    private class AllVisitors extends AsyncTask<String, Void, String> {
         @Override
-        protected void onPreExecute()
-        {
+        protected void onPreExecute() {
             super.onPreExecute();
         }
+
         @Override
-        protected String doInBackground(String... url)
-        {
+        protected String doInBackground(String... url) {
             return POST(url[0]);
         }
+
         @Override
-        protected void onPostExecute(String s)
-        {
+        protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("result",result);
-            try
-            {
-                JSONObject jsonObject=new JSONObject(result);
-                JSONObject info=jsonObject.getJSONObject("info");
-                if(info.getString("status").equals("success"))
-                {
-                    JSONObject details=jsonObject.getJSONObject("details");
-                    JSONArray records=details.getJSONArray("records");
-                    if(records.length()==0)
-                    {
+            Log.d("result", result);
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject info = jsonObject.getJSONObject("info");
+                if (info.getString("status").equals("success")) {
+                    JSONObject details = jsonObject.getJSONObject("details");
+                    JSONArray records = details.getJSONArray("records");
+                    if (records.length() == 0) {
                         Toast.makeText(UnlockVisitors.this, "No visitors", Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                    {
-                        for(int i=0;i<records.length();i++)
-                        {
+                    } else {
+                        for (int i = 0; i < records.length(); i++) {
                             JSONObject user = records.getJSONObject(i);
                             visitName.add(user.getString("secname"));
                         }
-                        Log.d("visitors",""+visitName);
-                        for(int i=0;i<indexpath;i++)
-                        {
+                        Log.d("visitors", "" + visitName);
+                        for (int i = 0; i < indexpath; i++) {
                             viewed.add(visitName.get(i));
                         }
                     }
+                } else {
+                    Toast.makeText(UnlockVisitors.this, "" + info.getString("message"), Toast.LENGTH_SHORT).show();
                 }
-                else
-                {
-                    Toast.makeText(UnlockVisitors.this,""+info.getString("message"),Toast.LENGTH_SHORT).show();
-                }
-            }
-            catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
     }
-    private class IndexUpdate extends AsyncTask<String,Void,String>
-    {
+
+    private class IndexUpdate extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -194,7 +245,7 @@ public class UnlockVisitors extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Result",result);
+            Log.d("Result", result);
         }
 
         @Override
@@ -202,6 +253,7 @@ public class UnlockVisitors extends AppCompatActivity
             return POST1(url[0]);
         }
     }
+
     public String POST(String url) {
         InputStream inputStream = null;
         try {
@@ -239,6 +291,7 @@ public class UnlockVisitors extends AppCompatActivity
         }
         return result;
     }
+
     public String POST1(String url) {
         InputStream inputStream = null;
         try {
@@ -276,6 +329,7 @@ public class UnlockVisitors extends AppCompatActivity
         }
         return result;
     }
+
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = "";

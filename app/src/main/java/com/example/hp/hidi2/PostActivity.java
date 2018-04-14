@@ -15,8 +15,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
@@ -107,6 +110,41 @@ public class PostActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        if(isNetworkAvailable()){
+
+        }
+        else
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                    .setTitle("No Internet Connection")
+                    .setCancelable(false)
+                    .setPositiveButton(" Enable Internet ",
+                            new DialogInterface.OnClickListener()
+                            {
+
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+                                    swiper.setRefreshing(false);
+                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                    startActivity(in);
+
+                                }
+                            });
+
+            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
         swiper = findViewById(R.id.refresh);
@@ -215,6 +253,14 @@ public class PostActivity extends AppCompatActivity
 
 
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {

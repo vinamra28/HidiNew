@@ -1,8 +1,14 @@
 package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +47,41 @@ public class ChatList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
+        if(isNetworkAvailable()){
+
+        }
+        else
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                    .setTitle("No Internet Connection")
+                    .setCancelable(false)
+                    .setPositiveButton(" Enable Internet ",
+                            new DialogInterface.OnClickListener()
+                            {
+
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+
+                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                    startActivity(in);
+
+                                }
+                            });
+
+            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
         floatingActionButton = findViewById(R.id.addchat);
         session = new SessionManager(getApplicationContext());
         recyclerView = findViewById(R.id.recyclerViewChatHistory);
@@ -114,5 +155,12 @@ public class ChatList extends AppCompatActivity {
 
             }
         });
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

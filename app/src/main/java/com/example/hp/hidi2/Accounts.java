@@ -1,18 +1,24 @@
 package com.example.hp.hidi2;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.test.mock.MockPackageManager;
@@ -89,6 +95,41 @@ public class Accounts extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        if(isNetworkAvailable()){
+
+        }
+        else
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                    .setTitle("No Internet Connection")
+                    .setCancelable(false)
+                    .setPositiveButton(" Enable Internet ",
+                            new DialogInterface.OnClickListener()
+                            {
+
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+
+                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                    startActivity(in);
+
+                                }
+                            });
+
+            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES)
         {
             setTheme(R.style.darkTheme);
@@ -159,6 +200,14 @@ public class Accounts extends AppCompatActivity
         });
 
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     private void showFileChooser()
     {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
