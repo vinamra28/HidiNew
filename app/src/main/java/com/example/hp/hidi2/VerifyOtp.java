@@ -3,10 +3,15 @@ package com.example.hp.hidi2;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -65,6 +70,41 @@ public class VerifyOtp extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        if(isNetworkAvailable()){
+
+        }
+        else
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                    .setTitle("No Internet Connection")
+                    .setCancelable(false)
+                    .setPositiveButton(" Enable Internet ",
+                            new DialogInterface.OnClickListener()
+                            {
+
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+
+                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                    startActivity(in);
+
+                                }
+                            });
+
+            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
         myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
@@ -125,14 +165,85 @@ public class VerifyOtp extends AppCompatActivity
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
                 if(otp.length()!=0)
                 {
-                    progress.show();
                     if(request==1)
                     {
-                        new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp.php");
+                        if(isNetworkAvailable())
+                        {
+                            progress.show();
+                            new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp.php");
+                        }
+                        else
+                        {
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VerifyOtp.this);
+                            alertDialogBuilder
+                                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                                    .setTitle("No Internet Connection")
+                                    .setCancelable(false)
+                                    .setPositiveButton(" Enable Internet ",
+                                            new DialogInterface.OnClickListener()
+                                            {
+
+                                                public void onClick(DialogInterface dialog, int id)
+                                                {
+
+
+                                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                                    startActivity(in);
+
+                                                }
+                                            });
+
+                            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            AlertDialog alert = alertDialogBuilder.create();
+                            alert.show();
+                        }
                     }
                     else
                     {
-                        new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp2.php");
+                        if(isNetworkAvailable())
+                        {
+                            progress.show();
+                            new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp2.php");
+                        }
+                        else
+                        {
+                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VerifyOtp.this);
+                            alertDialogBuilder
+                                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                                    .setTitle("No Internet Connection")
+                                    .setCancelable(false)
+                                    .setPositiveButton(" Enable Internet ",
+                                            new DialogInterface.OnClickListener()
+                                            {
+
+                                                public void onClick(DialogInterface dialog, int id)
+                                                {
+
+
+                                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                                    startActivity(in);
+
+                                                }
+                                            });
+
+                            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+                            {
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            AlertDialog alert = alertDialogBuilder.create();
+                            alert.show();
+                        }
                     }
                 }
                 else
@@ -141,6 +252,12 @@ public class VerifyOtp extends AppCompatActivity
                 }
             }
         });
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
     class FlipperAdapter extends BaseAdapter
     {

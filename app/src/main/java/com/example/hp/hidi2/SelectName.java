@@ -2,10 +2,16 @@ package com.example.hp.hidi2;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
@@ -51,7 +57,7 @@ public class SelectName extends AppCompatActivity
     TextView tv,tv1;
     Spinner spinner;
     Button nextt;
-    String result="",hidiName="";
+    String result="",hidiName="BATMAN";
     int uid=0;
     SessionManager session;
     ArrayList<String> names=new ArrayList<>();
@@ -61,6 +67,41 @@ public class SelectName extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        if(isNetworkAvailable()){
+
+        }
+        else
+        {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder
+                    .setMessage("No internet connection on your device. Would you like to enable it?")
+                    .setTitle("No Internet Connection")
+                    .setCancelable(false)
+                    .setPositiveButton(" Enable Internet ",
+                            new DialogInterface.OnClickListener()
+                            {
+
+                                public void onClick(DialogInterface dialog, int id)
+                                {
+
+
+                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                    startActivity(in);
+
+                                }
+                            });
+
+            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+            {
+                public void onClick(DialogInterface dialog, int id)
+                {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = alertDialogBuilder.create();
+            alert.show();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_name);
         Bundle bundle=getIntent().getExtras();
@@ -110,32 +151,69 @@ public class SelectName extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                dialog.show();
-                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
-                //Registering user on Firebase
+                if(isNetworkAvailable())
+                {
+                    dialog.show();
+                    new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
+                    //Registering user on Firebase
 
-                firebaseAuth = FirebaseAuth.getInstance();
-                final Task<AuthResult> resultTask = firebaseAuth.signInAnonymously();
-                resultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        if (resultTask.isSuccessful()){
-                            Toast.makeText(SelectName.this,"Success",Toast.LENGTH_SHORT).show();
+                    firebaseAuth = FirebaseAuth.getInstance();
+                    final Task<AuthResult> resultTask = firebaseAuth.signInAnonymously();
+                    resultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            if (resultTask.isSuccessful()){
+                                Toast.makeText(SelectName.this,"Success",Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                Toast.makeText(SelectName.this,"Failed",Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Toast.makeText(SelectName.this,"Failed",Toast.LENGTH_SHORT).show();
+                    });
+                    //Saving data of user on firebase
+                    databaseReference = FirebaseDatabase.getInstance().getReference();
+                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                    databaseReference.child("users").child(uid+"").child("profilepic").setValue("http://hidi.org.in/hidi/account/image/default.png");
+                    databaseReference.child("users").child(uid+"").child("username").setValue(hidiName);
+                }
+                else
+                {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelectName.this);
+                    alertDialogBuilder
+                            .setMessage("No internet connection on your device. Would you like to enable it?")
+                            .setTitle("No Internet Connection")
+                            .setCancelable(false)
+                            .setPositiveButton(" Enable Internet ",
+                                    new DialogInterface.OnClickListener()
+                                    {
+                                        public void onClick(DialogInterface dialog, int id)
+                                        {
+                                            Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                            startActivity(in);
+                                        }
+                                    });
+
+                    alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+                    {
+                        public void onClick(DialogInterface dialog, int id)
+                        {
+                            dialog.cancel();
                         }
-                    }
-                });
-                //Saving data of user on firebase
-                databaseReference = FirebaseDatabase.getInstance().getReference();
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                databaseReference.child("users").child(uid+"").child("profilepic").setValue("http://hidi.org.in/hidi/account/image/default.png");
-                databaseReference.child("users").child(uid+"").child("username").setValue(hidiName);
+                    });
+
+                    AlertDialog alert = alertDialogBuilder.create();
+                    alert.show();
+                }
+
             }
         });
     }
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 
 //    @Override
@@ -179,6 +257,7 @@ public class SelectName extends AppCompatActivity
         {
             super.onPostExecute(s);
             Log.d("Result",result);
+            dialog.dismiss();
             try
             {
                 JSONObject res=new JSONObject(result);
@@ -188,7 +267,6 @@ public class SelectName extends AppCompatActivity
                 {
                     Log.d("test","ll");
                     session.setSecname(hidiName);
-                    dialog.dismiss();
                     Intent intent = new Intent(SelectName.this, PostActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -196,7 +274,6 @@ public class SelectName extends AppCompatActivity
                 }
                 else
                 {
-                    dialog.dismiss();
                     Toast.makeText(SelectName.this,"Incorrect",Toast.LENGTH_SHORT).show();
 //                    mobile.setText("");
 //                    pass.setText("");

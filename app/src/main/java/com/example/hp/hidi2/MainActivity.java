@@ -193,8 +193,44 @@ public class MainActivity extends AppCompatActivity
                 get.startAnimation(myAnim);
                */ if(Pattern.matches("[6789][0-9]{9}",mobile))
                 {
-                    progress.show();
-                     new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
+                    if(isNetworkAvailable())
+                    {
+                        progress.show();
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
+                    }
+                    else
+                    {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                        alertDialogBuilder
+                                .setMessage("No internet connection on your device. Would you like to enable it?")
+                                .setTitle("No Internet Connection")
+                                .setCancelable(false)
+                                .setPositiveButton(" Enable Internet ",
+                                        new DialogInterface.OnClickListener()
+                                        {
+
+                                            public void onClick(DialogInterface dialog, int id)
+                                            {
+
+
+                                                Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                                startActivity(in);
+
+                                            }
+                                        });
+
+                        alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
+                        {
+                            public void onClick(DialogInterface dialog, int id)
+                            {
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alert = alertDialogBuilder.create();
+                        alert.show();
+                    }
+
                 }
                 else
                 {

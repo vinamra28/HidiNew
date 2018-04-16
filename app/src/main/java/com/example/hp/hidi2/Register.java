@@ -93,21 +93,56 @@ public class Register extends AppCompatActivity {
                 name = username.getText().toString();
                 mobino = mobileNo.getText().toString();
                 passwd = passwords.getText().toString();
-                if (Pattern.matches("[6789][0-9]{9}", mobino) && name.length() != 0) {
-                    if (passwd.length() == 0) {
+                if (Pattern.matches("[6789][0-9]{9}", mobino) && name.length() != 0)
+                {
+                    if (passwd.length() == 0)
+                    {
                         REQUEST_CODE = 21;
-                    } else {
-                        if (!Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd)) {
+                    }
+                    else
+                    {
+                        if (!Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
+                        {
                             Snackbar snackbar = Snackbar.make(constraintLayout, "Password must contain one alphabet(CAPITAL and small) one number and a special character", Snackbar.LENGTH_LONG);
                             snackbar.show();
-                        } else if (Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
+                        }
+                        else if (Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
                             REQUEST_CODE = 22;
 //                        else
 //                            REQUEST_CODE = 21;
                     }
+                    if (isNetworkAvailable())
+                    {
+                        dialog.show();
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
+                    } else {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Register.this);
+                        alertDialogBuilder
+                                .setMessage("No internet connection on your device. Would you like to enable it?")
+                                .setTitle("No Internet Connection")
+                                .setCancelable(false)
+                                .setPositiveButton(" Enable Internet ",
+                                        new DialogInterface.OnClickListener() {
 
-                    dialog.show();
-                    new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
+                                            public void onClick(DialogInterface dialog, int id) {
+
+
+                                                Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
+                                                startActivity(in);
+
+                                            }
+                                        });
+
+                        alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        AlertDialog alert = alertDialogBuilder.create();
+                        alert.show();
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Enter correct entries", Toast.LENGTH_SHORT).show();
                 }
