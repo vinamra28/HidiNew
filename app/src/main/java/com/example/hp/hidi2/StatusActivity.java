@@ -171,18 +171,10 @@ public class StatusActivity extends AppCompatActivity
                         else
                         {
                             session.saveLoc(gps.latitude,gps.longitude);
-                            if(gps.canGetLocation())
-                            {
-                                session.saveLoc(gps.latitude,gps.longitude);
-                                dialog.show();
-                                dialog.setCancelable(false);
-                                dialog.setIndeterminate(false);
-                                new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
-                            }
-                            else
-                            {
-                                gps.showSettingsAlert();
-                            }
+                            dialog.show();
+                            dialog.setCancelable(false);
+                            dialog.setIndeterminate(false);
+                            new PostUpdate().execute("http://hidi.org.in/hidi/post/mypost.php");
                         }
                     }
                     catch (Exception e)

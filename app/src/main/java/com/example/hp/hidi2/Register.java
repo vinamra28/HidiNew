@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.provider.Settings;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,27 +42,23 @@ public class Register extends AppCompatActivity {
     EditText username, passwords, mobileNo;
     Button register;
     int REQUEST_CODE = 0;
+    ConstraintLayout constraintLayout;
     String name = "", mobino = "", passwd = "", result = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        if(isNetworkAvailable()){
+    protected void onCreate(Bundle savedInstanceState) {
+        if (isNetworkAvailable()) {
 
-        }
-        else
-        {
+        } else {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder
                     .setMessage("No internet connection on your device. Would you like to enable it?")
                     .setTitle("No Internet Connection")
                     .setCancelable(false)
                     .setPositiveButton(" Enable Internet ",
-                            new DialogInterface.OnClickListener()
-                            {
+                            new DialogInterface.OnClickListener() {
 
-                                public void onClick(DialogInterface dialog, int id)
-                                {
+                                public void onClick(DialogInterface dialog, int id) {
 
 
                                     Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
@@ -69,10 +67,8 @@ public class Register extends AppCompatActivity {
                                 }
                             });
 
-            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
-            {
-                public void onClick(DialogInterface dialog, int id)
-                {
+            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
                     dialog.cancel();
                 }
             });
@@ -87,6 +83,7 @@ public class Register extends AppCompatActivity {
         passwords = findViewById(R.id.passwordss);
         mobileNo = findViewById(R.id.mobilenoss);
         dialog = new ProgressDialog(this);
+        constraintLayout = findViewById(R.id.constraintlayout);
         dialog.setMessage("Registering....");
         dialog.setCancelable(false);
         dialog.setIndeterminate(false);
@@ -96,22 +93,17 @@ public class Register extends AppCompatActivity {
                 name = username.getText().toString();
                 mobino = mobileNo.getText().toString();
                 passwd = passwords.getText().toString();
-                if (Pattern.matches("[6789][0-9]{9}", mobino) && name.length() != 0)
-                {
-                    if (passwd.length() == 0)
-                    {
+                if (Pattern.matches("[6789][0-9]{9}", mobino) && name.length() != 0) {
+                    if (passwd.length() == 0) {
                         REQUEST_CODE = 21;
-                    }
-                    else
-                    {
-                        if (!Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
-                        {
-                            Toast.makeText(Register.this, "Enter valid paswword", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
+                    } else {
+                        if (!Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd)) {
+                            Snackbar snackbar = Snackbar.make(constraintLayout, "Password must contain one alphabet(CAPITAL and small) one number and a special character", Snackbar.LENGTH_LONG);
+                            snackbar.show();
+                        } else if (Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
                             REQUEST_CODE = 22;
-                        else
-                            REQUEST_CODE = 21;
+//                        else
+//                            REQUEST_CODE = 21;
                     }
 
                     dialog.show();
@@ -122,12 +114,14 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
+
     private class Verification extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {

@@ -91,6 +91,7 @@ public class Accounts extends AppCompatActivity
     String result="";
     FirebaseAuth firebaseAuth;
     DatabaseReference databaseReference;
+    public int flag=0;
      ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -177,7 +178,7 @@ public class Accounts extends AppCompatActivity
         hidies.setText(user.get(KEY_HIDIES));
         blocks.setText(user.get(KEY_BLOCKS));
         actionbars.setText(session.getSecname());
-        see_notifications.setEnabled(false);
+        //see_notifications.setEnabled(false);
         Bitmap myBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.index);
         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), myBitmap);
         roundedBitmapDrawable.setCornerRadius(55f);
@@ -194,8 +195,11 @@ public class Accounts extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                if(flag==0){
+                    Toast.makeText(Accounts.this,"Enable the notification content",Toast.LENGTH_SHORT).show();
+                }else {
                 Intent intent=new Intent(Accounts.this,AllNotificationsView.class);
-                startActivity(intent);
+                startActivity(intent);}
             }
         });
 
@@ -287,11 +291,13 @@ public class Accounts extends AppCompatActivity
             {
                 if(!item.isChecked())
                 {
+                    flag=1;
                     item.setChecked(true);
                     see_notifications.setEnabled(true);
                 }
                 else
                 {
+                    flag=0;
                     item.setChecked(false);
                     see_notifications.setEnabled(false);
                 }

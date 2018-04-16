@@ -10,11 +10,11 @@
         <!--android:actionLayout=""-->
         <!--/>-->
 
-    <!--<item-->
-        <!--android:id="@+id/notification"-->
-        <!--android:title="Notification"-->
-        <!--android:enabled="true"-->
-        <!--android:checkable="true"/>-->
+    <item
+        android:id="@+id/notification"
+        android:title="Notification"
+        android:enabled="true"
+        android:checkable="true"/>
     <item
         android:id="@+id/notifi_content"
         android:title="Notification Content"

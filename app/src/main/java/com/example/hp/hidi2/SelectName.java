@@ -110,10 +110,6 @@ public class SelectName extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-//                final Animation myAnim = AnimationUtils.loadAnimation(SelectName.this, R.anim.bounce);
-//                MyBounceInterpolator interpolator = new MyBounceInterpolator(0.0, 1);
-//                myAnim.setInterpolator(interpolator);
-//                nextt.startAnimation(myAnim);
                 dialog.show();
                 new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
                 //Registering user on Firebase
@@ -190,6 +186,7 @@ public class SelectName extends AppCompatActivity
                 String status=info.getString("status");
                 if(status.equals("success"))
                 {
+                    Log.d("test","ll");
                     session.setSecname(hidiName);
                     dialog.dismiss();
                     Intent intent = new Intent(SelectName.this, PostActivity.class);
