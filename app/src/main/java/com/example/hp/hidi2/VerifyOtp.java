@@ -162,88 +162,18 @@ public class VerifyOtp extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Log.e("entered","clicked ");
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
                 if(otp.length()!=0)
                 {
                     if(request==1)
                     {
-                        if(isNetworkAvailable())
-                        {
-                            progress.show();
-                            new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp.php");
-                        }
-                        else
-                        {
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VerifyOtp.this);
-                            alertDialogBuilder
-                                    .setMessage("No internet connection on your device. Would you like to enable it?")
-                                    .setTitle("No Internet Connection")
-                                    .setCancelable(false)
-                                    .setPositiveButton(" Enable Internet ",
-                                            new DialogInterface.OnClickListener()
-                                            {
-
-                                                public void onClick(DialogInterface dialog, int id)
-                                                {
-
-
-                                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                                                    startActivity(in);
-
-                                                }
-                                            });
-
-                            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int id)
-                                {
-                                    dialog.cancel();
-                                }
-                            });
-
-                            AlertDialog alert = alertDialogBuilder.create();
-                            alert.show();
-                        }
+                        Log.d("req","1");
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp.php");
                     }
                     else
                     {
-                        if(isNetworkAvailable())
-                        {
-                            progress.show();
-                            new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp2.php");
-                        }
-                        else
-                        {
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(VerifyOtp.this);
-                            alertDialogBuilder
-                                    .setMessage("No internet connection on your device. Would you like to enable it?")
-                                    .setTitle("No Internet Connection")
-                                    .setCancelable(false)
-                                    .setPositiveButton(" Enable Internet ",
-                                            new DialogInterface.OnClickListener()
-                                            {
-
-                                                public void onClick(DialogInterface dialog, int id)
-                                                {
-
-
-                                                    Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                                                    startActivity(in);
-
-                                                }
-                                            });
-
-                            alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
-                            {
-                                public void onClick(DialogInterface dialog, int id)
-                                {
-                                    dialog.cancel();
-                                }
-                            });
-
-                            AlertDialog alert = alertDialogBuilder.create();
-                            alert.show();
-                        }
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/verifyotp2.php");
                     }
                 }
                 else

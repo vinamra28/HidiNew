@@ -69,52 +69,64 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
-            android:weightSum="6">
+            android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:color="?attr/textColor"
-                android:gravity="center"
-                android:text="Admire"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/admireCount"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:color="?attr/textColor"
-                android:gravity="center"
-                android:text="0" />
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".3"
+                    android:gravity="end"
+                    android:text="Admire"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/admireCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1.7"
+                    android:text="0"
+                    android:textColor="#000" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:color="?attr/textColor"
-                android:gravity="center"
-                android:text="Love"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/loveCount"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:color="?attr/textColor"
-                android:gravity="center"
-                android:text="0" />
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.6"
+                    android:gravity="start"
+                    android:text="Love"
+                    android:textColor="#000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/loveCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".4"
+                    android:text="0"
+                    android:textColor="#000" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -153,6 +165,7 @@
                 android:color="?attr/textColor"
                 android:gravity="center"
                 android:text="Popularity"
+                android:textColor="#000"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
@@ -162,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
                 app:donut_circle_starting_degree="0"
-                app:donut_finished_color="#4db6a6"
+                app:donut_finished_color="#00acc1"
                 app:donut_progress="0.00" />
 
         </LinearLayout>
@@ -187,89 +200,143 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.852">
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="3">
 
-            android:columnCount="2"
-            android:rowCount="3">
-
-            <TextView
-                android:id="@+id/dovisit"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="left"
-                android:layout_margin="8dp"
-                android:layout_row="0"
-                android:color="?attr/textColor"
-                android:text="Visitors"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-            <TextView
-                android:id="@+id/visitorsCount"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/dovisit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:color="?attr/textColor"
+                    android:text="Visitors"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/visitorsCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:color="?attr/textColor"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/visitorsbtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:color="?attr/textColor"
+                    android:gravity="center"
+                    android:text="Show"
+                    android:textColor="#244afc"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_row="0"
-                android:color="?attr/textColor"
-                android:text="0"
-                android:textSize="16dp" />
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1.34"
+                    android:color="?attr/textColor"
+                    android:text="My Hidies"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/hidiCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight=".66"
+                    android:color="?attr/textColor"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="left"
-                android:layout_margin="8dp"
-                android:layout_row="1"
-                android:color="?attr/textColor"
-                android:text="My Hidies"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-            <TextView
-                android:id="@+id/hidiCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_row="1"
-                android:color="?attr/textColor"
-                android:text="0"
-                android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:color="?attr/textColor"
+                    android:text="Blocks"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/block"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:layout_gravity="left"
-                android:layout_margin="8dp"
-                android:layout_row="2"
-                android:color="?attr/textColor"
-                android:text="Blocks"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/blockCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:color="?attr/textColor"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/blockCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_column="1"
-                android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:layout_row="2"
-                android:color="?attr/textColor"
-                android:text="0"
-                android:textSize="16dp" />
+                <TextView
+                    android:id="@+id/blockbtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:color="?attr/textColor"
+                    android:gravity="center"
+                    android:text="Show"
+                    android:textColor="#244afc"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        </GridLayout>
+            </LinearLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
@@ -290,77 +357,40 @@
         app:layout_constraintVertical_bias="1.0">
 
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/notificationButton"
                 style="@style/Base.Widget.AppCompat.Button.Borderless"
-                android:layout_width="120dp"
-                android:layout_height="35dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_gravity="center"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:layout_weight="1.5"
                 android:background="@drawable/buttonborder"
-                android:color="?attr/textColor"
-                android:text="Notification"
+                android:text="Notifications"
                 android:textAllCaps="false"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.034"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                tools:ignore="MissingConstraints" />
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/statusButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_add_circle_black_24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_width="35sp"
+                android:layout_height="35sp"
+                android:src="@drawable/ic_add_circle_black_24dp" />
 
             <Button
                 android:id="@+id/journeyButton"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="120dp"
-                android:layout_height="35dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:layout_weight="1.5"
                 android:background="@drawable/buttonborder"
-                android:color="?attr/textColor"
-                android:gravity="center"
                 android:text="My Journey"
                 android:textAllCaps="false"
-                android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.965"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
-
-        </android.support.constraint.ConstraintLayout>
+                android:textSize="16sp" />
+        </LinearLayout>
     </RelativeLayout>
 
 

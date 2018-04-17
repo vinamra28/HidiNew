@@ -22,6 +22,7 @@
         android:layout_above="@+id/linearsLyo"
         android:layout_below="@+id/views"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/coming_soon"
         android:gravity="center"
         android:hint="Type a status"
         android:maxLength="120"

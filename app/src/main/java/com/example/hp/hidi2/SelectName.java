@@ -151,59 +151,28 @@ public class SelectName extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                if(isNetworkAvailable())
-                {
-                    dialog.show();
-                    new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
-                    //Registering user on Firebase
+                dialog.show();
+                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/secname.php");
+                //Registering user on Firebase
 
-                    firebaseAuth = FirebaseAuth.getInstance();
-                    final Task<AuthResult> resultTask = firebaseAuth.signInAnonymously();
-                    resultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            if (resultTask.isSuccessful()){
-                                Toast.makeText(SelectName.this,"Success",Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(SelectName.this,"Failed",Toast.LENGTH_SHORT).show();
-                            }
+                firebaseAuth = FirebaseAuth.getInstance();
+                final Task<AuthResult> resultTask = firebaseAuth.signInAnonymously();
+                resultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        if (resultTask.isSuccessful()){
+                            Toast.makeText(SelectName.this,"Success",Toast.LENGTH_SHORT).show();
                         }
-                    });
-                    //Saving data of user on firebase
-                    databaseReference = FirebaseDatabase.getInstance().getReference();
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    databaseReference.child("users").child(uid+"").child("profilepic").setValue("http://hidi.org.in/hidi/account/image/default.png");
-                    databaseReference.child("users").child(uid+"").child("username").setValue(hidiName);
-                }
-                else
-                {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SelectName.this);
-                    alertDialogBuilder
-                            .setMessage("No internet connection on your device. Would you like to enable it?")
-                            .setTitle("No Internet Connection")
-                            .setCancelable(false)
-                            .setPositiveButton(" Enable Internet ",
-                                    new DialogInterface.OnClickListener()
-                                    {
-                                        public void onClick(DialogInterface dialog, int id)
-                                        {
-                                            Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                                            startActivity(in);
-                                        }
-                                    });
-
-                    alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener()
-                    {
-                        public void onClick(DialogInterface dialog, int id)
-                        {
-                            dialog.cancel();
+                        else {
+                            Toast.makeText(SelectName.this,"Failed",Toast.LENGTH_SHORT).show();
                         }
-                    });
-
-                    AlertDialog alert = alertDialogBuilder.create();
-                    alert.show();
-                }
+                    }
+                });
+                //Saving data of user on firebase
+                databaseReference = FirebaseDatabase.getInstance().getReference();
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                databaseReference.child("users").child(uid+"").child("profilepic").setValue("http://hidi.org.in/hidi/account/image/default.png");
+                databaseReference.child("users").child(uid+"").child("username").setValue(hidiName);
 
             }
         });
@@ -328,7 +297,8 @@ public class SelectName extends AppCompatActivity
             e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
         return result;

@@ -98,6 +98,8 @@ public class Register extends AppCompatActivity {
                     if (passwd.length() == 0)
                     {
                         REQUEST_CODE = 21;
+                        dialog.show();
+                        new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
                     }
                     else
                     {
@@ -107,41 +109,13 @@ public class Register extends AppCompatActivity {
                             snackbar.show();
                         }
                         else if (Pattern.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%*])(?=\\S+$).{8,16}", passwd))
+                        {
                             REQUEST_CODE = 22;
-//                        else
-//                            REQUEST_CODE = 21;
+                            dialog.show();
+                            new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
+                        }
                     }
-                    if (isNetworkAvailable())
-                    {
-                        dialog.show();
-                        new Verification().execute("http://hidi.org.in/hidi/Auth/getotp.php");
-                    } else {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Register.this);
-                        alertDialogBuilder
-                                .setMessage("No internet connection on your device. Would you like to enable it?")
-                                .setTitle("No Internet Connection")
-                                .setCancelable(false)
-                                .setPositiveButton(" Enable Internet ",
-                                        new DialogInterface.OnClickListener() {
 
-                                            public void onClick(DialogInterface dialog, int id) {
-
-
-                                                Intent in = new Intent(Settings.ACTION_WIFI_SETTINGS);
-                                                startActivity(in);
-
-                                            }
-                                        });
-
-                        alertDialogBuilder.setNegativeButton(" Cancel ", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                        AlertDialog alert = alertDialogBuilder.create();
-                        alert.show();
-                    }
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Enter correct entries", Toast.LENGTH_SHORT).show();

@@ -195,6 +195,12 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#00acc1">
+
+                </View>
 
             </RelativeLayout>
 
@@ -203,6 +209,13 @@
                 android:layout_height="60dp"
                 android:layout_below="@+id/do_favours_arguments_share"
                 android:background="#fff">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#00acc1">
+
+                </View>
 
 
                 <com.google.android.gms.ads.AdView
