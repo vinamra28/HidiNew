@@ -116,6 +116,7 @@
         <activity
             android:name=".ChatList"
             android:launchMode="singleTop"
+            android:theme="@style/AccountsTheme"
             android:screenOrientation="portrait" />
         <activity
             android:name=".HidiListChat"

@@ -25,17 +25,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/profilepic"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +38,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
-        </android.support.constraint.ConstraintLayout>
 
 
     </android.support.v7.widget.CardView>
@@ -171,11 +164,16 @@
 
             <com.github.lzyzsd.circleprogress.DonutProgress
                 android:id="@+id/popularProgress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80sp"
+                android:layout_marginVertical="10dp"
+                android:layout_height="80sp"
                 android:layout_marginLeft="50dp"
                 app:donut_circle_starting_degree="0"
                 app:donut_finished_color="#00acc1"
+                app:donut_inner_bottom_text_color="#00acc1"
+                app:donut_unfinished_stroke_width="5sp"
+                app:donut_text_size="15sp"
+                app:donut_finished_stroke_width="5sp"
                 app:donut_progress="0.00" />
 
         </LinearLayout>
@@ -248,9 +246,9 @@
                     android:layout_weight="1"
                     android:color="?attr/textColor"
                     android:gravity="center"
-                    android:text="Show"
+                    android:text="View"
                     android:textColor="#244afc"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -330,9 +328,9 @@
                     android:layout_weight="1"
                     android:color="?attr/textColor"
                     android:gravity="center"
-                    android:text="Show"
+                    android:text="View"
                     android:textColor="#244afc"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

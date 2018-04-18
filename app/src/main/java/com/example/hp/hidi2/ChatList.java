@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChatList extends AppCompatActivity {
@@ -41,6 +44,7 @@ public class ChatList extends AppCompatActivity {
     public String groupUrl;
     Bundle bundle;
     ChatHistorySet chatHistorySet;
+    ActionBar toolbar;
     ArrayList<String> arrayListUploadUrl;
 
     @Override
@@ -87,6 +91,7 @@ public class ChatList extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewChatHistory);
         recyclerView.setHasFixedSize(true);
         bundle = getIntent().getExtras();
+        toolbar=getSupportActionBar();
         if (bundle != null) {
             i = bundle.getInt("key");
         }
@@ -111,11 +116,12 @@ public class ChatList extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 chatHistorySets = new ArrayList<>();
                 Log.d("chatHistorySize", chatHistorySets.size() + "");
-                String opponentname, opponentpic;
+                String opponentname, opponentpic, lastmsg, lastsender, lastUpdated,abc;
                 progressDialog.dismiss();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.child("users").child(session.getUID() + "").child("threads").getChildren()) {
                     groupUrl = dataSnapshot1.getKey();
                     String personalurl = groupUrl;
+                    Log.d("personalurl",personalurl);
                     Log.d("groupUrl", groupUrl);
                     if (!groupUrl.contains("-")) {
                         //checking for one to one chat
@@ -134,6 +140,15 @@ public class ChatList extends AppCompatActivity {
                         Log.d("opponentname", opponentname);
                         opponentpic = dataSnapshot.child("users").child(groupUrl).child("profilepic").getValue() + "";
                         Log.d("opponentpic", opponentpic);
+                        lastmsg = dataSnapshot.child("threads").child(personalurl).child("lastMessage").getValue()+"";
+                        Log.d("lastmsg",lastmsg);
+                        lastsender = dataSnapshot.child("threads").child(personalurl).child("lastSender").getValue()+"";
+                        Log.d("lastSender",lastsender);
+                        lastUpdated = dataSnapshot.child("threads").child(personalurl).child("lastUpdated").getValue()+"";
+                        Date date = new Date(Long.parseLong(lastUpdated));
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
+                        abc = simpleDateFormat.format(date);
+                        Log.d("lastUpdated",abc);
                     }
                     //making group
                     else {
@@ -142,8 +157,17 @@ public class ChatList extends AppCompatActivity {
                         Log.d("opponentname", opponentname);
                         opponentpic = dataSnapshot.child("threads").child(groupUrl).child("groupImage").getValue() + "";
                         Log.d("opponentpic", opponentpic);
+                        lastmsg = dataSnapshot.child("threads").child(groupUrl).child("lastMessage").getValue()+"";
+                        Log.d("lastmsg",lastmsg);
+                        lastsender = dataSnapshot.child("threads").child(groupUrl).child("lastMessage").getValue()+"";
+                        Log.d("lastSender",lastsender);
+                        lastUpdated = dataSnapshot.child("threads").child(groupUrl).child("lastUpdated").getValue()+"";
+                        Date date = new Date(Long.parseLong(lastUpdated));
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm");
+                        abc = simpleDateFormat.format(date);
+                        Log.d("lastUpdated",abc);
                     }
-                    chatHistorySet = new ChatHistorySet(opponentname, opponentpic);
+                    chatHistorySet = new ChatHistorySet(opponentname, opponentpic, lastmsg, lastsender,abc);
                     chatHistorySets.add(chatHistorySet);
                     chatHistoryAdapter = new ChatHistoryAdapter(getApplicationContext(), chatHistorySets);
                     recyclerView.setAdapter(chatHistoryAdapter);

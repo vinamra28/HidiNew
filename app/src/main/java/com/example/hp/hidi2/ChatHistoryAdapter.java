@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,10 +32,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatHistoryAdapter extends RecyclerView.Adapter<ChatHistoryAdapter.ViewHolder> {
     private Context context;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
     private List<ChatHistorySet> chatHistorySets;
-    ChatHistorySet chatHistorySet;
+    private ChatHistorySet chatHistorySet;
     SessionManager session;
     ArrayList<String> arrayListUid = new ArrayList<>();
     int chatposition;
@@ -60,6 +61,9 @@ public class ChatHistoryAdapter extends RecyclerView.Adapter<ChatHistoryAdapter.
         session = new SessionManager(context);
         chatHistorySet = chatHistorySets.get(holder.getAdapterPosition());
         holder.textView.setText(chatHistorySet.getName());
+        holder.txtlastmsgname.setText(chatHistorySet.getLastSender());
+        holder.txtlastmsg.setText(chatHistorySet.getLastmsg());
+        holder.lasttime.setText(chatHistorySet.getLasttime());
         Picasso.with(context).load(chatHistorySet.getProfileurl()).into(holder.circleImageView);
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,13 +125,17 @@ public class ChatHistoryAdapter extends RecyclerView.Adapter<ChatHistoryAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
         CircleImageView circleImageView;
         TextView textView;
-        ConstraintLayout constraintLayout;
+        TextView txtlastmsgname, txtlastmsg,lasttime;
+        RelativeLayout constraintLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             circleImageView = itemView.findViewById(R.id.chathistoryimage);
             textView = itemView.findViewById(R.id.chathistoryname);
             constraintLayout = itemView.findViewById(R.id.chatHistoryCard);
+            txtlastmsgname = itemView.findViewById(R.id.lastmsgname);
+            txtlastmsg = itemView.findViewById(R.id.lastmsg);
+            lasttime = itemView.findViewById(R.id.timeStampUpdated);
         }
     }
 }

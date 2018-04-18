@@ -13,22 +13,21 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <!--<de.hdodenhof.circleimageview.CircleImageView-->
-            <!--android:layout_width="54dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_height="54dp"-->
-            <!--android:background="#eeeeee"-->
-            <!--android:id="@+id/addpeople"/>-->
-        <android.support.design.widget.FloatingActionButton
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="54dp"
-            android:layout_height="54dp"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/addpeople"
-            android:src="@drawable/ic_group_add_black_24dp"
-            android:background="#4caf50"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginLeft="10dp"
+            android:layout_height="54dp"
+            android:id="@+id/addpeople"/>
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:layout_width="54dp"-->
+            <!--android:layout_height="54dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:id="@+id/addpeople"-->
+            <!--android:src="@drawable/ic_group_add_black_24dp"-->
+            <!--android:background="#4caf50"-->
+            <!--android:layout_marginBottom="10dp" />-->
 
 
 
@@ -48,6 +47,7 @@
                android:layout_marginBottom="8dp"
                android:layout_marginTop="8dp"
                android:text="NEW GROUP"
+               android:textSize="14sp"
                android:id="@+id/newgroup"
                android:textColor="#000"
                app:layout_constraintBottom_toBottomOf="parent"

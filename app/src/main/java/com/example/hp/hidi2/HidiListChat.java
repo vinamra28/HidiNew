@@ -32,6 +32,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HidiListChat extends AppCompatActivity
 {
     String result = "";
@@ -40,7 +42,7 @@ public class HidiListChat extends AppCompatActivity
     RecyclerView recyclerView;
     ChatListAdapter chatListAdapter;
     ProgressDialog progressDialog;
-    FloatingActionButton imageViewaddpeople;
+    CircleImageView imageViewaddpeople;
     TextView textView;
     ArrayList<String> arrayListuid = new ArrayList<>();
     ArrayList<String> arrayListprofilepic = new ArrayList<>();
@@ -52,6 +54,8 @@ public class HidiListChat extends AppCompatActivity
         setContentView(R.layout.activity_hidi_list_chat);
         recyclerView = findViewById(R.id.recyclerViewChatFriend);
         imageViewaddpeople = findViewById(R.id.addpeople);
+        imageViewaddpeople.setImageResource(R.drawable.ic_group_add_black_24dp);
+//        Picasso.with(HidiListChat.this).load(R.drawable.ic_group_add_black_24dp).into(imageViewaddpeople);
         textView = findViewById(R.id.newgroup);
         session = new SessionManager(getApplicationContext());
         textView.setOnClickListener(new View.OnClickListener() {

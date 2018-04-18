@@ -55,10 +55,10 @@ public class ChatWindow extends AppCompatActivity {
         databaseReference_check=databaseReference.child("users").child(sessionManager.getUID()+"").child("threads");
         recyclerView = findViewById(R.id.recyclerViewChatWindow);
         recyclerView.setHasFixedSize(true);
+        toolBar = getSupportActionBar();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         editText = findViewById(R.id.editTexttypeMessage);
         button = findViewById(R.id.buttonSend);
-        toolBar = getSupportActionBar();
         Intent intent = getIntent();
         final Bundle bundle = intent.getExtras();
         if (bundle != null)

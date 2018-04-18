@@ -44,7 +44,7 @@ public class SearchUserAdapter extends RecyclerView.Adapter<SearchUserAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.chathistorycard,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.searchcard,parent,false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
