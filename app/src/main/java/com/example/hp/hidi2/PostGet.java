@@ -10,6 +10,7 @@ public class PostGet
 {
     private String pid,user_dp, user_name , post_location , user_post_image , total_favours , do_arguments , total_dislikes,like,dislike;
     private Drawable  do_like, do_dislike, image_argument;
+    int uid_poster;
 
     public PostGet(String user_name, String total_favours, String do_arguments, String user_dp, String user_post_image)
     {
@@ -20,8 +21,9 @@ public class PostGet
         this.user_post_image = user_post_image;
     }
 
-    public PostGet(String pid, String user_dp, String user_name, String post_location, String user_post_image, String total_favours, String do_arguments, String total_dislikes, String like, String dislike)
+    public PostGet(int uid_poster,String pid, String user_dp, String user_name, String post_location, String user_post_image, String total_favours, String do_arguments, String total_dislikes, String like, String dislike)
     {
+        this.uid_poster=uid_poster;
         this.pid = pid;
         this.user_dp = user_dp;
         this.user_name = user_name;
@@ -150,5 +152,13 @@ public class PostGet
 
     public void setImage_argument(Drawable image_argument) {
         this.image_argument = image_argument;
+    }
+
+    public int getUid_poster() {
+        return uid_poster;
+    }
+
+    public void setUid_poster(int uid_poster) {
+        this.uid_poster = uid_poster;
     }
 }

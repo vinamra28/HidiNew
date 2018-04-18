@@ -232,14 +232,14 @@ public class SelectTags extends AppCompatActivity
                 if(f_carrees==0)
                 {
                     f_carrees=1;
-                    button_bussiness.setBackgroundResource(R.drawable.circular_round_click);
+                    button_carrees.setBackgroundResource(R.drawable.circular_round_click);
                     tagnames.add("Carrers");
                     Log.e("tags",tagnames+"");
                 }
                 else
                 {
                     f_carrees=0;
-                    button_bussiness.setBackgroundResource(R.drawable.undo_button);
+                    button_carrees.setBackgroundResource(R.drawable.undo_button);
                     tagnames.remove("Carrers");
                     Log.e("tags",tagnames+"");
                 }

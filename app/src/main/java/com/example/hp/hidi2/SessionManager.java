@@ -15,9 +15,9 @@ public class SessionManager
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     Context context;
+    private static final String PREF_NAME="Hidi_Session";
     private static final String IS_LOGIN="isLoggedIn";
     private static final String KEY_STATUS="status";
-    private static final String PREF_NAME="Hidi_Session";
     public static final String KEY_MOBILE="mobileno";
     public static final String KEY_UID="uid";
     public static final String KEY_NAME="username";
@@ -32,6 +32,8 @@ public class SessionManager
     public static final String KEY_BLOCKS="blocks";
     public static final String KEY_LAT="latitude";
     public static final String KEY_LONG="longitude";
+    public static final String KEY_NOTIFICATION="notification";
+    public static final String KEY_NOTIFICATION_CONTENT="notification_content";
     int PRIVATE_MODE=0;
     public SessionManager(Context context)
     {
@@ -140,4 +142,23 @@ public class SessionManager
         editor.putInt(KEY_INDEXPATH,indexpath);
         editor.commit();
     }
+    public void saveNotificationState(Boolean state)
+    {
+        editor.putBoolean(KEY_NOTIFICATION,state);
+        editor.commit();
+    }
+    public Boolean getNotificationState()
+    {
+        return sharedPreferences.getBoolean(KEY_NOTIFICATION,false);
+    }
+    public void saveNotificationContentState(Boolean state)
+    {
+        editor.putBoolean(KEY_NOTIFICATION_CONTENT,state);
+        editor.commit();
+    }
+    public Boolean getNotificationContentState()
+    {
+        return sharedPreferences.getBoolean(KEY_NOTIFICATION_CONTENT,false);
+    }
+
 }

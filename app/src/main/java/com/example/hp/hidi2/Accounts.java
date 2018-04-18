@@ -154,6 +154,8 @@ public class Accounts extends AppCompatActivity
         toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         toolbar.setCustomView(R.layout.set_middle_title);
         actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.INVISIBLE);
         actionbars.setText("Posts");
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -274,6 +276,17 @@ public class Accounts extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu, menu);
+        if(session.getNotificationContentState())
+        {
+            flag=1;
+            menu.findItem(R.id.notifi_content).setChecked(true);
+            see_notifications.setEnabled(true);
+        }
+        if(session.getNotificationState())
+        {
+            flag=1;
+            menu.findItem(R.id.notification).setChecked(true);
+        }
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -293,30 +306,32 @@ public class Accounts extends AppCompatActivity
                 {
                     flag=1;
                     item.setChecked(true);
-                    see_notifications.setEnabled(true);
+                    session.saveNotificationContentState(true);
                 }
                 else
                 {
                     flag=0;
                     item.setChecked(false);
-                    see_notifications.setEnabled(false);
+                    session.saveNotificationContentState(false);
                 }
             }
         }
-//        if (id == R.id.notification)
-//        {
-//            if(item.isCheckable())
-//            {
-//                if(!item.isChecked())
-//                {
-//                    item.setChecked(true);
-//                }
-//                else
-//                {
-//                    item.setChecked(false);
-//                }
-//            }
-//        }
+        if (id == R.id.notification)
+        {
+            if(item.isCheckable())
+            {
+                if(!item.isChecked())
+                {
+                    item.setChecked(true);
+                    session.saveNotificationState(true);
+                }
+                else
+                {
+                    item.setChecked(false);
+                    session.saveNotificationState(false);
+                }
+            }
+        }
 //        if (id == R.id.night)
 //        {
 //            if(item.isCheckable())

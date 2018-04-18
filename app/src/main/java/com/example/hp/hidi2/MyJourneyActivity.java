@@ -103,6 +103,8 @@ public class MyJourneyActivity extends AppCompatActivity
 //                        Log.d("profilepic",""+posts.getString("profilepic"));
 //                        Log.d("like",""+posts.getInt("like"));
 //                        Log.d("dislike",""+posts.getInt("dislike"));
+                        Log.d("uid", "" + posts.getInt("uid"));
+                        int uid_poster =  posts.getInt("uid");
                         Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
                         Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
                         Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");
@@ -131,7 +133,7 @@ public class MyJourneyActivity extends AppCompatActivity
                         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        PostGet postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
+                        PostGet postGet=new PostGet(uid_poster,pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
                     }
                     myAdapter_post = new MyAdapter_post(MyJourneyActivity.this,postList,session.getUID(),"my");

@@ -80,6 +80,8 @@ public class MyHidiesPosts extends AppCompatActivity
                     for(int i=0;i<records.length();i++)
                     {
                         JSONObject posts=records.getJSONObject(i);
+                        Log.d("uid", "" + posts.getInt("uid"));
+                        int uid_poster =  posts.getInt("uid");
                         Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
                         Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
                         Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");
@@ -94,7 +96,7 @@ public class MyHidiesPosts extends AppCompatActivity
                         Log.d("profilepic",""+posts.getString("profilepic"));String profile=posts.getString("profilepic");
                         Log.d("like",""+posts.getInt("like"));String mlike=""+posts.getInt("like");
                         Log.d("dislike",""+posts.getInt("dislike"));String mdisllike=""+posts.getInt("dislike");
-                        PostGet postGet=new PostGet(pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
+                        PostGet postGet=new PostGet(uid_poster,pid,profile,name,locations,pic,likesc,commentsc,dislikesc,mlike,mdisllike);
                         postList.add(postGet);
                         Log.e("foll","sdcsdc");
                     }

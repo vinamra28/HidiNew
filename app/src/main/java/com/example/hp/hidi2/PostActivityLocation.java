@@ -175,6 +175,8 @@ public class PostActivityLocation extends AppCompatActivity {
                     }
                     for (int i = 0; i < records.length(); i++) {
                         JSONObject posts = records.getJSONObject(i);
+                        Log.d("uid", "" + posts.getInt("uid"));
+                        int uid_poster =  posts.getInt("uid");
                         Log.d("pid", "" + posts.getInt("pid"));
                         String pid = "" + posts.getInt("pid");
                         Log.d("pic", "" + posts.getString("pic"));
@@ -217,7 +219,7 @@ public class PostActivityLocation extends AppCompatActivity {
 //                        postGet=new PostGet(posts.getString("sec_name"),
 //                                ""+posts.getInt("like"),""+posts.getInt("comments"),
 //                                posts.getString("profilepic"),posts.getString("pic"));
-                        postGet = new PostGet(pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
+                        postGet = new PostGet(uid_poster,pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
                         postList.add(postGet);
                         myAdapter_post = new MyAdapter_post(PostActivityLocation.this, postList, session.getUID(), "filter");
                         recyclerView.setAdapter(myAdapter_post);

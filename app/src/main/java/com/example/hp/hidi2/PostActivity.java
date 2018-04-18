@@ -171,6 +171,8 @@ public class PostActivity extends AppCompatActivity
         toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         toolbar.setCustomView(R.layout.set_middle_title);
         actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
         gps = new GPSTracker(this);
         session.saveLoc(gps.latitude, gps.longitude);
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
@@ -501,10 +503,13 @@ public class PostActivity extends AppCompatActivity
                         startActivity(intent);
                         finish();
                     }
-                    for (int i = 0; i < records.length(); i++) {
+                    for (int i = 0; i < records.length(); i++)
+                    {
                         JSONObject posts = records.getJSONObject(i);
                         Log.d("pid", "" + posts.getInt("pid"));
                         String pid = "" + posts.getInt("pid");
+                        Log.d("uid", "" + posts.getInt("uid"));
+                        int uid_poster =  posts.getInt("uid");
                         Log.d("pic", "" + posts.getString("pic"));
                         String pic = "" + posts.getString("pic");
                         Log.d("likes", "" + posts.getInt("likes"));
@@ -545,7 +550,7 @@ public class PostActivity extends AppCompatActivity
 //                        postGet=new PostGet(posts.getString("sec_name"),
 //                                ""+posts.getInt("like"),""+posts.getInt("comments"),
 //                                posts.getString("profilepic"),posts.getString("pic"));
-                        postGet = new PostGet(pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
+                        postGet = new PostGet(uid_poster,pid, profile, name, locations, pic, likesc, commentsc, dislikesc, mlike, mdisllike);
                         postList.add(postGet);
                     }
                     myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");

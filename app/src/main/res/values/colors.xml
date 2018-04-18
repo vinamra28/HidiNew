@@ -9,11 +9,27 @@
     <color name="back_color">#798081</color>
     <color name="green_dark">#4db6ac</color>
     <color name="green">#4caf50</color>
+    <color name="amber">#ffca28</color>
+    <color name="cyan">#00bcd4</color>
+    <color name="red">#ff4081</color>
+
+    <color name="blue_gray">#263238</color>
+    <color name="pink_dark">#880e4f</color>
+    <color name="purple">#6a1b9a</color>
+    <color name="deep_purple">#5e35b1</color>
+    <color name="teal">#00796b</color>
+    <color name="lime">#9e9d24</color>
+    <color name="orangemix">#c99a0c</color>
 
 
     <array name="back">
-        <item>@color/textColorPrimary</item>
-        <item>@color/backcolor</item>
+        <item>@color/blue_gray</item>
+        <item>@color/pink_dark</item>
+        <item>@color/purple</item>
+        <item>@color/deep_purple</item>
+        <item>@color/teal</item>
+        <item>@color/lime</item>
+        <item>@color/orangemix</item>
     </array>
 
     <array name="textcolor">

@@ -22,6 +22,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,6 +53,8 @@ public class NewUserProfile extends AppCompatActivity
         toolBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         toolBar.setCustomView(R.layout.set_middle_title);
         actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.INVISIBLE);
         useradmire=findViewById(R.id.admireCount1);
         userlove=findViewById(R.id.loveCount1);
         userpopular=findViewById(R.id.popularProgress1);

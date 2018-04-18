@@ -174,7 +174,8 @@
         </service>
 
         <activity android:name=".AllNotificationsView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"></activity>
     </application>
 
 </manifest>

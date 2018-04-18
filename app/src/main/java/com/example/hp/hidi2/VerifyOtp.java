@@ -166,6 +166,7 @@ public class VerifyOtp extends AppCompatActivity
                 otp=otp+n1.getText().toString()+n2.getText().toString()+n3.getText().toString()+n4.getText().toString()+n5.getText().toString()+n6.getText().toString();
                 if(otp.length()!=0)
                 {
+                    progress.show();
                     if(request==1)
                     {
                         Log.d("req","1");
@@ -356,6 +357,7 @@ public class VerifyOtp extends AppCompatActivity
                 JSONObject ff=new JSONObject(result);
                 JSONObject info=ff.getJSONObject("info");
                 String otp_status=info.getString("otpStatus");
+                progress.dismiss();
                 if(otp_status.compareTo("success")==0)
                 {
                     progress.dismiss();

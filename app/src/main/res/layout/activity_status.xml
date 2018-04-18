@@ -5,7 +5,7 @@
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backcolor"
+    android:background="@color/blue_gray"
     android:orientation="vertical"
     tools:context="com.example.hp.hidi2.StatusActivity">
 
@@ -27,7 +27,8 @@
         android:hint="Type a status"
         android:maxLength="120"
         android:maxLines="12"
-        android:textColorHint="#000"
+        android:textColor="#fff"
+        android:textColorHint="#fff"
         android:textSize="35sp" />
 
     <LinearLayout

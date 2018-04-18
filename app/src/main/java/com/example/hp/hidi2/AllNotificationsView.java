@@ -2,12 +2,15 @@ package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -19,6 +22,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,6 +40,8 @@ public class AllNotificationsView extends AppCompatActivity
     ArrayList<NotificationSet> notificationSets=new ArrayList<>();
     NotificationAdapter notificationAdapter;
     RecyclerView recyclerView;
+    TextView actionbars,clr;
+    ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,6 +49,12 @@ public class AllNotificationsView extends AppCompatActivity
         setContentView(R.layout.activity_all_notifications_view);
         session=new SessionManager(getApplicationContext());
         recyclerView=findViewById(R.id.notificRecycler);
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
+        clr=findViewById(R.id.clearbtn);
+        actionbars.setText("Notifications");
         progress=new ProgressDialog(this);
         progress.setTitle("Loading....");
         progress.setIndeterminate(false);
@@ -52,6 +64,15 @@ public class AllNotificationsView extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         progress.show();
         new ShowNotifi().execute("http://hidi.org.in/hidi/notification/shownotification.php");
+        clr.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                progress.show();
+                new ClrNot().execute("http://hidi.org.in/hidi/notification/clearnotification.php");
+            }
+        });
     }
     private class ShowNotifi extends AsyncTask<String,Void,String>
     {
@@ -88,6 +109,47 @@ public class AllNotificationsView extends AppCompatActivity
                         notificationAdapter=new NotificationAdapter(AllNotificationsView.this,notificationSets);
                         recyclerView.setAdapter(notificationAdapter);
                     }
+                }
+                else
+                {
+                    Toast.makeText(AllNotificationsView.this,"No new notifications",Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
+    }
+    private class ClrNot extends AsyncTask<String,Void,String>
+    {
+        @Override
+        protected String doInBackground(String... url)
+        {
+            return POST(url[0]);
+        }
+        @Override
+        protected void onPostExecute(String s)
+        {
+            super.onPostExecute(s);
+            Log.d("Result",s);
+            progress.dismiss();
+            try
+            {
+                JSONObject jsonObject=new JSONObject(s);
+                JSONObject info=jsonObject.getJSONObject("info");
+                if(info.getString("status").equals("success"))
+                {
+                   if(notificationSets.size()!=0)
+                   {
+                       notificationSets.clear();
+                       notificationAdapter.notifyDataSetChanged();
+                   }
+                   else
+                   {
+                       Toast.makeText(AllNotificationsView.this, "Nothing to clear", Toast.LENGTH_SHORT).show();
+                   }
                 }
                 else
                 {

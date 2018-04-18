@@ -84,7 +84,7 @@ public class StatusActivity extends AppCompatActivity
         backgroundLayout= findViewById(R.id.background);
         status=findViewById(R.id.text);
         sending=findViewById(R.id.send);
-//        status.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        status.setBackgroundColor(getResources().getColor(R.color.blue_gray));
 //        backgroundLayout.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         colorBack= findViewById(R.id.color);
         gps=new GPSTracker(this);
@@ -142,8 +142,8 @@ public class StatusActivity extends AppCompatActivity
             {
                 backgroundLayout.setBackgroundColor(backColors[t]);
                 status.setBackgroundColor(backColors[t]);
-                status.setTextColor(textColors[t]);
-                status.setHintTextColor(textColors[t]);
+//                status.setTextColor(textColors[t]);
+//                status.setHintTextColor(textColors[t]);
                 t++;
                 if(t==backColors.length)t=0;
             }

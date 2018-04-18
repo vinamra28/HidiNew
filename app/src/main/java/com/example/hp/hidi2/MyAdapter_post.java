@@ -37,9 +37,10 @@ import java.util.List;
 
 public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHolder> {
     private Context context;
+    SessionManager session;
     private List<PostGet> postList;
     String result = "", request = "";
-    int pid, uid, x;
+    int pid, uid, x,uidToVisit;
     PostGet post;
     String from = "";
     private List<Integer> flag = new ArrayList<>();
@@ -51,6 +52,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         this.postList = postList;
         this.uid = uid;
         this.from = from;
+        session=new SessionManager(context);
         Log.e("size", postList.size() + "");
         for (int x = 0; x < postList.size(); x++) {
             flagdis.add(Integer.parseInt(postList.get(x).getDislike()));
@@ -70,10 +72,9 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position)
+    {
         post = postList.get(holder.getAdapterPosition());
-
-
         Picasso.with(context).load(post.getUser_dp()).into(holder.user_dp);
         holder.user_name.setText(post.getUser_name());
         holder.post_location.setText(post.getPost_location());
@@ -85,8 +86,6 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
         holder.total_dislikes.setText(dislike.get(position).toString());
         pid = Integer.parseInt(post.getPid());
-
-
         MobileAds.initialize(context, "ca-app-pub-8395196853946468~5498076485");
         AdRequest adRequest = new AdRequest.Builder().build();
         AdView adView = new AdView(context);
@@ -112,6 +111,42 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             holder.do_dislike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_down_blue_24dp));
 
         }
+        holder.user_dp.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                uidToVisit=postList.get(holder.getAdapterPosition()).getUid_poster();
+                if(uidToVisit!=session.getUID())
+                {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("name",postList.get(holder.getAdapterPosition()).getUser_name());
+                    bundle.putInt("uid", uidToVisit);
+                    Intent intent=new Intent(v.getContext(),NewUserProfile.class);
+                    intent.putExtras(bundle);
+                    v.getContext().startActivity(intent);
+                }
+                else
+                {
+                    Intent intent=new Intent(v.getContext(),Accounts.class);
+                    v.getContext().startActivity(intent);
+                }
+            }
+        });
+        holder.user_name.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                uidToVisit=postList.get(holder.getAdapterPosition()).getUid_poster();
+                Bundle bundle=new Bundle();
+                bundle.putString("name",postList.get(holder.getAdapterPosition()).getUser_name());
+                bundle.putInt("uid", uidToVisit);
+                Intent intent=new Intent(v.getContext(),NewUserProfile.class);
+                intent.putExtras(bundle);
+                v.getContext().startActivity(intent);
+            }
+        });
         holder.do_arguments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
