@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="2">
+    android:layout_centerHorizontal="true">
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="Posts"-->
+    <!--android:layout_weight="1.15"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center"-->
+
+    <!--android:textColor="#ffffff"-->
+    <!--android:id="@+id/actionBarTitles"-->
+    <!--android:textSize="20sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/clearbtn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight=".85"-->
+    <!--android:text="Clear All"-->
+    <!--android:textAlignment="viewEnd"-->
+    <!--android:textColor="#fff"-->
+    <!--android:textSize="15sp" />-->
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Posts"
-        android:layout_weight="1.15"
-        android:textAlignment="viewEnd"
-        android:textColor="#ffffff"
         android:id="@+id/actionBarTitles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Posts"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
         android:textSize="20sp" />
 
     <TextView
+        android:layout_width="match_parent"
         android:id="@+id/clearbtn"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight=".85"
-        android:text="Clear All"
-        android:textAlignment="viewEnd"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
         android:textColor="#fff"
+        android:textAllCaps="false"
+        android:text="Clear All"
         android:textSize="15sp" />
 
-</LinearLayout>
+</RelativeLayout>

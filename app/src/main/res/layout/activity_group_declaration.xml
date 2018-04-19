@@ -32,10 +32,9 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:id="@+id/groupimage"
-                    android:background="@drawable/logo012"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginStart="15dp"/>
 
                 <EditText
                     android:layout_width="match_parent"

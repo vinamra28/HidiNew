@@ -39,13 +39,13 @@ public class GroupDeclaration extends AppCompatActivity {
     ArrayList<String> arrayListFinalGroupName = new ArrayList<>();
     ArrayList<String> arrayListFinalGroupImage = new ArrayList<>();
     ArrayList<String> arrayListFinalGroupUid = new ArrayList<>();
-    AddPeopleAdapter addPeopleAdapter;
+    FinalAdapter addPeopleAdapter;
     private StorageReference mStorageReference;
-    ArrayList<AddPeopleSet> addPeopleSets = new ArrayList<>();
+    ArrayList<FinalSet> addPeopleSets = new ArrayList<>();
     private RecyclerView recyclerView;
     String name, uid, image;
     private Uri imageUri;
-    AddPeopleSet addPeopleSet;
+    FinalSet addPeopleSet;
     SessionManager session;
     DatabaseReference databaseReference;
     EditText editText;
@@ -76,10 +76,10 @@ public class GroupDeclaration extends AppCompatActivity {
             name = arrayListFinalGroupName.get(i);
             uid = arrayListFinalGroupUid.get(i);
             image = arrayListFinalGroupImage.get(i);
-            addPeopleSet = new AddPeopleSet(image, uid, name);
+            addPeopleSet = new FinalSet(image, uid, name);
             addPeopleSets.add(addPeopleSet);
         }
-        addPeopleAdapter = new AddPeopleAdapter(getApplicationContext(), addPeopleSets);
+        addPeopleAdapter = new FinalAdapter(getApplicationContext(), addPeopleSets);
         recyclerView.setAdapter(addPeopleAdapter);
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
