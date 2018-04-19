@@ -2,6 +2,7 @@ package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -50,6 +52,8 @@ public class PostActivityTag extends AppCompatActivity
     ProgressDialog progress;
     private List<PostGet> postList = new ArrayList<>();
     String result="";
+    ActionBar toolbar;
+    TextView actionbars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +61,12 @@ public class PostActivityTag extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_tag);
         session=new SessionManager(getApplicationContext());
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
         session.checkLogin();
         gps=new GPSTracker(this);
         session.saveLoc(gps.latitude,gps.longitude);
@@ -78,6 +88,7 @@ public class PostActivityTag extends AppCompatActivity
             {
                 String selecttag= (String) parent.getItemAtPosition(position);
                 tag=(String) parent.getItemAtPosition(position);
+                actionbars.setText(tag);
                 recyclerView.setAdapter(null);
                 progress.show();
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");

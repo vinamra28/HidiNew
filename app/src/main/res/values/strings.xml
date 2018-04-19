@@ -2,7 +2,7 @@
     <string name="app_name">Hidi</string>
     <string name="title_person">Filter</string>
     <string name="title_loc">Location</string>
-    <string name="title_my">My hidies</string>
+    <string name="title_my">My Hidies</string>
     <string name="GOOGLE_API_KEY">AIzaSyCD5V56dQHwz73iYRY1y2lgAYIAqzV9gi4</string>
     <string name="quickstart_message">Click the SUBSCRIBE TO NEWS button below to subscribe to the
         news topic. Messages sent to the news topic will be received. The LOG TOKEN button logs the

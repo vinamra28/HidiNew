@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -92,6 +93,12 @@ public class ChatList extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         bundle = getIntent().getExtras();
         toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        TextView actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
+        actionbars.setText("Chat");
         if (bundle != null) {
             i = bundle.getInt("key");
         }
@@ -145,7 +152,8 @@ public class ChatList extends AppCompatActivity {
                         lastsender = dataSnapshot.child("threads").child(personalurl).child("lastSender").getValue()+"";
                         Log.d("lastSender",lastsender);
                         lastUpdated = dataSnapshot.child("threads").child(personalurl).child("lastUpdated").getValue()+"";
-                        Date date = new Date(Long.parseLong(lastUpdated));
+                        long stamp=(long)Double.parseDouble(lastUpdated);
+                        Date date = new Date(stamp);
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a");
                         abc = simpleDateFormat.format(date);
                         Log.d("lastUpdated",abc);

@@ -1,13 +1,17 @@
 package com.example.hp.hidi2;
 
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -35,12 +39,21 @@ public class MyHidiesPosts extends AppCompatActivity
     private List<PostGet> postList = new ArrayList<>();
     private MyAdapter_post myAdapter_post;
     RecyclerView recyclerView;
+    ActionBar toolbar;
+    TextView actionbars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_hidies_posts);
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
+        actionbars.setText("My Hidies Posts");
         recyclerView=findViewById(R.id.myhidiesRecycler);
         session=new SessionManager(getApplicationContext());
         session.checkLogin();

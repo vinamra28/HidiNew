@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     String mPermission= Manifest.permission.READ_SMS;
     String mPermission1= Manifest.permission.ACCESS_FINE_LOCATION;
     String mPermission2=Manifest.permission.INTERNET;
+    String mPermission3=Manifest.permission.CAMERA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         {
             if (ActivityCompat.checkSelfPermission(this, mPermission) != MockPackageManager.PERMISSION_GRANTED||ActivityCompat.checkSelfPermission(this, mPermission1) != MockPackageManager.PERMISSION_GRANTED)
             {
-                ActivityCompat.requestPermissions(this, new String[]{mPermission,mPermission1,mPermission2},REQUEST_CODE_PERMISSION);
+                ActivityCompat.requestPermissions(this, new String[]{mPermission,mPermission1,mPermission2,mPermission3},REQUEST_CODE_PERMISSION);
             }
         }
         catch (Exception e)

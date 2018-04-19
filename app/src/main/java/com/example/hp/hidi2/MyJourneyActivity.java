@@ -2,12 +2,15 @@ package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -40,6 +43,8 @@ public class MyJourneyActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private MyAdapter_post myAdapter_post;
     ProgressDialog progress;
+    ActionBar toolbar;
+    TextView actionbars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -47,6 +52,13 @@ public class MyJourneyActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_journey);
         session=new SessionManager(getApplicationContext());
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
+        actionbars.setText("My Posts");
         session.checkLogin();
         recyclerView = findViewById(R.id.recyclerView1);
         gps=new GPSTracker(this);
@@ -103,8 +115,7 @@ public class MyJourneyActivity extends AppCompatActivity
 //                        Log.d("profilepic",""+posts.getString("profilepic"));
 //                        Log.d("like",""+posts.getInt("like"));
 //                        Log.d("dislike",""+posts.getInt("dislike"));
-                        Log.d("uid", "" + posts.getInt("uid"));
-                        int uid_poster =  posts.getInt("uid");
+                        int uid_poster =  session.getUID();
                         Log.d("pid",""+posts.getInt("pid"));String pid=""+posts.getInt("pid");
                         Log.d("pic",""+posts.getString("pic"));String pic=""+posts.getString("pic");
                         Log.d("likes",""+posts.getInt("likes"));String likesc=""+posts.getInt("likes");

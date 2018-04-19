@@ -277,6 +277,7 @@ public class PostActivity extends AppCompatActivity
                 Log.d("Latitiude",""+latitude1);
                 Log.d("Longitude",""+longitude1);
                 Bundle bundle =new Bundle();
+                bundle.putString("place",""+place.getName());
                 bundle.putDouble("lat",latitude1);
                 bundle.putDouble("lng",longitude1);
                 bundle.putInt("uid",session.getUID());
@@ -445,7 +446,7 @@ public class PostActivity extends AppCompatActivity
     }
 
     private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener {
-        private static final int SWIPE_MIN_DISTANCE = 50;
+        private static final int SWIPE_MIN_DISTANCE = 150;
         private static final int SWIPE_MAX_OFF_PATH = 200;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
@@ -686,6 +687,11 @@ public class PostActivity extends AppCompatActivity
             {
                 // TODO: Handle the error.
             }
+        }
+        if(id==R.id.msgs)
+        {
+            Intent intent=new Intent(PostActivity.this,ChatList.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

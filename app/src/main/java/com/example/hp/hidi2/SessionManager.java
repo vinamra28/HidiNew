@@ -85,6 +85,11 @@ public class SessionManager
         editor.putInt(KEY_INDEXPATH,indexpath);
         editor.commit();
     }
+    public void setPic()
+    {
+        editor.putString(KEY_PROFILEPIC,null);
+        editor.commit();
+    }
     public HashMap<String,String> getUserDetails()
     {
         HashMap<String,String> user=new HashMap<>();

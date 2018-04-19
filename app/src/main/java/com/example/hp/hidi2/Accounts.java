@@ -54,6 +54,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -211,95 +212,83 @@ public class Accounts extends AppCompatActivity {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    private void showFileChooser() {
+    private void showFileChooser()
+    {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        intent.putExtra("crop", "true");
+        intent.putExtra("crop","true");
         intent.putExtra("aspectX", 0);
         intent.putExtra("aspectY", 0);
-        try {
-            intent.putExtra("return-data", true);
-            startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_IMAGE_REQUEST);
-        } catch (ActivityNotFoundException e) {
-        }
-        Log.d("Intent", "" + intent);
+        intent.setType("image/*");
+        intent.putExtra("return-data", true);
+        Log.d("Intent",""+intent);
+//        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_IMAGE_REQUEST);
     }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
-//            Uri selectedMediaUri = data.getData();
-//            Log.e("uri", selectedMediaUri + "");
-//            String type = this.getContentResolver().getType(selectedMediaUri);
-//            Log.e(type + " ddd", selectedMediaUri.getEncodedPath());
-//            URI = data.getData();
-//            FILE = new String[]{MediaStore.Images.Media.DATA};
-//            Cursor cursor = getContentResolver().query(URI, FILE, null, null, null);
-//            cursor.moveToFirst();
-//            int columnIndex = cursor.getColumnIndex(FILE[0]);
-//            ImageDecode = cursor.getString(columnIndex);
-//            Log.d("paths", ImageDecode);
-//            cursor.close();
-//            imageUpload(selectedMediaUri);
-//        }
-
-
-        if (requestCode == CAMERA_REQUEST) {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-            userdp.setImageBitmap(photo);
-            byteArray = outputStream.toByteArray();
-            imageUpload();
-//            Uri selectedMediaUri = data.getData();
-//            Log.e("uri", selectedMediaUri + "");
-//            String type = this.getContentResolver().getType(selectedMediaUri);
-//            Log.e(type + " ddd", selectedMediaUri.getEncodedPath());
-//            URI = data.getData();
-//            FILE = new String[]{MediaStore.Images.Media.DATA};
-//            Cursor cursor = getContentResolver().query(URI, FILE, null, null, null);
-//            cursor.moveToFirst();
-//            int columnIndex = cursor.getColumnIndex(FILE[0]);
-//            ImageDecode = cursor.getString(columnIndex);
-//            Log.d("paths", ImageDecode);
-//            cursor.close();
-//            imageUpload(selectedMediaUri);
-
-        }
-
-        if (requestCode == PICK_IMAGE_REQUEST) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK)
+        {
+            Uri selectedMediaUri = data.getData();
+            Log.e("uri", selectedMediaUri + "");
+            String type = this.getContentResolver().getType(selectedMediaUri);
+            Log.e(type + " ddd", selectedMediaUri.getEncodedPath());
+            URI = data.getData();
+            FILE = new String[]{MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(URI, FILE, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(FILE[0]);
+            ImageDecode = cursor.getString(columnIndex);
+            Log.d("paths",ImageDecode);
+            cursor.close();
             try {
-                Bundle extras2 = data.getExtras();
-                if (extras2 != null) {
-                    Bitmap photo = extras2.getParcelable("data");
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-                    userdp.setImageBitmap(photo);
-                    byteArray = outputStream.toByteArray();
-//                    Uri selectedMediaUri = data.getData();
-//                    Log.e("uri", selectedMediaUri + "");
-//                    String type = this.getContentResolver().getType(selectedMediaUri);
-//                    Log.e(type + " ddd", selectedMediaUri.getEncodedPath());
-//                    URI = data.getData();
-//                    FILE = new String[]{MediaStore.Images.Media.DATA};
-//                    Cursor cursor = getContentResolver().query(URI, FILE, null, null, null);
-//                    cursor.moveToFirst();
-//                    int columnIndex = cursor.getColumnIndex(FILE[0]);
-//                    ImageDecode = cursor.getString(columnIndex);
-//                    Log.d("paths", ImageDecode);
-//                    cursor.close();
-                    imageUpload();
-                }
-            } catch (Exception e) {
+                InputStream is=getContentResolver().openInputStream(selectedMediaUri);
+                Bitmap selectedImage = BitmapFactory.decodeStream(is);
+                selectedImage = getResizedBitmap(selectedImage, 400);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                selectedImage.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                byteArray = outputStream.toByteArray();
+
+            } catch (FileNotFoundException e) {
                 e.printStackTrace();
+            }
+            imageUpload(selectedMediaUri);
+        }
+        else if(requestCode==CAMERA_REQUEST)
+        {
+            if(data==null)
+            {
+
+            }
+            else
+            {
+                Log.d("Enter ","Checked");
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+                byteArray = outputStream.toByteArray();
+                cameraUpload(photo);
             }
         }
     }
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
 
-    private void imageUpload() {
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+    private void cameraUpload(final Bitmap pic)
+    {
         FileUploadService service = ServiceGenerator.createService(FileUploadService.class);
-//        File file = new File(ImageDecode);
         RequestBody requestFile = RequestBody.create(MediaType.parse("*/*"), byteArray);
         Log.d("Request1", "" + requestFile);
         MultipartBody.Part body = MultipartBody.Part.createFormData("profile", ""+session.getUID(), requestFile);
@@ -309,13 +298,15 @@ public class Accounts extends AppCompatActivity {
         RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
         Log.d("Description", "" + description);
         Call<ResponseBody> call = service.upload(description, body, id);
+        session.setPic();
         Log.d("Call service", "" + call);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
                 Log.v("Upload", "success");
-//                userdp.setImageURI(fileUri);
-//                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
+                session.setPic();
+                userdp.setImageBitmap(pic);
             }
 
             @Override
@@ -324,6 +315,69 @@ public class Accounts extends AppCompatActivity {
             }
         });
     }
+    private void imageUpload(final Uri fileUri)
+    {
+        FileUploadService service = ServiceGenerator.createService(FileUploadService.class);
+        File file = new File(ImageDecode);
+        RequestBody requestFile =RequestBody.create(MediaType.parse("*/*"), byteArray);
+        Log.d("Request1",""+requestFile);
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("profile", file.getName(), requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("profile", ""+session.getUID(), requestFile);
+        Log.d("Multipart",""+body);
+        String descriptionString = "hello, this is description speaking";
+        RequestBody id=RequestBody.create(MediaType.parse("text/plain"),""+session.getUID());
+        RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
+        Log.d("Description",""+description);
+        Call<ResponseBody> call = service.upload(description, body,id);
+        Log.d("Call service",""+call);
+        call.enqueue(new Callback<ResponseBody>()
+        {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+            {
+                Log.v("Upload", "success");
+                userdp.setImageURI(fileUri);
+                session.setPic();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+//            private void imageUpload(final Bitmap pic) {
+//        FileUploadService service = ServiceGenerator.createService(FileUploadService.class);
+////        File file = new File(ImageDecode);
+//        RequestBody requestFile = RequestBody.create(MediaType.parse("*/*"), byteArray);
+//        Log.d("Request1", "" + requestFile);
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("profile", ""+session.getUID(), requestFile);
+//        Log.d("Multipart", "" + body);
+//        String descriptionString = "hello, this is description speaking";
+//        RequestBody id = RequestBody.create(MediaType.parse("text/plain"), "" + session.getUID());
+//        RequestBody description = RequestBody.create(okhttp3.MultipartBody.FORM, descriptionString);
+//        Log.d("Description", "" + description);
+//        Call<ResponseBody> call = service.upload(description, body, id);
+//        session.setPic();
+//        Log.d("Call service", "" + call);
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)
+//            {
+//                Log.v("Upload", "success");
+//                session.setPic();
+//                userdp.setImageBitmap(pic);
+////                userdp.setImageURI(fileUri);
+////                new HttpAsyncTask().execute("http://hidi.org.in/hidi/account/myaccount.php");
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Log.e("Upload error:", t.getMessage());
+//            }
+//        });
+//    }
 //    private void imageUpload(final Uri fileUri) {
 //        FileUploadService service = ServiceGenerator.createService(FileUploadService.class);
 //        File file = new File(ImageDecode);
@@ -550,6 +604,9 @@ public class Accounts extends AppCompatActivity {
                     txtgallery = view.findViewById(R.id.gallery_img);
                     linearLayoutcamera = view.findViewById(R.id.linearlayoutcamera);
                     linearLayoutgallery = view.findViewById(R.id.linearlayoutgallery);
+                    builder.setView(view);
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
                     btncamera.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -566,12 +623,14 @@ public class Accounts extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             showFileChooser();
+                            dialog.dismiss();
                         }
                     });
                     txtgallery.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             showFileChooser();
+                            dialog.dismiss();
                         }
                     });
                     linearLayoutcamera.setOnClickListener(new View.OnClickListener() {
@@ -579,17 +638,17 @@ public class Accounts extends AppCompatActivity {
                         public void onClick(View v) {
                             Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                             startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                            dialog.dismiss();
                         }
                     });
                     linearLayoutgallery.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             showFileChooser();
+                            dialog.dismiss();
                         }
                     });
-                    builder.setView(view);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
+
 //                    showFileChooser();
                 }
             });

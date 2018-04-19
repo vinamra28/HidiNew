@@ -3,6 +3,7 @@ package com.example.hp.hidi2;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -48,6 +50,8 @@ public class RepliesOnComments extends AppCompatActivity
     String time_stamp="",myreply="";
     int cid;
     ArrayList<ReplyGet> replyGets=new ArrayList<>();
+    ActionBar toolbar;
+    TextView actionbars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,6 +59,13 @@ public class RepliesOnComments extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_replies_on_comments);
         session=new SessionManager(getApplicationContext());
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
+        actionbars.setText("Replies");
         session.checkLogin();
         replyAdapter=new ReplyAdapter(getApplicationContext(),replyGets);
         Bundle bundle=getIntent().getExtras();

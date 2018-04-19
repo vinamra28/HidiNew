@@ -64,7 +64,8 @@
             android:theme="@style/AccountsTheme" />
         <activity
             android:name=".Arguments"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
@@ -82,7 +83,8 @@
 
         <activity
             android:name=".MyJourneyActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
 
         <receiver android:name=".Incomingsms">
             <intent-filter>
@@ -98,13 +100,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".PostActivityLocation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
         <activity
             android:name=".PostActivityTag"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
         <activity
             android:name=".BlockActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
         <activity
             android:name=".SearchUser"
             android:screenOrientation="portrait"
@@ -137,7 +142,8 @@
         <!-- <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/GOOGLE_API_KEY"/> -->
         <activity
             android:name=".MyHidiesPosts"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
         <activity
             android:name=".ShowUnlockedVisitors"
             android:screenOrientation="portrait" />
@@ -148,11 +154,15 @@
         <activity
             android:name=".RepliesOnComments"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
+
         <activity
             android:name=".AreaSortActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AccountsTheme"/>
+
         <activity android:name=".CreatePassword"
             android:screenOrientation="portrait"/>
 

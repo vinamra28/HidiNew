@@ -139,12 +139,20 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
             public void onClick(View v)
             {
                 uidToVisit=postList.get(holder.getAdapterPosition()).getUid_poster();
-                Bundle bundle=new Bundle();
-                bundle.putString("name",postList.get(holder.getAdapterPosition()).getUser_name());
-                bundle.putInt("uid", uidToVisit);
-                Intent intent=new Intent(v.getContext(),NewUserProfile.class);
-                intent.putExtras(bundle);
-                v.getContext().startActivity(intent);
+                if(uidToVisit!=session.getUID())
+                {
+                    Bundle bundle=new Bundle();
+                    bundle.putString("name",postList.get(holder.getAdapterPosition()).getUser_name());
+                    bundle.putInt("uid", uidToVisit);
+                    Intent intent=new Intent(v.getContext(),NewUserProfile.class);
+                    intent.putExtras(bundle);
+                    v.getContext().startActivity(intent);
+                }
+                else
+                {
+                    Intent intent=new Intent(v.getContext(),Accounts.class);
+                    v.getContext().startActivity(intent);
+                }
             }
         });
         holder.do_arguments.setOnClickListener(new View.OnClickListener() {

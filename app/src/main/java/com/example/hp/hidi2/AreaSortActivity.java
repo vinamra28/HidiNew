@@ -2,12 +2,15 @@ package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -40,15 +43,23 @@ public class AreaSortActivity extends AppCompatActivity
     String result="";
     MyAdapter_post myAdapter_post;
     private List<PostGet> postList = new ArrayList<>();
+    ActionBar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_sort);
+        toolbar=getSupportActionBar();
+        toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        toolbar.setCustomView(R.layout.set_middle_title);
+        TextView actionbars=findViewById(R.id.actionBarTitles);
+        TextView abc=findViewById(R.id.clearbtn);
+        abc.setVisibility(View.GONE);
         Bundle bundle=getIntent().getExtras();
         lat=bundle.getDouble("lat");
         lng=bundle.getDouble("lng");
         uid=bundle.getInt("uid");
+        actionbars.setText(bundle.getString("place"));
         recyclerView=findViewById(R.id.areaRecyler);
         progress=new ProgressDialog(this);
         progress.setTitle("Loading...");

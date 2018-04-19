@@ -25,7 +25,7 @@
                 android:layout_marginTop="17dp"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="Location"
+                android:text="Nearby"
                 android:textColor="#000" />
 
             <ImageButton
