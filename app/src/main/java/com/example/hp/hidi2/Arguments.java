@@ -1,9 +1,7 @@
 package com.example.hp.hidi2;
 
 import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
 import android.content.Context;
-import android.hardware.input.InputManager;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

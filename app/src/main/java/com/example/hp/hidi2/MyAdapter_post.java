@@ -86,7 +86,7 @@ public class MyAdapter_post extends RecyclerView.Adapter<MyAdapter_post.MyViewHo
         holder.do_dislike.setImageDrawable(post.getDo_dislike());
         holder.total_dislikes.setText(dislike.get(position).toString());
         pid = Integer.parseInt(post.getPid());
-        MobileAds.initialize(context, "ca-app-pub-8395196853946468~5498076485");
+        MobileAds.initialize(context, "ca-app-pub-8097507647686370~9504269092");
         AdRequest adRequest = new AdRequest.Builder().build();
         AdView adView = new AdView(context);
         adView.setAdSize(AdSize.SMART_BANNER);

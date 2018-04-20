@@ -2,7 +2,6 @@ package com.example.hp.hidi2;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

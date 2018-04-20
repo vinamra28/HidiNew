@@ -1,6 +1,5 @@
 package com.example.hp.hidi2;
 
-import android.annotation.SuppressLint;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.os.Build;

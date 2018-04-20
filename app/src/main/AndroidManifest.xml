@@ -31,7 +31,7 @@
         <!-- <meta-data -->
         <!-- android:name="com.google.firebase.messaging.default_notification_channel_id" /> -->
         <activity
-            android:name=".SplashScreen"
+            android:name="com.example.hp.hidi2.SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,22 +40,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Recover"
+            android:name="com.example.hp.hidi2.Recover"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Register"
+            android:name="com.example.hp.hidi2.Register"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PostActivity"
+            android:name="com.example.hp.hidi2.PostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
-            android:name=".VerifyOtp"
+            android:name="com.example.hp.hidi2.VerifyOtp"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SelectName"
+            android:name="com.example.hp.hidi2.SelectName"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Accounts"
@@ -63,14 +63,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
-            android:name=".Arguments"
+            android:name="com.example.hp.hidi2.Arguments"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.hp.hidi2.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StatusActivity"
+            android:name="com.example.hp.hidi2.StatusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
 
@@ -82,109 +82,109 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".MyJourneyActivity"
+            android:name="com.example.hp.hidi2.MyJourneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
 
-        <receiver android:name=".Incomingsms">
+        <receiver android:name="com.example.hp.hidi2.Incomingsms">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name=".UnlockVisitors"
+            android:name="com.example.hp.hidi2.UnlockVisitors"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SelectTags"
+            android:name="com.example.hp.hidi2.SelectTags"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PostActivityLocation"
+            android:name="com.example.hp.hidi2.PostActivityLocation"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
         <activity
-            android:name=".PostActivityTag"
+            android:name="com.example.hp.hidi2.PostActivityTag"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
         <activity
-            android:name=".BlockActivity"
+            android:name="com.example.hp.hidi2.BlockActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
         <activity
-            android:name=".SearchUser"
+            android:name="com.example.hp.hidi2.SearchUser"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
-            android:name=".NewUserProfile"
+            android:name="com.example.hp.hidi2.NewUserProfile"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
-            android:name=".ChatList"
+            android:name="com.example.hp.hidi2.ChatList"
             android:launchMode="singleTop"
             android:theme="@style/AccountsTheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HidiListChat"
+            android:name="com.example.hp.hidi2.HidiListChat"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SingleChat"
+            android:name="com.example.hp.hidi2.SingleChat"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
-            android:name=".AddPeople"
+            android:name="com.example.hp.hidi2.AddPeople"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".GroupDeclaration"
+            android:name="com.example.hp.hidi2.GroupDeclaration"
             android:screenOrientation="portrait" />
         <!-- <meta-data android:name="com.google.android.geo.API_KEY" android:value="@string/GOOGLE_API_KEY"/> -->
         <activity
-            android:name=".MyHidiesPosts"
+            android:name="com.example.hp.hidi2.MyHidiesPosts"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
         <activity
-            android:name=".ShowUnlockedVisitors"
+            android:name="com.example.hp.hidi2.ShowUnlockedVisitors"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ChatWindow"
+            android:name="com.example.hp.hidi2.ChatWindow"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme" />
         <activity
-            android:name=".RepliesOnComments"
+            android:name="com.example.hp.hidi2.RepliesOnComments"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
 
         <activity
-            android:name=".AreaSortActivity"
+            android:name="com.example.hp.hidi2.AreaSortActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"/>
 
-        <activity android:name=".CreatePassword"
+        <activity android:name="com.example.hp.hidi2.CreatePassword"
             android:screenOrientation="portrait"/>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name="com.example.hp.hidi2.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".MyFirebaseInstanceIDService">
+        <service android:name="com.example.hp.hidi2.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
-            android:name=".MyJobService"
+            android:name="com.example.hp.hidi2.MyJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
 
-        <activity android:name=".AllNotificationsView"
+        <activity android:name="com.example.hp.hidi2.AllNotificationsView"
             android:screenOrientation="portrait"
             android:theme="@style/AccountsTheme"></activity>
     </application>

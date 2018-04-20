@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

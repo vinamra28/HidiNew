@@ -102,7 +102,7 @@ public class UnlockVisitors extends AppCompatActivity implements RewardedVideoAd
 
     private void loadRewardedVideoAd() {
         Log.d("loadkaf", "loaded");
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-8097507647686370/8691590737",
                 new AdRequest.Builder().build());
     }
 

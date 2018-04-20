@@ -3,17 +3,13 @@ package com.example.hp.hidi2;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -54,7 +50,7 @@ public class HidiListChat extends AppCompatActivity
         setContentView(R.layout.activity_hidi_list_chat);
         recyclerView = findViewById(R.id.recyclerViewChatFriend);
         imageViewaddpeople = findViewById(R.id.addpeople);
-        imageViewaddpeople.setImageResource(R.drawable.ic_group_add_black_24dp);
+//        imageViewaddpeople.setImageResource(R.drawable.ic_group_add_black_24dp);
 //        Picasso.with(HidiListChat.this).load(R.drawable.ic_group_add_black_24dp).into(imageViewaddpeople);
         textView = findViewById(R.id.newgroup);
         session = new SessionManager(getApplicationContext());

@@ -1,7 +1,6 @@
 package com.example.hp.hidi2;
 
 import android.Manifest;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,7 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.lzyzsd.circleprogress.CircleProgress;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
