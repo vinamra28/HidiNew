@@ -14,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -87,6 +88,8 @@ public class PostActivity extends AppCompatActivity
     private ActionBar toolbar;
     TextView actionbars;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    int offset=0;
+    RecyclerView.LayoutManager layoutManager;
 
 
     @Override
@@ -174,10 +177,14 @@ public class PostActivity extends AppCompatActivity
             public void onRefresh() {
                 Log.e("dcd","cde");
                 recyclerView.setAdapter(null);
+                postList.clear();
+                offset=0;
                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
             }
         });
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
+        postList.clear();
+        offset=0;
         swiper.setRefreshing(true);
 //        try
 //        {
@@ -473,15 +480,15 @@ public class PostActivity extends AppCompatActivity
             Log.d("result", result);
             try {
                 PostGet postGet;
-                postList.clear();
+
                 JSONObject respnse = new JSONObject(result);
                 JSONObject info = respnse.getJSONObject("info");
-
+                progress.dismiss();
                 if ((info.getString("status")).equals("success")) {
                     progress.dismiss();
                     JSONArray records = respnse.getJSONArray("records");
                     swiper.setRefreshing(false);
-                    if(records.length()==0)
+                    if(records.length()==0&&postList.size()==0)
                     {
                         Intent intent=new Intent(PostActivity.this,Accounts.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -528,7 +535,7 @@ public class PostActivity extends AppCompatActivity
                         String mlike = "" + posts.getInt("like");
                         Log.d("dislike", "" + posts.getInt("dislike"));
                         String mdisllike = "" + posts.getInt("dislike");
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                        layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -540,6 +547,7 @@ public class PostActivity extends AppCompatActivity
                     }
                     myAdapter_post = new MyAdapter_post(PostActivity.this, postList, session.getUID(), "all");
                     recyclerView.setAdapter(myAdapter_post);
+                    recyclerView.scrollToPosition(offset);
                     recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener()
                     {
                         @Override
@@ -551,16 +559,55 @@ public class PostActivity extends AppCompatActivity
                 }
                 else
                 {
-                    progress.dismiss();
-                    Intent intent=new Intent(PostActivity.this,Accounts.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();
+                    if(postList.size()==0)
+                    {
+                        progress.dismiss();
+                        Intent intent=new Intent(PostActivity.this,Accounts.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Error getting records", Toast.LENGTH_SHORT).show();
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+                {
+                    super.onScrollStateChanged(recyclerView, newState);
+//                    Log.d("new state",""+newState);
+                    LinearLayoutManager ll= (LinearLayoutManager)recyclerView.getLayoutManager();
+                    Log.d("POS cc",""+ll.findLastVisibleItemPosition());
+                    offset=ll.findLastVisibleItemPosition();
+                    if(offset==myAdapter_post.getItemCount()-1)
+                    {
+//                        offset=offset+1;
+                        new Handler().postDelayed(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                offset=offset+1;
+                                Log.d("offset",""+offset);
+                                progress.show();
+                                new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
+                            }
+                        },1000);
+                    }
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+                {
+                    super.onScrolled(recyclerView, dx, dy);
+//                    Log.d("dx",""+dx);
+//                    Log.d("dy",""+dy);
+                    LinearLayoutManager ll= (LinearLayoutManager)recyclerView.getLayoutManager();
+                    Log.d("POS",""+ll.findLastVisibleItemPosition());
+                }
+            });
 
         }
     }
@@ -578,6 +625,7 @@ public class PostActivity extends AppCompatActivity
             jsonObject.accumulate("lat", gps.latitude);
             jsonObject.accumulate("long", gps.longitude);
             jsonObject.accumulate("dist", 2);
+            jsonObject.accumulate("offset",offset);
             json = jsonObject.toString();
             Log.d("json", json);
             StringEntity se = new StringEntity(json);
