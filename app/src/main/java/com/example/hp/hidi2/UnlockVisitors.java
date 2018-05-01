@@ -56,7 +56,7 @@ public class UnlockVisitors extends AppCompatActivity implements RewardedVideoAd
         setContentView(R.layout.activity_unlock_visitors);
         session = new SessionManager(getApplicationContext());
         session.checkLogin();
-        MobileAds.initialize(this, "ca-app-pub-8097507647686370~9504269092");
+        MobileAds.initialize(this, "ca-app-pub-7722560397407905~2428324894");
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(UnlockVisitors.this);
         loadRewardedVideoAd();
@@ -102,7 +102,7 @@ public class UnlockVisitors extends AppCompatActivity implements RewardedVideoAd
 
     private void loadRewardedVideoAd() {
         Log.d("loadkaf", "loaded");
-        mRewardedVideoAd.loadAd("ca-app-pub-8097507647686370/8691590737",
+        mRewardedVideoAd.loadAd("ca-app-pub-7722560397407905/1470466449",
                 new AdRequest.Builder().build());
     }
 

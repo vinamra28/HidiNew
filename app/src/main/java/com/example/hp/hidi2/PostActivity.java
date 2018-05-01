@@ -591,6 +591,7 @@ public class PostActivity extends AppCompatActivity
                             {
                                 offset=offset+1;
                                 Log.d("offset",""+offset);
+                                progress.setCancelable(true);
                                 progress.show();
                                 new Posts().execute("http://hidi.org.in/hidi/post/showposts.php");
                             }
