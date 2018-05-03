@@ -4,7 +4,7 @@
     <item
         android:id="@+id/person"
         android:icon="@mipmap/ic_account_circle_white_24dp"
-        android:title="Users"
+        android:title="Hidies"
     />
     <item
         android:id="@+id/filter"

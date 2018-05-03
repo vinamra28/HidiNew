@@ -38,6 +38,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -156,10 +157,23 @@ public class PostActivity extends AppCompatActivity
         progress.setIndeterminate(false);
         toolbar=getSupportActionBar();
         toolbar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        toolbar.setCustomView(R.layout.set_middle_title);
-        actionbars=findViewById(R.id.actionBarTitles);
-        TextView abc=findViewById(R.id.clearbtn);
-        abc.setVisibility(View.GONE);
+        toolbar.setCustomView(R.layout.post_middle_lay);
+        ImageView accred=findViewById(R.id.aaccoouunntt);
+        accred.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(PostActivity.this, Accounts.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+//        toolbar.setCustomView(R.layout.set_middle_title);
+//        actionbars=findViewById(R.id.actionBarTitles);
+//        TextView abc=findViewById(R.id.clearbtn);
+//        abc.setVisibility(View.GONE);
         gps = new GPSTracker(this);
         session.saveLoc(gps.latitude, gps.longitude);
         gestureDetector = new GestureDetector(new SwipeGestureDetector());
